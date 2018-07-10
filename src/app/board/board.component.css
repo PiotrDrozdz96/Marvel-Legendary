@@ -1,0 +1,7 @@
+.board {
+    width: 140vh;
+    height: 100vh;
+    background-image: url('/assets/legendary_board.jpg');
+    background-size: 140vh 100vh;
+    margin: auto;
+}
