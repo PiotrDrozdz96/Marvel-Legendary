@@ -20,8 +20,8 @@ export interface MasterMind extends Card {
     masterStrike();
 }
 
-export interface Villan extends Card {
-    type: 'villan';
+export interface Villain extends Card {
+    type: 'villain';
     team: string;
     attack: number;
     points: number;
@@ -41,9 +41,9 @@ export interface Bystanders extends Card {
     points: number;
 }
 
-export interface CardInVillanDeck extends Card {
-    type: 'villan' | 'bystanders' | 'masterStrike' | 'schemeTwist';
-    /* villan type extends Villan interface */
+export interface CardInVillainDeck extends Card {
+    type: 'villain' | 'bystanders' | 'masterStrike' | 'schemeTwist';
+    /* villain type extends Villain interface */
     /* bystanders type extends Bystranders interface */
     team?: string;
     attack?: number;
