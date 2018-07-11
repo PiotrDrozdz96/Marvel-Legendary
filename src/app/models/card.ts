@@ -13,12 +13,17 @@ export interface Hero extends Card {
     func?();
 }
 
-export interface MasterMind extends Card {
-    // type: 'masterMind';
+export interface Mastermind extends Card {
+    // type: 'mastermind';
     attack: number;
     points: number;
     alwaysLeads: string;
     masterStrike();
+}
+
+export interface MastermindTactic extends Card {
+    // type: 'mastermindTactic
+    func();
 }
 
 export interface Villain extends Card {

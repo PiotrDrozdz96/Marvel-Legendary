@@ -15,4 +15,8 @@ export class OpenedDeck<T> extends Deck<T> implements OnInit {
     return temp;
   }
 
+  pushDeck(cards: Array<any>) {
+    [this.topCard, ...this.deck] = [...cards];
+  }
+
 }
