@@ -4,7 +4,7 @@ export interface Card {
 }
 
 export interface Hero extends Card {
-    // type: 'hero';
+    // type: 'hero' || 'wound;
     team: string;
     color?: string;
     attack: number;
@@ -43,7 +43,7 @@ export interface Bystander extends Card {
 }
 
 export interface CardInVillainDeck extends Card {
-    // type: 'villain' | 'bystanders' | 'masterStrike' | 'schemeTwist';
+    /* type: 'villain' | 'bystanders' | 'masterStrike' | 'schemeTwist'; */
     /* villain type extends Villain interface */
     /* bystander type extends Bystrander interface */
     team?: string;

@@ -9,3 +9,23 @@ export class hero_shield_officer implements Hero {
     recrutingPoints = 2;
     cost = 3;
 }
+
+// tslint:disable-next-line:class-name
+export class hero_shield_agent implements Hero {
+    type = 'hero';
+    image = '/assets/cards/hero/shield/shield_agent.png';
+    team = 'shield';
+    attack = 0;
+    recrutingPoints = 1;
+    cost = 0;
+}
+
+// tslint:disable-next-line:class-name
+export class hero_shield_trooper implements Hero {
+    type = 'hero';
+    image = '/assets/cards/hero/shield/shield_trooper.png';
+    team = 'shield';
+    attack = 1;
+    recrutingPoints = 0;
+    cost = 0;
+}
