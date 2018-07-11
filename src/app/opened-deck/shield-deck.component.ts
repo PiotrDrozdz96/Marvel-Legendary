@@ -11,10 +11,7 @@ export class ShieldDeckComponent extends OpenedDeck<hero_shield_officer> {
 
   constructor() {
     super();
-    this.deck = new Array(30);
-    for (let i = 0; i < this.deck.length; i++) {
-      this.deck[i] = new hero_shield_officer;
-    }
+    this.create(30, new hero_shield_officer);
   }
 
 }

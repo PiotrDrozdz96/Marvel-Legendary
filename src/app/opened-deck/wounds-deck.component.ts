@@ -11,10 +11,7 @@ export class WoundsDeckComponent extends OpenedDeck<wound> {
 
   constructor() {
     super();
-    this.deck = new Array(30);
-    for (let i = 0; i < this.deck.length; i++) {
-      this.deck[i] = new wound;
-    }
+    this.create(30, new wound);
 
   }
 

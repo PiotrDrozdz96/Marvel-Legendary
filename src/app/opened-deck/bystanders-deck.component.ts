@@ -11,10 +11,7 @@ export class BystandersDeckComponent extends OpenedDeck<bystander> {
 
   constructor() {
     super();
-    this.deck = new Array(30);
-    for (let i = 0; i < this.deck.length; i++) {
-      this.deck[i] = new bystander;
-    }
+    this.create(30, new bystander);
   }
 
 }
