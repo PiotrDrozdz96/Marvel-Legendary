@@ -6,4 +6,12 @@
     float: left;
     top: 11.3vh;
     left: 1.5vh;
+
 } 
+
+img {
+    display: block;
+    margin: auto;
+    height: 35.3vh;
+    width:20.7vh;
+}

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BoardService } from '../board.service';
 
 @Component({
   selector: 'app-ko',
@@ -7,7 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class KOComponent implements OnInit {
 
-  constructor() { }
+  src: string;
+
+  constructor(private boardService: BoardService) {
+    this.boardService.getKOimage().subscribe((image: string) => {
+      this.src = image;
+    });
+   }
 
   ngOnInit() {
   }
