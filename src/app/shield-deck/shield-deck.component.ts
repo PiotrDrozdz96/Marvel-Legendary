@@ -5,7 +5,7 @@ import { Hero } from '../models/card';
 @Component({
   selector: 'app-shield-deck',
   templateUrl: './shield-deck.component.html',
-  styleUrls: ['../board/board.component.css', './shield-deck.component.css']
+  styleUrls: ['../board/board.component.css']
 })
 export class ShieldDeckComponent implements OnInit {
 

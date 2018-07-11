@@ -9,8 +9,9 @@
 .left-board {
     border: 2px solid green;
     height: 100vh;
-    width: 28.83vh;
+    width: 22.08vh;
     float: left;
+    margin-left: 6.65vh;
 }
 
 .center-board {
@@ -34,10 +35,6 @@
     position: relative;
     top: 2.53vh;
     
-}
-
-.additional-block.left {
-    left: 6.75vh;
 }
 
 .deck {
