@@ -5,3 +5,51 @@
     background-size: 140vh 100vh;
     margin: auto;
 }
+
+.left-board {
+    border: 2px solid green;
+    height: 100vh;
+    width: 28.83vh;
+    float: left;
+}
+
+.center-board {
+    border: 2px solid green;
+    height: 100vh;
+    width: 84vh;
+    float: left;
+}
+
+.right-board {
+    border: 2px solid green;
+    height: 100vh;
+    width: 25.75vh;
+    float: left;
+}
+
+.additional-block {
+    border: 2px solid red;
+    width: 21.5vh;
+    height: 18.17vh;
+    position: relative;
+    top: 2.53vh;
+    
+}
+
+.additional-block.left {
+    left: 6.75vh;
+}
+
+.deck {
+    border: 2px solid red;
+    height: 18.32vh;
+    width: 13.19vh;
+    position: relative;
+}
+
+.cards-list {
+    border: 2px solid red;
+    position: relative;
+    width: 81.21vh;
+    height: 22.77vh;
+}
