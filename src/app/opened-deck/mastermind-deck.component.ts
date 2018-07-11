@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-mastermind-deck',
-  templateUrl: './mastermind-deck.component.html',
-  styleUrls: ['../board/board.component.css']
+  templateUrl: './opened-deck.html',
+  styles: ['.deck { top: 17.75vh; }']
 })
 export class MastermindDeckComponent implements OnInit {
 

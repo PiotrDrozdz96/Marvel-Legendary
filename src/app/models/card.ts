@@ -37,15 +37,15 @@ export interface Scheme extends Card {
     twists: Array<() => void>;
 }
 
-export interface Bystanders extends Card {
-    // type: 'bystanders';
+export interface Bystander extends Card {
+    // type: 'bystander';
     points: number;
 }
 
 export interface CardInVillainDeck extends Card {
     // type: 'villain' | 'bystanders' | 'masterStrike' | 'schemeTwist';
     /* villain type extends Villain interface */
-    /* bystanders type extends Bystranders interface */
+    /* bystander type extends Bystrander interface */
     team?: string;
     attack?: number;
     points?: number;
