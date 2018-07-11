@@ -12,6 +12,7 @@ import { WoundsDeckComponent } from './wounds-deck/wounds-deck.component';
 import { CityscapeComponent } from './cityscape/cityscape.component';
 import { HqComponent } from './hq/hq.component';
 import { BystandersDeckComponent } from './bystanders-deck/bystanders-deck.component';
+import { CardComponent } from './card/card.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { BystandersDeckComponent } from './bystanders-deck/bystanders-deck.compo
     WoundsDeckComponent,
     CityscapeComponent,
     HqComponent,
-    BystandersDeckComponent
+    BystandersDeckComponent,
+    CardComponent
   ],
   imports: [
     BrowserModule

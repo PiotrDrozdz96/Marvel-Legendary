@@ -4,16 +4,17 @@ export interface Card {
 }
 
 export interface Hero extends Card {
-    type: 'hero';
+    // type: 'hero';
     team: string;
-    color: string;
+    color?: string;
     attack: number;
     recrutingPoints: number;
+    cost: number;
     func?();
 }
 
 export interface MasterMind extends Card {
-    type: 'masterMind';
+    // type: 'masterMind';
     attack: number;
     points: number;
     alwaysLeads: string;
@@ -21,7 +22,7 @@ export interface MasterMind extends Card {
 }
 
 export interface Villain extends Card {
-    type: 'villain';
+    // type: 'villain';
     team: string;
     attack: number;
     points: number;
@@ -31,18 +32,18 @@ export interface Villain extends Card {
 }
 
 export interface Scheme extends Card {
-    type: 'scheme';
+    // type: 'scheme';
     counterTwist: number;
     twists: Array<() => void>;
 }
 
 export interface Bystanders extends Card {
-    type: 'bystanders';
+    // type: 'bystanders';
     points: number;
 }
 
 export interface CardInVillainDeck extends Card {
-    type: 'villain' | 'bystanders' | 'masterStrike' | 'schemeTwist';
+    // type: 'villain' | 'bystanders' | 'masterStrike' | 'schemeTwist';
     /* villain type extends Villain interface */
     /* bystanders type extends Bystranders interface */
     team?: string;
@@ -55,8 +56,4 @@ export interface CardInVillainDeck extends Card {
     masterStrike?();
     /* schemeTwist type have function twist() */
     twist?();
-}
-
-export interface Wounds extends Card {
-    type: 'wounds';
 }
