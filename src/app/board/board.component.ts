@@ -37,6 +37,7 @@ export class BoardComponent implements OnInit {
         this.selectScheme();
       } else {
         this.board.scheme = scheme;
+        scheme.setup(this.board); /* after build deck*/
       }
     });
   }

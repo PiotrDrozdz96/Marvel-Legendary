@@ -1,3 +1,5 @@
+import { BoardService } from '../board.service';
+
 export interface Card {
     type: string;
     image: string;
@@ -36,6 +38,7 @@ export interface Scheme extends Card {
     // type: 'scheme';
     counterTwist: number;
     twists: Array<() => void>;
+    setup(board: BoardService);
 }
 
 export interface Bystander extends Card {
