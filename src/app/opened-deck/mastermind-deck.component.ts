@@ -1,13 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OpenedDeck } from './opened-deck';
 import { Mastermind } from '../models/card';
-import {
-  mastermind_magneto,
-  magneto_tactic_1,
-  magneto_tactic_2,
-  magneto_tactic_3,
-  magneto_tactic_4
-} from '../cards/mastermind/magneto/magneto';
+import { mastermind_magneto } from '../cards/mastermind/mastermind';
 
 @Component({
   selector: 'app-mastermind-deck',
@@ -18,14 +12,7 @@ export class MastermindDeckComponent extends OpenedDeck<Mastermind> implements O
 
   constructor() {
     super();
-    this.pushDeck([
-      new mastermind_magneto,
-      new magneto_tactic_1,
-      new magneto_tactic_2,
-      new magneto_tactic_3,
-      new magneto_tactic_4
-    ]);
-    this.shuffle();
+    this.pushDeck([ new mastermind_magneto ]);
   }
 
   ngOnInit() { }

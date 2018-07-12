@@ -18,12 +18,8 @@ export interface Mastermind extends Card {
     attack: number;
     points: number;
     alwaysLeads: string;
+    tactics: Array<() => any>;
     masterStrike();
-}
-
-export interface MastermindTactic extends Card {
-    // type: 'mastermindTactic
-    func();
 }
 
 export interface Villain extends Card {
