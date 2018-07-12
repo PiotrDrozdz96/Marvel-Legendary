@@ -4,6 +4,11 @@ h2 {
 }
 
 img {
-    margin: 5px;
+    margin: 4px;
     cursor: pointer;
+}
+
+.scroll {
+    height: 100vh;
+    overflow-y: scroll;
 }
