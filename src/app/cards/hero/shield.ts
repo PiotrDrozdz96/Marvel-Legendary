@@ -1,6 +1,7 @@
 import { Hero } from '../../models/card';
 
-// tslint:disable-next-line:class-name
+// tslint:disable:class-name
+
 export class hero_shield_officer implements Hero {
     type = 'hero';
     image = '/assets/cards/hero/shield/shield_officer.png';
@@ -10,7 +11,6 @@ export class hero_shield_officer implements Hero {
     cost = 3;
 }
 
-// tslint:disable-next-line:class-name
 export class hero_shield_agent implements Hero {
     type = 'hero';
     image = '/assets/cards/hero/shield/shield_agent.png';
@@ -20,7 +20,6 @@ export class hero_shield_agent implements Hero {
     cost = 0;
 }
 
-// tslint:disable-next-line:class-name
 export class hero_shield_trooper implements Hero {
     type = 'hero';
     image = '/assets/cards/hero/shield/shield_trooper.png';

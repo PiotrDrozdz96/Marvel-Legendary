@@ -5,7 +5,7 @@ export interface Card {
 
 export interface Hero extends Card {
     // type: 'hero' || 'wound;
-    team: string;
+    team?: string;
     color?: string;
     attack: number;
     recrutingPoints: number;
