@@ -50,3 +50,26 @@
     width: 81.21vh;
     height: 22.77vh;
 }
+
+.scheme {
+    top: 8.2vh; 
+}
+
+.mastermind {
+    top: 17.75vh;
+}
+
+.shield {
+    top: 23.5vh; 
+}
+
+.wounds {
+    float: left; 
+    top: 26.6vh; 
+    left: 10.3vh;
+}
+
+.bystanders {
+    top: 8vh; 
+    left: 8vh;
+}

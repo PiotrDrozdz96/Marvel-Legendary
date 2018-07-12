@@ -1,4 +1,4 @@
-import { Bystander } from '../../models/card';
+import { Bystander } from '../models/card';
 
 // tslint:disable-next-line:class-name
 export class bystander implements Bystander {

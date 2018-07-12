@@ -2,21 +2,21 @@ import { Card } from './card';
 
 export class Deck<T> {
 
-    deck: Array<T> = [];
+    cards: Array<T> = [];
 
     create(number: number, card: T) {
         const array = new Array(number);
         for (let i = 0; i < array.length; i++) {
             array[i] = Object.assign({}, card);
         }
-        this.deck = this.deck.concat(array);
+        this.cards = this.cards.concat(array);
     }
-    push(cards: Array<T>) { this.deck = this.deck.concat(cards); }
-    draw(): T { return this.deck.shift(); }
+    push(cards: Array<T>) { this.cards = this.cards.concat(cards); }
+    draw(): T { return this.cards.shift(); }
     shuffle() {
-        for (let i = this.deck.length - 1; i > 0; i--) {
+        for (let i = this.cards.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
-            [this.deck[i], this.deck[j]] = [this.deck[j], this.deck[i]];
+            [this.cards[i], this.cards[j]] = [this.cards[j], this.cards[i]];
         }
     }
 }

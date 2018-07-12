@@ -1,4 +1,4 @@
-import { Scheme, Card } from '../../models/card';
+import { Scheme, Card } from '../models/card';
 
 // tslint:disable:class-name
 

@@ -1,4 +1,4 @@
-import { Mastermind, Card } from '../../models/card';
+import { Mastermind, Card } from '../models/card';
 
 // tslint:disable:class-name
 

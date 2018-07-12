@@ -1,4 +1,4 @@
-import { Hero } from '../../models/card';
+import { Hero } from '../models/card';
 
 // tslint:disable-next-line:class-name
 export class wound implements Hero {

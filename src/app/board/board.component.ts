@@ -10,7 +10,7 @@ import { BoardService } from '../board.service';
 })
 export class BoardComponent implements OnInit {
 
-  constructor() { }
+  constructor(public board: BoardService) { }
 
   ngOnInit() {
   }
