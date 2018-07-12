@@ -28,9 +28,9 @@ export class scheme_negative_zone_prison_breakout implements Scheme {
     twists = [];
 }
 
-export class scheme_portals_dark_dimnesion implements Scheme {
+export class scheme_portals_dark_dimension implements Scheme {
     type = 'scheme';
-    image = '/assets/cards/scheme/scheme_portals_dark_dimnesion.png';
+    image = '/assets/cards/scheme/scheme_portals_dark_dimension.png';
     counterTwist = 0;
     twists = [];
 }
@@ -42,9 +42,9 @@ export class scheme_replace_leaders_killbots implements Scheme {
     twists = [];
 }
 
-export class scheme_secret_invasions_shapeshifters implements Scheme {
+export class scheme_secret_invasion_shapeshifters implements Scheme {
     type = 'scheme';
-    image = '/assets/cards/scheme/scheme_secret_invasions_shapeshifters.png';
+    image = '/assets/cards/scheme/scheme_secret_invasion_shapeshifters.png';
     counterTwist = 0;
     twists = [];
 }

@@ -42,9 +42,9 @@ export class BoardService {
     this.bystandersDeck.create(30, new bystander);
     this.woundsDeck.create(30, new wound);
     /* 3. select mastermind */
-    this.mastermind = new mastermind_magneto;
+      /* inside board.component, selectMastermind.dialog */
     /* 4. select scheme */
-    this.scheme = new scheme_legacy_virus;
+      /* inside board.component, selectScheme.dialog */
     /* 5. villain deck*/
       /*  number of schemeTwist described in scheme */
       /* a. 3 villain group 8*3=24 cards*/

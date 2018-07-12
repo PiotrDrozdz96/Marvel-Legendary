@@ -1,0 +1,9 @@
+h2 {
+    color: goldenrod;
+    text-align: center;
+}
+
+img {
+    margin: 5px;
+    cursor: pointer;
+}
