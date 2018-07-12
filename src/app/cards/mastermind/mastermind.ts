@@ -1,6 +1,12 @@
-import { Mastermind } from '../../models/card';
+import { Mastermind, Card } from '../../models/card';
 
-// tslint:disable-next-line:class-name
+// tslint:disable:class-name
+
+export class master_strike implements Card {
+    type = 'masterStrike';
+    image = '/assets/cards/mastermind/master_strike.png';
+}
+
 export class mastermind_doctor_doom implements Mastermind {
     type = 'mastermind';
     image = '/assets/cards/mastermind/doctor_doom/mastermind_doctor_doom.png';
@@ -16,7 +22,6 @@ export class mastermind_doctor_doom implements Mastermind {
     masterStrike() { }
 }
 
-// tslint:disable-next-line:class-name
 export class mastermind_loki implements Mastermind {
     type = 'mastermind';
     image = '/assets/cards/mastermind/loki/mastermind_loki.png';
@@ -32,7 +37,6 @@ export class mastermind_loki implements Mastermind {
     masterStrike() { }
 }
 
-// tslint:disable-next-line:class-name
 export class mastermind_magneto implements Mastermind {
     type = 'mastermind';
     image = '/assets/cards/mastermind/magneto/mastermind_magneto.png';
@@ -48,7 +52,6 @@ export class mastermind_magneto implements Mastermind {
     masterStrike() { }
 }
 
-// tslint:disable-next-line:class-name
 export class mastermind_red_skull implements Mastermind {
     type = 'mastermind';
     image = '/assets/cards/mastermind/red_skull/mastermind_red_skull.png';
