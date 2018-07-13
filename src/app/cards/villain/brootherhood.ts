@@ -2,33 +2,33 @@ import { Villain } from '../../models/card';
 
 // tslint:disable:class-name
 
-export class villain_broterhood_blob implements Villain {
+export class villain_brotherhood_blob implements Villain {
     type = 'villain';
-    image = '/assets/cards/villain/brotherhood/villain_broterhood_blob.png';
+    image = '/assets/cards/villain/brotherhood/villain_brotherhood_blob.png';
     team = 'brotherhood';
     attack = 4;
     points = 2;
 }
 
-export class villain_broterhood_juggernaut implements Villain {
+export class villain_brotherhood_juggernaut implements Villain {
     type = 'villain';
-    image = '/assets/cards/villain/brotherhood/villain_broterhood_juggernaut.png';
+    image = '/assets/cards/villain/brotherhood/villain_brotherhood_juggernaut.png';
     team = 'brotherhood';
     attack = 6;
     points = 4;
 }
 
-export class villain_broterhood_mystique implements Villain {
+export class villain_brotherhood_mystique implements Villain {
     type = 'villain';
-    image = '/assets/cards/villain/brotherhood/villain_broterhood_mistique.png';
+    image = '/assets/cards/villain/brotherhood/villain_brotherhood_mistique.png';
     team = 'brotherhood';
     attack = 5;
     points = 3;
 }
 
-export class villain_broterhood_sabretooth implements Villain {
+export class villain_brotherhood_sabretooth implements Villain {
     type = 'villain';
-    image = '/assets/cards/villain/brotherhood/villain_broterhood_sabretooth.png';
+    image = '/assets/cards/villain/brotherhood/villain_brotherhood_sabretooth.png';
     team = 'brotherhood';
     attack = 5;
     points = 3;

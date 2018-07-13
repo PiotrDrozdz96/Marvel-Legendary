@@ -13,6 +13,8 @@ import { HqComponent } from './hq/hq.component';
 import { CardComponent } from './card/card.component';
 import { SelectMastermindDialog } from './select-dialog/select-mastermind.dialog';
 import { SelectSchemeDialog } from './select-dialog/select-scheme.dialog';
+import { SelectVillainsDialog } from './select-dialog/select-villains.dialog';
+import { SelectHenchmenDialog } from './select-dialog/select-henchmen.dialog';
 
 @NgModule({
   declarations: [
@@ -24,11 +26,15 @@ import { SelectSchemeDialog } from './select-dialog/select-scheme.dialog';
     HqComponent,
     CardComponent,
     SelectMastermindDialog,
-    SelectSchemeDialog
+    SelectSchemeDialog,
+    SelectVillainsDialog,
+    SelectHenchmenDialog
   ],
   entryComponents: [
     SelectMastermindDialog,
-    SelectSchemeDialog
+    SelectSchemeDialog,
+    SelectVillainsDialog,
+    SelectHenchmenDialog
   ],
   imports: [
     BrowserModule,

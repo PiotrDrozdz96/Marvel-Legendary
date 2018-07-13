@@ -1,21 +1,48 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { BoardService } from '../board.service';
+import { VillainsService } from '../villains.service';
 import { SelectMastermindDialog } from '../select-dialog/select-mastermind.dialog';
 import { SelectSchemeDialog } from '../select-dialog/select-scheme.dialog';
-import { Mastermind, Scheme } from '../models/card';
+import { SelectVillainsDialog } from '../select-dialog/select-villains.dialog';
+import { SelectHenchmenDialog } from '../select-dialog/select-henchmen.dialog';
+import { Mastermind, Scheme, Villain } from '../models/card';
+import { bystander } from '../cards/bystanders';
+import { master_strike } from '../cards/mastermind';
 
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.css'],
-  providers: [BoardService],
+  providers: [BoardService, VillainsService],
   encapsulation: ViewEncapsulation.None
 })
 export class BoardComponent implements OnInit {
 
+  private heroGroup: number;
+  private villainGroup: number;
+  private henchmanCards: number;
+  private bystanders: number;
+  private masterStrike: number;
+
+
   constructor(public board: BoardService, private dialog: MatDialog) {
+    this.numberCards('normal');
     this.selectMastermind();
+  }
+
+  private numberCards(mode: string) {
+    const modes = {
+      onePlayer: [3, 1, 3, 1, 1],
+      normal: [5, 2, 10, 2, 5],
+      onBoard: [5, 3, 10, 10, 10]
+    };
+    this.heroGroup = modes[mode][0];
+    this.villainGroup = modes[mode][1];
+    this.henchmanCards = modes[mode][2];
+    this.bystanders = modes[mode][3];
+    this.masterStrike = modes[mode][4];
+
   }
 
   selectMastermind() {
@@ -38,6 +65,47 @@ export class BoardComponent implements OnInit {
       } else {
         this.board.scheme = scheme;
         scheme.setup(this.board); /* after build deck*/
+        this.selectVillains();
+      }
+    });
+  }
+
+  selectVillains() {
+    const dialogRef = this.dialog.open(SelectVillainsDialog);
+    dialogRef.afterClosed().subscribe((villains: Array<Villain>) => {
+      if (villains === undefined) {
+        this.selectVillains();
+      } else {
+        villains.forEach(villain => { this.board.villianDeck.create(2, villain); });
+        this.villainGroup--;
+        if (this.villainGroup > 0) {
+          this.selectVillains();
+        } else {
+          this.selectHenchman();
+        }
+      }
+    });
+  }
+
+  selectHenchman() {
+    const dialogRef = this.dialog.open(SelectHenchmenDialog);
+    dialogRef.afterClosed().subscribe((villain: Villain) => {
+      if (villain === undefined) {
+        this.selectHenchman();
+      } else {
+        // add henchman
+        this.board.villianDeck.create(this.henchmanCards, villain);
+        // add bystanders
+        const bystanders: Array<bystander> = [];
+        for (let i = 0; i < this.bystanders; i++) {
+          bystanders.push(this.board.bystandersDeck.draw());
+        }
+        this.board.villianDeck.push(bystanders);
+        // add masterStrike
+        this.board.villianDeck.create(this.masterStrike, new master_strike);
+
+        this.board.villianDeck.shuffle();
+        /* select hero */
       }
     });
   }
