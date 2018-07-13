@@ -1,1 +1,17 @@
-<div class="cards-list"></div>
+<div class="cards-list">
+    <div class="field">
+        <app-card *ngIf="fields[4].card!=null" [src]="fields[4].card.image"></app-card>
+    </div>
+    <div class="field">
+        <app-card *ngIf="fields[3].card!=null" [src]="fields[3].card.image"></app-card>
+    </div>
+    <div class="field">
+        <app-card *ngIf="fields[2].card!=null" [src]="fields[2].card.image"></app-card>
+    </div>
+    <div class="field">
+        <app-card *ngIf="fields[1].card!=null" [src]="fields[1].card.image"></app-card>
+    </div>
+    <div class="field">
+        <app-card *ngIf="fields[0].card!=null" [src]="fields[0].card.image"></app-card>
+    </div>
+</div>

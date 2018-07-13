@@ -127,7 +127,7 @@ export class BoardComponent implements OnInit {
           this.selectHero();
         } else {
           this.board.heroDeck.shuffle();
-          this.board.startObs.next(true);
+          this.board.drawObs.next(true);
         }
       }
     });

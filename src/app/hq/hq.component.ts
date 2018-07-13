@@ -12,11 +12,12 @@ export class HqComponent implements OnInit {
   cards: Array<Hero> = [];
 
   constructor(public board: BoardService) {
-    this.board.start().subscribe((start: boolean) => {
+    const observator = this.board.draw().subscribe((start: boolean) => {
       if (start) {
         for (let i = 0; i < 5; i++) {
           this.cards.push(this.board.heroDeck.draw());
         }
+        observator.unsubscribe();
       }
     });
   }
