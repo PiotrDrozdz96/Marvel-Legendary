@@ -49,6 +49,16 @@
     position: relative;
     width: 81.21vh;
     height: 22.77vh;
+    text-align: left;
+    color: white;
+}
+
+.field {
+    width: 16vh;
+    height: 14.11vh;
+    margin: 2.5vh 0.1vh 0 ;
+    float: left;
+    text-align: center;
 }
 
 .scheme {
@@ -65,7 +75,7 @@
 
 .wounds {
     float: left; 
-    top: 26.6vh; 
+    top: -20vh; 
     left: 10.3vh;
 }
 

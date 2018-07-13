@@ -16,6 +16,7 @@ import { bystander } from './cards/bystanders';
 export class BoardService {
 
   private koImage = new BehaviorSubject<string>('');
+  public startObs = new BehaviorSubject<boolean>(false);
 
   private playerDeck = new Deck<Hero>();
   private playerHand = new Deck<Hero>();
@@ -57,4 +58,5 @@ export class BoardService {
 
   getKOimage(): Observable<string> { return this.koImage.asObservable(); }
   setKOimage(image: string): void { this.koImage.next(image); }
+  start(): Observable<boolean> {return this.startObs.asObservable(); }
 }

@@ -13,13 +13,13 @@
         </div>
     </div>
     <div class="center-board">
+        <app-cityscape></app-cityscape>
+        <app-hq></app-hq>
         <app-escaped-villains></app-escaped-villains>
         <app-ko></app-ko>
         <div class="deck wounds">
             <app-card *ngIf="board.woundsDeck.cards" [src]="board.woundsDeck.cards[0].image"></app-card>
         </div>
-        <app-cityscape></app-cityscape>
-        <app-hq></app-hq>
     </div>
     <div class="right-board">
         <div class="additional-block"></div>

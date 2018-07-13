@@ -1,1 +1,5 @@
-<div class="cards-list"></div>
+<div class="cards-list">
+    <div class="field" *ngFor="let card of cards">
+        <app-card  [src]="card.image"></app-card>
+    </div>
+</div>
