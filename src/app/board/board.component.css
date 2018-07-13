@@ -76,10 +76,17 @@
 .wounds {
     float: left; 
     top: -20vh; 
-    left: 10.3vh;
+    left: 15.3vh;
 }
 
 .bystanders {
     top: 8vh; 
     left: 8vh;
+}
+
+.escapedVillains {
+    top: -17vh;
+    left: -0.8vh;
+    float: left;
+    transform: rotate(90deg);
 }

@@ -40,14 +40,27 @@ export class CityscapeComponent implements OnInit {
     this.board.draw().subscribe((draw: boolean) => {
       if (draw) {
         const new_card = this.board.villianDeck.draw();
-        let freePlaceIndex = this.fields.findIndex(field => field.card === null);
-        console.log(freePlaceIndex);
-        if (freePlaceIndex !== 0) {
-          for (freePlaceIndex; freePlaceIndex > 0; freePlaceIndex--) {
-            this.fields[freePlaceIndex].card = this.fields[freePlaceIndex - 1].card;
+        console.log(new_card); /* dialog only view new_card*/
+        if (new_card.type === 'villain') {
+          let freePlaceIndex = this.fields.findIndex(field => field.card === null);
+          if (freePlaceIndex !== 0) {
+            if (freePlaceIndex === -1) {
+              board.escapedVillain.push([this.fields[4].card]);
+              freePlaceIndex = 4;
+            }
+            for (freePlaceIndex; freePlaceIndex > 0; freePlaceIndex--) {
+              this.fields[freePlaceIndex].card = this.fields[freePlaceIndex - 1].card;
+            }
           }
+          this.fields[0].card = new_card;
+        } else if (new_card.type === 'bystander') {
+          /* add bystander */
+        } else if (new_card.type === 'schemeTwist') {
+          /* function twist() in scheme */
+        } else if (new_card.type === 'masterStrike') {
+          /* function masterStrike in mastermind*/
         }
-        this.fields[0].card = new_card;
+
         this.board.drawObs.next(false);
       }
     });

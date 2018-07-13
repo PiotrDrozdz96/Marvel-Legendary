@@ -30,7 +30,7 @@ export class BoardService {
   villianDeck = new Deck<CardInVillainDeck>();
   heroDeck = new Deck<Hero>();
 
-  escapedVillian = new Deck<Villain>();
+  escapedVillain = new Deck<Villain>();
 
   constructor() {
     /* SET UP */

@@ -14,7 +14,12 @@
     <div class="center-board">
         <app-cityscape></app-cityscape>
         <app-hq></app-hq>
-        <app-escaped-villains></app-escaped-villains>
+        <!-- <app-escaped-villains></app-escaped-villains> -->
+        <div class="deck escapedVillains">
+            <app-card *ngIf="board.escapedVillain.cards[board.escapedVillain.cards.length - 1]" 
+                      [src]="board.escapedVillain.cards[board.escapedVillain.cards.length - 1].image">
+            </app-card>
+        </div>
         <app-ko></app-ko>
         <div class="deck wounds">
             <app-card *ngIf="board.woundsDeck.cards" [src]="board.woundsDeck.cards[0].image"></app-card>

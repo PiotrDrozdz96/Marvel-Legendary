@@ -5,7 +5,7 @@ import {
     villain_brotherhood_blob,
     villain_brotherhood_juggernaut,
     villain_brotherhood_mystique,
-    villain_brotherhood_sabretooth
+    villain_brotherhood_sabertooth
 } from './cards/villain/brootherhood';
 import {
     villain_asgard_destroyer,
@@ -54,7 +54,7 @@ export class VillainsService {
             new villain_brotherhood_blob,
             new villain_brotherhood_juggernaut,
             new villain_brotherhood_mystique,
-            new villain_brotherhood_sabretooth
+            new villain_brotherhood_sabertooth
         ],
         [
             new villain_asgard_destroyer,

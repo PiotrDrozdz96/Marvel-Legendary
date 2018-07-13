@@ -20,15 +20,15 @@ export class villain_brotherhood_juggernaut implements Villain {
 
 export class villain_brotherhood_mystique implements Villain {
     type = 'villain';
-    image = '/assets/cards/villain/brotherhood/villain_brotherhood_mistique.png';
+    image = '/assets/cards/villain/brotherhood/villain_brotherhood_mystique.png';
     team = 'brotherhood';
     attack = 5;
     points = 3;
 }
 
-export class villain_brotherhood_sabretooth implements Villain {
+export class villain_brotherhood_sabertooth implements Villain {
     type = 'villain';
-    image = '/assets/cards/villain/brotherhood/villain_brotherhood_sabretooth.png';
+    image = '/assets/cards/villain/brotherhood/villain_brotherhood_sabertooth.png';
     team = 'brotherhood';
     attack = 5;
     points = 3;
