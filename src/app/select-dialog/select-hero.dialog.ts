@@ -16,6 +16,7 @@ export class SelectHeroDialog {
     header = 'Select Hero Group';
     randomImage = '/assets/back_of_card.png';
     cards: Array<Array<Hero>>;
+    preview = '';
 
     constructor(public dialogRef: MatDialogRef<SelectHeroDialog>, public heroService: HeroService) {
         heroService.getCards().subscribe(cards => {
@@ -25,5 +26,7 @@ export class SelectHeroDialog {
 
     select(index: number) { this.dialogRef.close(this.heroService.splice(index)); }
     random() {this.dialogRef.close(this.heroService.splice(Math.floor(Math.random() * this.cards.length))); }
+    mouseEnter(src) { this.preview = src; }
+    mouseLeave() { this.preview = ''; }
 
 }

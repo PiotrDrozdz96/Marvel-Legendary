@@ -1,5 +1,4 @@
-<div class="scroll">
-    <h2>{{header}}</h2>
-    <img [src]="randomImage" (click)="random()">
-    <img *ngFor="let card of cards" [src]="card.image" (click)="select(card)">
-</div>
+<img class="preview" *ngIf="preview!=''" [src]="preview">
+<h2>{{header}}</h2>
+<img [src]="randomImage" (click)="random()">
+<img *ngFor="let card of cards" [src]="card.image" (mouseenter)="mouseEnter(card.image)" (mouseleave)="mouseLeave()" (click)="select(card)">

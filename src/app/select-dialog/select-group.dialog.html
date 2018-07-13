@@ -1,5 +1,4 @@
-<div class="scroll">
-    <h2>{{header}}</h2>
-    <img [src]="randomImage" (click)="random()">
-    <img *ngFor="let group of cards let index = index" [src]="group[0].image" (click)="select(index)">
-</div>
+<img class="preview" *ngIf="preview!=''" [src]="preview">
+<h2>{{header}}</h2>
+<img [src]="randomImage" (click)="random()">
+<img *ngFor="let group of cards let index = index" [src]="group[0].image" (mouseenter)="mouseEnter(group[0].image)" (mouseleave)="mouseLeave()" (click)="select(index)">

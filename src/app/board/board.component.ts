@@ -11,6 +11,7 @@ import { Mastermind, Scheme, Villain, Hero } from '../models/card';
 import { bystander } from '../cards/bystanders';
 import { master_strike } from '../cards/mastermind';
 import { SelectHeroDialog } from '../select-dialog/select-hero.dialog';
+import { PlayCardsDialog } from '../play-cards-dialog/play-cards.dialog';
 
 @Component({
   selector: 'app-board',
@@ -131,6 +132,10 @@ export class BoardComponent implements OnInit {
         }
       }
     });
+  }
+
+  playerHand() {
+    this.dialog.open(PlayCardsDialog);
   }
 
   ngOnInit() {

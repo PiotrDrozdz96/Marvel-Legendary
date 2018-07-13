@@ -5,10 +5,15 @@ h2 {
 
 img {
     margin: 4px;
+    height: 18.32vh;
+    width: 13.19vh;
     cursor: pointer;
 }
 
-.scroll {
-    height: 100vh;
-    overflow-y: scroll;
+.preview {
+    position: absolute;
+    height: 35.3vh;
+    width:20.7vh;
+    top: -13.5vh;
+    left: 65vh;
 }

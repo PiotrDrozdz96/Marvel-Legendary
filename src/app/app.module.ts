@@ -6,7 +6,6 @@ import { MatDialogModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { BoardComponent } from './board/board.component';
-import { EscapedVillainsComponent } from './escaped-villains/escaped-villains.component';
 import { KOComponent } from './ko/ko.component';
 import { CityscapeComponent } from './cityscape/cityscape.component';
 import { HqComponent } from './hq/hq.component';
@@ -16,12 +15,12 @@ import { SelectSchemeDialog } from './select-dialog/select-scheme.dialog';
 import { SelectVillainsDialog } from './select-dialog/select-villains.dialog';
 import { SelectHenchmenDialog } from './select-dialog/select-henchmen.dialog';
 import { SelectHeroDialog } from './select-dialog/select-hero.dialog';
+import { PlayCardsDialog } from './play-cards-dialog/play-cards.dialog';
 
 @NgModule({
   declarations: [
     AppComponent,
     BoardComponent,
-    EscapedVillainsComponent,
     KOComponent,
     CityscapeComponent,
     HqComponent,
@@ -30,14 +29,16 @@ import { SelectHeroDialog } from './select-dialog/select-hero.dialog';
     SelectSchemeDialog,
     SelectVillainsDialog,
     SelectHenchmenDialog,
-    SelectHeroDialog
+    SelectHeroDialog,
+    PlayCardsDialog
   ],
   entryComponents: [
     SelectMastermindDialog,
     SelectSchemeDialog,
     SelectVillainsDialog,
     SelectHenchmenDialog,
-    SelectHeroDialog
+    SelectHeroDialog,
+    PlayCardsDialog
   ],
   imports: [
     BrowserModule,

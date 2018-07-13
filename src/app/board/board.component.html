@@ -14,7 +14,6 @@
     <div class="center-board">
         <app-cityscape></app-cityscape>
         <app-hq></app-hq>
-        <!-- <app-escaped-villains></app-escaped-villains> -->
         <div class="deck escapedVillains">
             <app-card *ngIf="board.escapedVillain.cards[board.escapedVillain.cards.length - 1]" 
                       [src]="board.escapedVillain.cards[board.escapedVillain.cards.length - 1].image">
@@ -26,7 +25,14 @@
         </div>
     </div>
     <div class="right-board">
-        <div class="additional-block"></div>
+        <div class="additional-block">
+            <ul class="playerStats">
+                <li>Attack: {{board.playerAttack}}</li>
+                <li>Recruting Points: {{board.playerRecrutingPoints}}</li>
+            </ul>
+            <img src="/assets/player_hand.jpg" (click)="playerHand()">
+            <img src="/assets/next_turn.jpg">
+        </div>
         <div class="deck bystanders">
             <app-card *ngIf="board.bystandersDeck.cards" [src]="board.bystandersDeck.cards[0].image"></app-card>
         </div>

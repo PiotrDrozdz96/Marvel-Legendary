@@ -16,6 +16,7 @@ export class SelectVillainsDialog {
     header = 'Select Villains Group';
     randomImage = '/assets/back_of_card.png';
     cards: Array<Array<Villain>>;
+    preview = '';
 
     constructor(public dialogRef: MatDialogRef<SelectVillainsDialog>, public villainsService: VillainsService) {
         villainsService.getCards().subscribe(cards => {
@@ -25,5 +26,7 @@ export class SelectVillainsDialog {
 
     select(index: number) { this.dialogRef.close(this.villainsService.splice(index)); }
     random() {this.dialogRef.close(this.villainsService.splice(Math.floor(Math.random() * this.cards.length))); }
+    mouseEnter(src) { this.preview = src; }
+    mouseLeave() { this.preview = ''; }
 
 }

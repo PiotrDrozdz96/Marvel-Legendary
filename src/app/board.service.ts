@@ -19,8 +19,11 @@ export class BoardService {
   public drawObs = new BehaviorSubject<boolean>(false);
 
   private playerDeck = new Deck<Hero>();
-  private playerHand = new Deck<Hero>();
+  playerHand = new Deck<Hero>();
+  playerCards = new Deck<Hero>();
   private discardPile = new Deck<Hero>();
+  playerAttack = 0;
+  playerRecrutingPoints = 0;
 
   shieldDeck = new Deck<hero_shield_officer>();
   woundsDeck = new Deck<Hero>();
@@ -54,6 +57,7 @@ export class BoardService {
       /* c. 10 bystanders */
       /* d. 5 masterStrike */
       /* shuffle deck */
+      this.playerHand.create(6, new hero_shield_agent);
   }
 
   getKOimage(): Observable<string> { return this.koImage.asObservable(); }

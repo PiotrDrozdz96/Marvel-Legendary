@@ -7,7 +7,7 @@
 }
 
 .left-board {
-    border: 2px solid green;
+    border: 2px solid transparent;
     height: 100vh;
     width: 22.08vh;
     float: left;
@@ -15,37 +15,40 @@
 }
 
 .center-board {
-    border: 2px solid green;
+    border: 2px solid transparent;
     height: 100vh;
     width: 84vh;
     float: left;
 }
 
 .right-board {
-    border: 2px solid green;
+    border: 2px solid transparent;
     height: 100vh;
     width: 25.75vh;
     float: left;
 }
 
 .additional-block {
-    border: 2px solid red;
+    border: 2px solid transparent;
+    background-color: #207aad;
     width: 21.5vh;
     height: 18.17vh;
     position: relative;
-    top: 2.53vh;
+    top: 2.2vh;
+    text-align: center; 
+    opacity: 0.9;
     
 }
 
 .deck {
-    border: 2px solid red;
+    border: 2px solid transparent;
     height: 18.32vh;
     width: 13.19vh;
     position: relative;
 }
 
 .cards-list {
-    border: 2px solid red;
+    border: 2px solid transparent;
     position: relative;
     width: 81.21vh;
     height: 22.77vh;
@@ -89,4 +92,14 @@
     left: -0.8vh;
     float: left;
     transform: rotate(90deg);
+}
+
+.additional-block img {
+    width: 8vh;
+    height: 8vh;
+    margin-right: 0.5vh;
+}
+
+.additional-block li{
+    list-style: none;
 }

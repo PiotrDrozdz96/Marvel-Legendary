@@ -1,0 +1,22 @@
+.cards-list {
+    width: 76.4vh;
+    height: 20.5vh;
+    text-align: left;
+    color: white;
+    border-bottom: 2px solid #207aad;
+    overflow-y: scroll;
+}
+
+img{
+    height: 18.32vh;
+    width: 13.19vh;
+    margin: 4px;
+}
+
+.preview {
+    position: absolute;
+    height: 35.3vh;
+    width:20.7vh;
+    top: -13.5vh;
+    left: 65vh;
+}
