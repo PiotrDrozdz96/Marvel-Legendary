@@ -27,6 +27,7 @@ export class BoardService {
   mastermind: Mastermind;
   scheme: Scheme;
   villianDeck = new Deck<CardInVillainDeck>();
+  heroDeck = new Deck<Hero>();
 
   escapedVillian = new Deck<Villain>();
 

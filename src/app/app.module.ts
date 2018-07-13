@@ -15,6 +15,7 @@ import { SelectMastermindDialog } from './select-dialog/select-mastermind.dialog
 import { SelectSchemeDialog } from './select-dialog/select-scheme.dialog';
 import { SelectVillainsDialog } from './select-dialog/select-villains.dialog';
 import { SelectHenchmenDialog } from './select-dialog/select-henchmen.dialog';
+import { SelectHeroDialog } from './select-dialog/select-hero.dialog';
 
 @NgModule({
   declarations: [
@@ -28,13 +29,15 @@ import { SelectHenchmenDialog } from './select-dialog/select-henchmen.dialog';
     SelectMastermindDialog,
     SelectSchemeDialog,
     SelectVillainsDialog,
-    SelectHenchmenDialog
+    SelectHenchmenDialog,
+    SelectHeroDialog
   ],
   entryComponents: [
     SelectMastermindDialog,
     SelectSchemeDialog,
     SelectVillainsDialog,
-    SelectHenchmenDialog
+    SelectHenchmenDialog,
+    SelectHeroDialog
   ],
   imports: [
     BrowserModule,

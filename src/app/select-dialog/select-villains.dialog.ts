@@ -6,7 +6,7 @@ import { VillainsService } from '../villains.service';
 
 
 @Component({
-    selector: 'app-select-mastermind',
+    selector: 'app-select-villain',
     templateUrl: './select-group.dialog.html',
     styleUrls: ['./select.dialog.css']
 })

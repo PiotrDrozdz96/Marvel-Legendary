@@ -2,19 +2,21 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { BoardService } from '../board.service';
 import { VillainsService } from '../villains.service';
+import { HeroService } from '../hero.service';
 import { SelectMastermindDialog } from '../select-dialog/select-mastermind.dialog';
 import { SelectSchemeDialog } from '../select-dialog/select-scheme.dialog';
 import { SelectVillainsDialog } from '../select-dialog/select-villains.dialog';
 import { SelectHenchmenDialog } from '../select-dialog/select-henchmen.dialog';
-import { Mastermind, Scheme, Villain } from '../models/card';
+import { Mastermind, Scheme, Villain, Hero } from '../models/card';
 import { bystander } from '../cards/bystanders';
 import { master_strike } from '../cards/mastermind';
+import { SelectHeroDialog } from '../select-dialog/select-hero.dialog';
 
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.css'],
-  providers: [BoardService, VillainsService],
+  providers: [BoardService, VillainsService, HeroService],
   encapsulation: ViewEncapsulation.None
 })
 export class BoardComponent implements OnInit {
@@ -27,7 +29,7 @@ export class BoardComponent implements OnInit {
 
 
   constructor(public board: BoardService, private dialog: MatDialog) {
-    this.numberCards('normal');
+    this.numberCards('onePlayer');
     this.selectMastermind();
   }
 
@@ -105,7 +107,28 @@ export class BoardComponent implements OnInit {
         this.board.villianDeck.create(this.masterStrike, new master_strike);
 
         this.board.villianDeck.shuffle();
-        /* select hero */
+        this.selectHero();
+      }
+    });
+  }
+
+  selectHero() {
+    const dialogRef = this.dialog.open(SelectHeroDialog);
+    dialogRef.afterClosed().subscribe((heroes: Array<Hero>) => {
+      if (heroes === undefined) {
+        this.selectHero();
+      } else {
+        this.board.heroDeck.create(1, heroes[0]);
+        this.board.heroDeck.create(3, heroes[1]);
+        this.board.heroDeck.create(5, heroes[2]);
+        this.board.heroDeck.create(5, heroes[3]);
+        this.heroGroup--;
+        if (this.heroGroup > 0) {
+          this.selectHero();
+        } else {
+          this.board.heroDeck.shuffle();
+          console.log(this.board.heroDeck.cards);
+        }
       }
     });
   }
