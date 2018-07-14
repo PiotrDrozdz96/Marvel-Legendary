@@ -1,4 +1,4 @@
-<img class="preview" *ngIf="preview!=''" [src]="preview">
+<div class="preview"><img *ngIf="preview!=''" [src]="preview"></div>
 <div class="dialog">
     <div class="cards-list">
         <img *ngFor="let card of board.playerCards.cards" [src]="card.image" (mouseenter)="mouseEnter(card.image)" (mouseleave)="mouseLeave()">

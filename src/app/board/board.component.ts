@@ -38,13 +38,15 @@ export class BoardComponent implements OnInit {
     const modes = {
       onePlayer: [3, 1, 3, 1, 1],
       normal: [5, 2, 10, 2, 5],
-      onBoard: [5, 3, 10, 10, 10]
+      onBoard: [5, 3, 10, 10, 5]
     };
-    this.heroGroup = modes[mode][0];
-    this.villainGroup = modes[mode][1];
-    this.henchmanCards = modes[mode][2];
-    this.bystanders = modes[mode][3];
-    this.masterStrike = modes[mode][4];
+    [
+      this.heroGroup,
+      this.villainGroup,
+      this.henchmanCards,
+      this.bystanders,
+      this.masterStrike
+    ] = [...modes[mode]];
 
   }
 
