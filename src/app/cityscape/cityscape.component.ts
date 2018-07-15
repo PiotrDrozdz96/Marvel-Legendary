@@ -69,4 +69,12 @@ export class CityscapeComponent implements OnInit {
   ngOnInit() {
   }
 
+  attack(index: number) {
+    if (this.board.playerAttack >= this.fields[index].attack + this.fields[index].card.attack) {
+      this.board.playerAttack -= this.fields[index].attack + this.fields[index].card.attack;
+      this.board.victoryPile.push([this.fields[index].card]);
+      this.fields[index].card = null;
+    }
+  }
+
 }

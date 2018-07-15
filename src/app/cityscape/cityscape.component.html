@@ -1,17 +1,5 @@
 <div class="cards-list">
-    <div class="field">
-        <app-card *ngIf="fields[4].card!=null" [src]="fields[4].card.image"></app-card>
-    </div>
-    <div class="field">
-        <app-card *ngIf="fields[3].card!=null" [src]="fields[3].card.image"></app-card>
-    </div>
-    <div class="field">
-        <app-card *ngIf="fields[2].card!=null" [src]="fields[2].card.image"></app-card>
-    </div>
-    <div class="field">
-        <app-card *ngIf="fields[1].card!=null" [src]="fields[1].card.image"></app-card>
-    </div>
-    <div class="field">
-        <app-card *ngIf="fields[0].card!=null" [src]="fields[0].card.image"></app-card>
+    <div class="field" *ngFor="let field of fields.slice().reverse(); let index = index">
+        <app-card *ngIf="field.card!=null" [src]="field.card.image" (click)="attack(fields.length-index-1)"></app-card>
     </div>
 </div>
