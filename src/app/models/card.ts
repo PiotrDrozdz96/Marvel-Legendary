@@ -5,6 +5,11 @@ export interface Card {
     image: string;
 }
 
+export interface Tactic {
+    image: string;
+    func();
+}
+
 export interface Hero extends Card {
     // type: 'hero' || 'wound;
     team?: string;
@@ -20,7 +25,7 @@ export interface Mastermind extends Card {
     attack: number;
     points: number;
     alwaysLeads: string;
-    tactics: Array<() => any>;
+    tactics: Array<Tactic>;
     masterStrike();
 }
 

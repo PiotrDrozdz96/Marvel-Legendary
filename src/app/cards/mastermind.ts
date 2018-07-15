@@ -14,10 +14,22 @@ export class mastermind_doctor_doom implements Mastermind {
     points = 5;
     alwaysLeads = 'doombotLegion';
     tactics = [
-        function() {},
-        function() {},
-        function() {},
-        function() {}
+        {
+            image: 'assets/cards/mastermind/doctor_doom/doctor_doom_1.png',
+            func: () => {}
+        },
+        {
+            image: 'assets/cards/mastermind/doctor_doom/doctor_doom_2.png',
+            func: () => {}
+        },
+        {
+            image: 'assets/cards/mastermind/doctor_doom/doctor_doom_3.png',
+            func: () => {}
+        },
+        {
+            image: 'assets/cards/mastermind/doctor_doom/doctor_doom_4.png',
+            func: () => {}
+        }
     ];
     masterStrike() { }
 }
@@ -29,10 +41,22 @@ export class mastermind_loki implements Mastermind {
     points = 5;
     alwaysLeads = 'enemiesOfAsgard';
     tactics = [
-        function() {},
-        function() {},
-        function() {},
-        function() {}
+        {
+            image: 'assets/cards/mastermind/loki/loki_1.png',
+            func: () => {}
+        },
+        {
+            image: 'assets/cards/mastermind/loki/loki_2.png',
+            func: () => {}
+        },
+        {
+            image: 'assets/cards/mastermind/loki/loki_3.png',
+            func: () => {}
+        },
+        {
+            image: 'assets/cards/mastermind/loki/loki_4.png',
+            func: () => {}
+        }
     ];
     masterStrike() { }
 }
@@ -44,10 +68,22 @@ export class mastermind_magneto implements Mastermind {
     points = 5;
     alwaysLeads = 'brotherhood';
     tactics = [
-        function() {},
-        function() {},
-        function() {},
-        function() {}
+        {
+            image: '/assets/cards/mastermind/magneto/magento_1.png',
+            func: () => {}
+        },
+        {
+            image: '/assets/cards/mastermind/magneto/magento_2.png',
+            func: () => {}
+        },
+        {
+            image: '/assets/cards/mastermind/magneto/magento_3.png',
+            func: () => {}
+        },
+        {
+            image: '/assets/cards/mastermind/magneto/magento_4.png',
+            func: () => {}
+        }
     ];
     masterStrike() { }
 }
@@ -59,10 +95,22 @@ export class mastermind_red_skull implements Mastermind {
     points = 5;
     alwaysLeads = 'hydra';
     tactics = [
-        function() {},
-        function() {},
-        function() {},
-        function() {}
+        {
+            image: '/assets/cards/mastermind/red_skull/red_skull_1.png',
+            func: () => {}
+        },
+        {
+            image: '/assets/cards/mastermind/red_skull/red_skull_2.png',
+            func: () => {}
+        },
+        {
+            image: '/assets/cards/mastermind/red_skull/red_skull_3.png',
+            func: () => {}
+        },
+        {
+            image: '/assets/cards/mastermind/red_skull/red_skull_4.png',
+            func: () => {}
+        }
     ];
     masterStrike() { }
 }

@@ -110,3 +110,15 @@
 .additional-block li{
     list-style: none;
 }
+
+.text-in-deck {
+    position: absolute;
+    color: white;
+    font-size: 4vh;
+    bottom: 7vh;
+    right: -4.5vh;
+    background-color: goldenrod;
+    opacity: 0.8;
+    width: 2.5vh;
+    border-radius: 25%;
+}

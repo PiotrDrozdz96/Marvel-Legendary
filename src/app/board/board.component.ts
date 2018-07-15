@@ -141,7 +141,7 @@ export class BoardComponent implements OnInit {
 
   playerHand() { this.dialog.open(PlayCardsDialog); }
   viewCards(header: string, cards: Array<Card>) {
-    this.dialog.open(CardsListDialog, {data: {header: header, cards: cards}});
+    this.dialog.open(CardsListDialog, { data: { header: header, cards: cards } });
   }
 
   recruitShieldOfficer() {
@@ -159,6 +159,21 @@ export class BoardComponent implements OnInit {
     this.board.playerCards.cards = [];
     this.board.drawToPlayerHand();
     this.board.drawObs.next(true);
+  }
+
+  attackMastermind() {
+    if (this.board.playerAttack >= this.board.mastermind.attack) {
+      this.board.playerAttack -= this.board.mastermind.attack;
+      const tactic = this.board.mastermind.tactics.splice(Math.floor(Math.random() * this.board.mastermind.tactics.length), 1);
+      const tacticCard = Object.assign({}, this.board.mastermind);
+      tacticCard.image = tactic[0].image;
+      this.board.victoryPile.push([tacticCard]);
+      if (this.board.mastermind.tactics.length === 0) {
+        console.log('Win');
+      } else {
+        tactic[0].func();
+      }
+    }
   }
 
   ngOnInit() {

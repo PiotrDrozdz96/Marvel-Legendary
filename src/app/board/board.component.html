@@ -8,7 +8,8 @@
             <app-card *ngIf="board.scheme" [src]="board.scheme.image"></app-card>
         </div>
         <div class="deck mastermind">
-            <app-card *ngIf="board.mastermind" [src]="board.mastermind.image"></app-card>
+            <app-card *ngIf="board.mastermind" [src]="board.mastermind.image" (click)="attackMastermind()"></app-card>
+            <div class="text-in-deck" *ngIf="board.mastermind">{{board.mastermind.tactics.length}}</div>
         </div>
         <div class="deck shield">
             <app-card *ngIf="board.shieldDeck.cards" [src]="board.shieldDeck.cards[0].image" (click)="recruitShieldOfficer()"></app-card>
