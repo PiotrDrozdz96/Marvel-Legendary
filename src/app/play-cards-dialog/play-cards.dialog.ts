@@ -19,6 +19,7 @@ export class PlayCardsDialog {
     mouseLeave() { this.preview = ''; }
     pick(card: Hero, index: number) {
         this.board.playerCards.push(this.board.playerHand.pick(index));
+        this.preview = '';
         this.board.playerAttack += card.attack;
         this.board.playerRecrutingPoints += card.recrutingPoints;
     }

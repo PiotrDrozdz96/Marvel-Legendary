@@ -48,7 +48,7 @@ export class CityscapeComponent implements OnInit {
     this.board.draw().subscribe((draw: boolean) => {
       if (draw) {
         const new_card = this.board.villianDeck.draw();
-        console.log(new_card); /* dialog only view new_card*/
+        this.board.setKOimage(new_card.image);
         if (new_card.type === 'villain') {
           let freePlaceIndex = this.fields.findIndex(field => field.card === null);
           if (freePlaceIndex !== 0) {
@@ -87,6 +87,7 @@ export class CityscapeComponent implements OnInit {
 
   attack(index: number) {
     if (this.board.playerAttack >= this.fields[index].attack + this.fields[index].card.attack) {
+      this.board.setKOimage('');
       this.board.playerAttack -= this.fields[index].attack + this.fields[index].card.attack;
       this.board.victoryPile.push([this.fields[index].card]);
       this.board.victoryPile.push(this.fields[index].bystanders);
