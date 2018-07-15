@@ -122,3 +122,12 @@
     width: 2.5vh;
     border-radius: 25%;
 }
+
+.villain {
+    position: absolute;
+}
+
+.captured-bystanders {
+    position: absolute;
+    top: -2vh;
+}

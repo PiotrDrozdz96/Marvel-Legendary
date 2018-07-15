@@ -8,7 +8,12 @@
             <app-card *ngIf="board.scheme" [src]="board.scheme.image"></app-card>
         </div>
         <div class="deck mastermind">
-            <app-card *ngIf="board.mastermind" [src]="board.mastermind.image" (click)="attackMastermind()"></app-card>
+            <div class="captured-bystanders">
+                <app-card *ngIf="board.mastermindBystanders.length!=0" [src]="board.mastermindBystanders[0].image" (click)="viewCards('Bystanders in Mastermind',board.mastermindBystanders)"></app-card>
+            </div>
+            <div class="villain">
+                    <app-card *ngIf="board.mastermind" [src]="board.mastermind.image" (click)="attackMastermind()"></app-card>
+                </div>
             <div class="text-in-deck" *ngIf="board.mastermind">{{board.mastermind.tactics.length}}</div>
         </div>
         <div class="deck shield">

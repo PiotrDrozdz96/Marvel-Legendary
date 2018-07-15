@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { BoardService } from '../board.service';
+import { MatDialog } from '@angular/material';
+import { Card } from '../models/card';
+import { CardsListDialog } from '../cards-list-dialog/cards-list.dialog';
 
 @Component({
   selector: 'app-cityscape',
@@ -12,31 +15,36 @@ export class CityscapeComponent implements OnInit {
     {
       place: 'sewers',
       card: null,
+      bystanders: [],
       attack: 0
     },
     {
       place: 'bank',
       card: null,
+      bystanders: [],
       attack: 0
     },
     {
       place: 'rooftops',
       card: null,
+      bystanders: [],
       attack: 0
     },
     {
       place: 'streets',
       card: null,
+      bystanders: [],
       attack: 0
     },
     {
       place: 'bridge',
       card: null,
+      bystanders: [],
       attack: 0
     }
   ];
 
-  constructor(public board: BoardService) {
+  constructor(public board: BoardService, public dialog: MatDialog) {
     this.board.draw().subscribe((draw: boolean) => {
       if (draw) {
         const new_card = this.board.villianDeck.draw();
@@ -46,15 +54,23 @@ export class CityscapeComponent implements OnInit {
           if (freePlaceIndex !== 0) {
             if (freePlaceIndex === -1) {
               board.escapedVillain.push([this.fields[4].card]);
+              board.escapedVillain.push(this.fields[4].bystanders);
               freePlaceIndex = 4;
             }
             for (freePlaceIndex; freePlaceIndex > 0; freePlaceIndex--) {
               this.fields[freePlaceIndex].card = this.fields[freePlaceIndex - 1].card;
+              this.fields[freePlaceIndex].bystanders = this.fields[freePlaceIndex - 1].bystanders;
+              this.fields[freePlaceIndex - 1].bystanders = [];
             }
           }
           this.fields[0].card = new_card;
         } else if (new_card.type === 'bystander') {
-          /* add bystander */
+          const villainFieldIndex = this.fields.findIndex(field => field.card != null);
+          if (villainFieldIndex !== -1) {
+            this.fields[villainFieldIndex].bystanders.push(new_card);
+          } else {
+            this.board.mastermindBystanders.push(new_card);
+          }
         } else if (new_card.type === 'schemeTwist') {
           /* function twist() in scheme */
         } else if (new_card.type === 'masterStrike') {
@@ -73,8 +89,14 @@ export class CityscapeComponent implements OnInit {
     if (this.board.playerAttack >= this.fields[index].attack + this.fields[index].card.attack) {
       this.board.playerAttack -= this.fields[index].attack + this.fields[index].card.attack;
       this.board.victoryPile.push([this.fields[index].card]);
+      this.board.victoryPile.push(this.fields[index].bystanders);
       this.fields[index].card = null;
+      this.fields[index].bystanders = [];
     }
+  }
+
+  viewBystanders(fieldName: string, cards: Array<Card>) {
+    this.dialog.open(CardsListDialog, { data: { header: 'Bystanders in ' + fieldName, cards: cards } });
   }
 
 }

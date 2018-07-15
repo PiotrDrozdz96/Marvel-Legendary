@@ -31,6 +31,7 @@ export class BoardService {
   woundsDeck = new Deck<Hero>();
   bystandersDeck = new Deck<Bystander>();
   mastermind: Mastermind;
+  mastermindBystanders: Array<CardInVillainDeck> = []; /* really Array<Bystanders> */
   scheme: Scheme;
   villianDeck = new Deck<CardInVillainDeck>();
   heroDeck = new Deck<Hero>();

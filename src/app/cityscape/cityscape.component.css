@@ -1,3 +1,7 @@
 .cards-list {
     top: 51.4vh;
 }
+
+.villain {
+    position: absolute;
+}

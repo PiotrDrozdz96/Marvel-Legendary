@@ -168,6 +168,8 @@ export class BoardComponent implements OnInit {
       const tacticCard = Object.assign({}, this.board.mastermind);
       tacticCard.image = tactic[0].image;
       this.board.victoryPile.push([tacticCard]);
+      this.board.victoryPile.push(this.board.mastermindBystanders);
+      this.board.mastermindBystanders = [];
       if (this.board.mastermind.tactics.length === 0) {
         console.log('Win');
       } else {
