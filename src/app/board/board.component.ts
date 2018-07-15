@@ -139,6 +139,13 @@ export class BoardComponent implements OnInit {
     this.dialog.open(PlayCardsDialog);
   }
 
+  recruitShieldOfficer() {
+    if (this.board.playerRecrutingPoints >= this.board.shieldDeck.cards[0].cost) {
+      this.board.playerRecrutingPoints -= this.board.shieldDeck.cards[0].cost;
+      this.board.discardPile.push([this.board.shieldDeck.draw()]);
+    }
+  }
+
   ngOnInit() {
   }
 

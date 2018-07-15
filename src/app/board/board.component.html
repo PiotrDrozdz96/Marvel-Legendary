@@ -1,6 +1,6 @@
 <div class="board">
     <div class="left-board">
-        <div class="additional-block" (click)="board.playerObs.next(board.player)"></div>
+        <div class="additional-block"></div>
         <div class="deck scheme">
             <app-card *ngIf="board.scheme" [src]="board.scheme.image"></app-card>
         </div>
@@ -8,7 +8,7 @@
             <app-card *ngIf="board.mastermind" [src]="board.mastermind.image"></app-card>
         </div>
         <div class="deck shield">
-            <app-card *ngIf="board.shieldDeck.cards" [src]="board.shieldDeck.cards[0].image"></app-card>
+            <app-card *ngIf="board.shieldDeck.cards" [src]="board.shieldDeck.cards[0].image" (click)="recruitShieldOfficer()"></app-card>
         </div>
     </div>
     <div class="center-board">

@@ -25,4 +25,12 @@ export class HqComponent implements OnInit {
   ngOnInit() {
   }
 
+  recruit(index: number) {
+    if (this.board.playerRecrutingPoints >= this.cards[index].cost) {
+      this.board.playerRecrutingPoints -= this.cards[index].cost;
+      this.board.discardPile.push(this.cards.splice(index, 1));
+      this.cards.push(this.board.heroDeck.draw());
+    }
+  }
+
 }

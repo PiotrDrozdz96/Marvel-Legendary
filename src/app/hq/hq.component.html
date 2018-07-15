@@ -1,5 +1,5 @@
 <div class="cards-list">
-    <div class="field" *ngFor="let card of cards">
+    <div class="field" *ngFor="let card of cards; let index = index" (click)="recruit(index)">
         <app-card  [src]="card.image"></app-card>
     </div>
 </div>
