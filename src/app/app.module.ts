@@ -4,6 +4,10 @@ import { NgModule } from '@angular/core';
 
 import { MatDialogModule } from '@angular/material';
 
+import { BoardService } from './board.service';
+import { VillainsService } from './villains.service';
+import { HeroService } from './hero.service';
+
 import { AppComponent } from './app.component';
 import { BoardComponent } from './board/board.component';
 import { KOComponent } from './ko/ko.component';
@@ -16,6 +20,7 @@ import { SelectVillainsDialog } from './select-dialog/select-villains.dialog';
 import { SelectHenchmenDialog } from './select-dialog/select-henchmen.dialog';
 import { SelectHeroDialog } from './select-dialog/select-hero.dialog';
 import { PlayCardsDialog } from './play-cards-dialog/play-cards.dialog';
+
 
 @NgModule({
   declarations: [
@@ -45,7 +50,7 @@ import { PlayCardsDialog } from './play-cards-dialog/play-cards.dialog';
     BrowserAnimationsModule,
     MatDialogModule,
   ],
-  providers: [],
+  providers: [BoardService, VillainsService, HeroService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

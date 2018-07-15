@@ -1,6 +1,6 @@
 <div class="board">
     <div class="left-board">
-        <div class="additional-block" (click)="board.drawObs.next(true)"></div>
+        <div class="additional-block" (click)="board.playerObs.next(board.player)"></div>
         <div class="deck scheme">
             <app-card *ngIf="board.scheme" [src]="board.scheme.image"></app-card>
         </div>

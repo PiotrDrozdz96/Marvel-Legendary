@@ -17,7 +17,6 @@ import { PlayCardsDialog } from '../play-cards-dialog/play-cards.dialog';
   selector: 'app-board',
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.css'],
-  providers: [BoardService, VillainsService, HeroService],
   encapsulation: ViewEncapsulation.None
 })
 export class BoardComponent implements OnInit {

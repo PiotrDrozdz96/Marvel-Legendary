@@ -42,26 +42,31 @@ export class BoardService {
     this.playerDeck.create(8, new hero_shield_agent);
     this.playerDeck.create(4, new hero_shield_trooper);
     this.playerDeck.shuffle();
+    this.drawToPlayerHand();
     /* 2. shield, bystanders, wounds deck */
     this.shieldDeck.create(30, new hero_shield_officer);
     this.bystandersDeck.create(30, new bystander);
     this.woundsDeck.create(30, new wound);
     /* 3. select mastermind */
-      /* inside board.component, selectMastermind.dialog */
+    /* inside board.component, selectMastermind.dialog */
     /* 4. select scheme */
-      /* inside board.component, selectScheme.dialog */
+    /* inside board.component, selectScheme.dialog */
     /* 5. villain deck*/
-      /*  number of schemeTwist described in scheme */
-      /* a. 3 villain group 8*3=24 cards*/
-      /* b. 1 henchmen group 10 cards*/
-      /* c. 10 bystanders */
-      /* d. 5 masterStrike */
-      /* shuffle deck */
-      this.playerHand.create(6, new hero_shield_agent);
+    /*  number of schemeTwist described in scheme */
+    /* a. 3 villain group 8*3=24 cards*/
+    /* b. 1 henchmen group 10 cards*/
+    /* c. 10 bystanders */
+    /* d. 5 masterStrike */
+    /* shuffle deck */
   }
 
   getKOimage(): Observable<string> { return this.koImage.asObservable(); }
   setKOimage(image: string): void { this.koImage.next(image); }
-  draw(): Observable<boolean> {return this.drawObs.asObservable(); }
+  draw(): Observable<boolean> { return this.drawObs.asObservable(); }
+  drawToPlayerHand() {
+    for (let i = 0; i < 6; i++) {
+      this.playerHand.push([this.playerDeck.draw()]);
+    }
+  }
 
 }

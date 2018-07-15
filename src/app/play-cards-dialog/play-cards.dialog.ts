@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 import { BoardService } from '../board.service';
+import { Hero } from '../models/card';
 
 @Component({
     selector: 'app-play-cards',
@@ -16,4 +17,9 @@ export class PlayCardsDialog {
 
     mouseEnter(src) { this.preview = src; }
     mouseLeave() { this.preview = ''; }
+    pick(card: Hero, index: number) {
+        this.board.playerCards.push(this.board.playerHand.pick(index));
+        this.board.playerAttack += card.attack;
+        this.board.playerRecrutingPoints += card.recrutingPoints;
+    }
 }

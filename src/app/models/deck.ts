@@ -19,4 +19,7 @@ export class Deck<T> {
             [this.cards[i], this.cards[j]] = [this.cards[j], this.cards[i]];
         }
     }
+    pick(index: number) {
+        return this.cards.splice(index, 1);
+    }
 }
