@@ -146,6 +146,16 @@ export class BoardComponent implements OnInit {
     }
   }
 
+  nextTurn() {
+    this.board.playerAttack = 0;
+    this.board.playerRecrutingPoints = 0;
+    this.board.discardPile.push(this.board.playerHand.cards.concat(this.board.playerCards.cards));
+    this.board.playerHand.cards = [];
+    this.board.playerCards.cards = [];
+    this.board.drawToPlayerHand();
+    this.board.drawObs.next(true);
+  }
+
   ngOnInit() {
   }
 

@@ -31,7 +31,7 @@
                 <li>Recruting Points: {{board.playerRecrutingPoints}}</li>
             </ul>
             <img src="/assets/player_hand.jpg" (click)="playerHand()">
-            <img src="/assets/next_turn.jpg">
+            <img src="/assets/next_turn.jpg" (click)="nextTurn()">
         </div>
         <div class="deck bystanders">
             <app-card *ngIf="board.bystandersDeck.cards" [src]="board.bystandersDeck.cards[0].image"></app-card>

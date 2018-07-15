@@ -65,6 +65,11 @@ export class BoardService {
   draw(): Observable<boolean> { return this.drawObs.asObservable(); }
   drawToPlayerHand() {
     for (let i = 0; i < 6; i++) {
+      if (this.playerDeck.cards.length === 0) {
+        this.discardPile.shuffle();
+        this.playerDeck.cards = this.discardPile.cards;
+        this.discardPile.cards = [];
+      }
       this.playerHand.push([this.playerDeck.draw()]);
     }
   }
