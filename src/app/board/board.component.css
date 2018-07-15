@@ -97,6 +97,10 @@
     transform: rotate(90deg);
 }
 
+.left-board .additional-block img {
+    margin-top: 5vh;
+}
+
 .additional-block img {
     width: 8vh;
     height: 8vh;

@@ -1,6 +1,9 @@
 <div class="board">
     <div class="left-board">
-        <div class="additional-block"></div>
+        <div class="additional-block">
+            <img src="/assets/ko.jpg" (click)="viewCards('KO',board.KO.cards)">
+            <img src="/assets/victory_pile.jpg" (click)="viewCards('Victory Pile',board.victoryPile.cards)">
+        </div>
         <div class="deck scheme">
             <app-card *ngIf="board.scheme" [src]="board.scheme.image"></app-card>
         </div>
@@ -16,7 +19,8 @@
         <app-hq></app-hq>
         <div class="deck escapedVillains">
             <app-card *ngIf="board.escapedVillain.cards[board.escapedVillain.cards.length - 1]" 
-                      [src]="board.escapedVillain.cards[board.escapedVillain.cards.length - 1].image">
+                      [src]="board.escapedVillain.cards[board.escapedVillain.cards.length - 1].image"
+                      (click)="viewCards('Escaped Villains',board.escapedVillain.cards)">
             </app-card>
         </div>
         <app-ko></app-ko>

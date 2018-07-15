@@ -1,0 +1,22 @@
+h2 {
+    color: goldenrod;
+    text-align: center;
+}
+
+img{
+    height: 18.32vh;
+    width: 13.19vh;
+    margin: 4px;
+}
+
+.preview {
+    position: absolute;
+    width: 100vw;
+    top: -13.5vh;
+}
+
+.preview img {
+    height: 35.3vh;
+    width:20.7vh;
+    margin: 0 275px;
+}

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 
 import { Deck } from './models/deck';
-import { Hero, Scheme, Mastermind, Bystander, CardInVillainDeck, Villain } from './models/card';
+import { Card, Hero, Scheme, Mastermind, Bystander, CardInVillainDeck, Villain } from './models/card';
 
 import { hero_shield_agent, hero_shield_trooper, hero_shield_officer } from './cards/hero/shield';
 import { scheme_legacy_virus } from './cards/scheme';
@@ -25,6 +25,8 @@ export class BoardService {
   playerAttack = 0;
   playerRecrutingPoints = 0;
 
+  victoryPile = new Deck<CardInVillainDeck>();
+  KO = new Deck<Card>();
   shieldDeck = new Deck<hero_shield_officer>();
   woundsDeck = new Deck<Hero>();
   bystandersDeck = new Deck<Bystander>();

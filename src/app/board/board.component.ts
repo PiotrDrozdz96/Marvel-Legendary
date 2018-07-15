@@ -1,17 +1,21 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material';
+
+import { Card, Mastermind, Scheme, Villain, Hero } from '../models/card';
+import { bystander } from '../cards/bystanders';
+import { master_strike } from '../cards/mastermind';
+
 import { BoardService } from '../board.service';
 import { VillainsService } from '../villains.service';
 import { HeroService } from '../hero.service';
+
 import { SelectMastermindDialog } from '../select-dialog/select-mastermind.dialog';
 import { SelectSchemeDialog } from '../select-dialog/select-scheme.dialog';
 import { SelectVillainsDialog } from '../select-dialog/select-villains.dialog';
 import { SelectHenchmenDialog } from '../select-dialog/select-henchmen.dialog';
-import { Mastermind, Scheme, Villain, Hero } from '../models/card';
-import { bystander } from '../cards/bystanders';
-import { master_strike } from '../cards/mastermind';
 import { SelectHeroDialog } from '../select-dialog/select-hero.dialog';
 import { PlayCardsDialog } from '../play-cards-dialog/play-cards.dialog';
+import { CardsListDialog } from '../cards-list-dialog/cards-list.dialog';
 
 @Component({
   selector: 'app-board',
@@ -135,8 +139,9 @@ export class BoardComponent implements OnInit {
     });
   }
 
-  playerHand() {
-    this.dialog.open(PlayCardsDialog);
+  playerHand() { this.dialog.open(PlayCardsDialog); }
+  viewCards(header: string, cards: Array<Card>) {
+    this.dialog.open(CardsListDialog, {data: {header: header, cards: cards}});
   }
 
   recruitShieldOfficer() {
