@@ -21,7 +21,7 @@ export class BoardService {
   playerDeck = new Deck<Hero>();
   playerHand = new Deck<Hero>();
   playerCards = new Deck<Hero>();
-  public discardPile = new Deck<Hero>();
+  discardPile = new Deck<Hero>();
   playerAttack = 0;
   playerRecrutingPoints = 0;
   numberOfDrawing = 6;

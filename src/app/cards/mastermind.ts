@@ -84,7 +84,7 @@ export class mastermind_doctor_doom implements Mastermind {
             });
         }
 
-        if (board.playerHand.cards.length === 6) {
+        if (board.playerHand.cards.length === 6 && !board.playerHand.cards.some(card => card.color === 'grey')) {
             open();
         }
     }
@@ -99,22 +99,70 @@ export class mastermind_loki implements Mastermind {
     tactics = [
         {
             image: 'assets/cards/mastermind/loki/loki_1.png',
-            func: (board: BoardService, dialog: MatDialog) => { }
+            func: (board: BoardService, dialog: MatDialog, tactic: Tactic) => {
+                if (board.fields.findIndex(field => field.card !== null) !== -1) {
+                    const VillainDialog = dialog.open(HQDialog, {
+                        data: {
+                            cards: board.fields.map(field => field.card),
+                            preview: tactic.image,
+                            header: 'Defeat Villain for free'
+                        }
+                    }).afterClosed().subscribe(card => {
+                        if (card === undefined) {
+                            tactic.func(board, dialog, tactic);
+                        } else {
+                            const index = board.fields.findIndex(field => field.card === card);
+                            board.victoryPile.push([board.fields[index].card]);
+                            board.victoryPile.push(board.fields[index].bystanders);
+                            board.fields[index].card = null;
+                            board.fields[index].bystanders = [];
+                            /* card fight function*/
+                            VillainDialog.unsubscribe();
+                        }
+                    });
+                }
+            }
         },
         {
             image: 'assets/cards/mastermind/loki/loki_2.png',
-            func: (board: BoardService, dialog: MatDialog) => { }
+            func: (board: BoardService, dialog: MatDialog, tactic: Tactic) => {
+                board.setKOimage(tactic.image);
+                board.discardPile.shuffle();
+                const length = 4 < board.discardPile.cards.length ? 4 : board.discardPile.cards.length;
+                const cards = [];
+                for (let i = 0; i < length; i++) {
+                    cards.push(board.discardPile.draw());
+                }
+                board.KO.push(cards);
+            }
         },
         {
             image: 'assets/cards/mastermind/loki/loki_3.png',
-            func: (board: BoardService, dialog: MatDialog) => { }
+            func: (board: BoardService, dialog: MatDialog, tactic: Tactic) => {
+                board.setKOimage(tactic.image);
+                const villains = board.victoryPile.cards.filter(card => card.type === 'villain');
+                const rest = board.victoryPile.cards.filter(card => card.type !== 'villain');
+                board.KO.push(villains);
+                board.victoryPile.cards = rest;
+            }
         },
         {
             image: 'assets/cards/mastermind/loki/loki_4.png',
-            func: (board: BoardService, dialog: MatDialog) => { }
+            func: (board: BoardService, dialog: MatDialog, tactic: Tactic) => {
+                board.setKOimage(tactic.image);
+                const bystanders = board.victoryPile.cards.filter(card => card.type === 'bystander');
+                const length = 2 < bystanders.length ? 2 : bystanders.length;
+                for (let i = 0; i < length; i++) {
+                    board.KO.push(board.victoryPile.pick(board.victoryPile.cards.findIndex(card => card.type === 'bystander')));
+                }
+            }
         }
     ];
-    masterStrike(board: BoardService, dialog: MatDialog) { }
+    masterStrike(board: BoardService, dialog: MatDialog) {
+        if (!board.playerHand.cards.some(card => card.color === 'green')) {
+            board.discardPile.push([board.woundsDeck.draw()]);
+        }
+    }
 }
 
 export class mastermind_magneto implements Mastermind {
