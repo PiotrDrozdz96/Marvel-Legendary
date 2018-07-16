@@ -42,6 +42,7 @@ export class CityscapeComponent implements OnInit {
           /* function twist() in scheme */
         } else if (new_card.type === 'masterStrike') {
           this.board.mastermind.masterStrike(this.board, this.dialog);
+          this.board.KO.push([new_card]);
         }
 
         this.board.drawObs.next(false);
