@@ -75,6 +75,7 @@ export class mastermind_doctor_doom implements Mastermind {
                     numberOfChoosenCards++;
                     const index = board.playerHand.cards.findIndex(card => card === hero);
                     board.playerDeck.cards.unshift(...board.playerHand.pick(index));
+                    HandDialog.unsubscribe();
                     if (numberOfChoosenCards !== 2) { open(); }
                 }
             });
@@ -246,6 +247,7 @@ export class mastermind_magneto implements Mastermind {
                 } else {
                     const index = board.playerHand.cards.findIndex(card => card === hero);
                     board.discardPile.cards.unshift(...board.playerHand.pick(index));
+                    HandDialog.unsubscribe();
                     if (board.playerHand.cards.length > 4) {
                         open();
                     }
@@ -268,20 +270,78 @@ export class mastermind_red_skull implements Mastermind {
     tactics = [
         {
             image: '/assets/cards/mastermind/red_skull/red_skull_1.png',
-            func: (board: BoardService, dialog: MatDialog) => { }
+            func: (board: BoardService, dialog: MatDialog, tactic: Tactic) => {
+                board.playerRecrutingPoints += 4;
+            }
         },
         {
             image: '/assets/cards/mastermind/red_skull/red_skull_2.png',
-            func: (board: BoardService, dialog: MatDialog) => { }
+            func: (board: BoardService, dialog: MatDialog, tactic: Tactic) => {
+                const length = board.victoryPile.cards.filter(card => card['team'] === 'hydra').length + 2;
+                for (let i = 0; i < length; i++) {
+                    board.playerHand.push(board.playerDeck.draw());
+                }
+            }
         },
         {
             image: '/assets/cards/mastermind/red_skull/red_skull_3.png',
-            func: (board: BoardService, dialog: MatDialog) => { }
+            func: (board: BoardService, dialog: MatDialog, tactic: Tactic) => {
+                board.playerAttack += 3;
+            }
         },
         {
             image: '/assets/cards/mastermind/red_skull/red_skull_4.png',
-            func: (board: BoardService, dialog: MatDialog) => { }
+            func: (board: BoardService, dialog: MatDialog, tactic: Tactic) => {
+
+                function ko() {
+                    const KODialog = dialog.open(HQDialog, {
+                        data: {
+                            cards: cards,
+                            preview: tactic.image,
+                            header: 'KOs one card'
+                        }
+                    }).afterClosed().subscribe(hero => {
+                        if (hero === undefined) {
+                            ko();
+                        } else {
+                            const index = cards.findIndex(card => card === hero);
+                            board.KO.push(cards.splice(index));
+                            KODialog.unsubscribe();
+                            if (cards.length > 0) {
+                                discard();
+                            }
+                        }
+                    });
+                }
+
+                function discard() {
+                    const discardDialog = dialog.open(HQDialog, {
+                        data: {
+                            cards: cards,
+                            preview: tactic.image,
+                            header: 'Discard one card'
+                        }
+                    }).afterClosed().subscribe(hero => {
+                        if (hero === undefined) {
+                            discard();
+                        } else {
+                            const index = cards.findIndex(card => card === hero);
+                            board.discardPile.push(cards.splice(index));
+                            discardDialog.unsubscribe();
+                            if (cards.length > 0) {
+                                board.playerDeck.cards.unshift(cards[0]);
+                            }
+                        }
+                    });
+                }
+
+                const cards = [...board.playerDeck.draw(), ...board.playerDeck.draw(), ...board.playerDeck.draw()];
+                ko();
+            }
         }
     ];
-    masterStrike(board: BoardService, dialog: MatDialog) { }
+    masterStrike(board: BoardService, dialog: MatDialog) {
+        board.KO.push(board.playerHand.cards);
+        board.playerHand.cards = [];
+    }
 }
