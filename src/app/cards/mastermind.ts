@@ -1,4 +1,8 @@
-import { Mastermind, Card } from '../models/card';
+import { Mastermind, Card, Tactic } from '../models/card';
+import { BoardService } from '../board.service';
+import { MatDialog } from '@angular/material';
+import { SelectHeroDialog } from '../select-dialog/select-hero.dialog';
+import { HQDialog } from '../cards-dialog/hq-dialog/hq.dialog';
 
 // tslint:disable:class-name
 
@@ -16,22 +20,74 @@ export class mastermind_doctor_doom implements Mastermind {
     tactics = [
         {
             image: 'assets/cards/mastermind/doctor_doom/doctor_doom_1.png',
-            func: () => {}
+            func: (board: BoardService, dialog: MatDialog, tactic: Tactic) => {
+                const cardsList = board.hq.filter(card => card.color === 'grey' || card.color === 'white');
+                if (cardsList.length !== 0) {
+                    const heroDialog = dialog.open(HQDialog, {
+                        data: {
+                            cards: cardsList,
+                            preview: tactic.image,
+                            header: 'Recruit one Hero for free'
+                        }
+                    }).afterClosed().subscribe(hero => {
+                        if (hero === undefined) {
+                            tactic.func(board, dialog, tactic);
+                        } else {
+                            const index = board.hq.findIndex(card => card === hero);
+                            board.discardPile.push(board.hq.splice(index, 1));
+                            board.hq.push(board.heroDeck.draw());
+                            heroDialog.unsubscribe();
+                        }
+                    });
+                }
+            }
         },
         {
             image: 'assets/cards/mastermind/doctor_doom/doctor_doom_2.png',
-            func: () => {}
+            func: (board: BoardService, dialog: MatDialog, tactic: Tactic) => {
+                board.setKOimage(tactic.image);
+                board.playerHand.push([board.playerDeck.draw()]);
+            }
         },
         {
             image: 'assets/cards/mastermind/doctor_doom/doctor_doom_3.png',
-            func: () => {}
+            func: (board: BoardService, dialog: MatDialog, tactic: Tactic) => {
+                board.setKOimage(tactic.image);
+            }
         },
         {
             image: 'assets/cards/mastermind/doctor_doom/doctor_doom_4.png',
-            func: () => {}
+            func: (board: BoardService, dialog: MatDialog, tactic: Tactic) => {
+                board.setKOimage(tactic.image);
+                board.numberOfDrawing = board.numberOfDrawing + 3;
+            }
         }
     ];
-    masterStrike() { }
+    masterStrike(board: BoardService, dialog: MatDialog) {
+        let numberOfChoosenCards = 0;
+        function open() {
+            const HandDialog = dialog.open(HQDialog, {
+                data: {
+                    cards: board.playerHand.cards,
+                    preview: board.mastermind.image,
+                    header: 'Put card on top their deck'
+                }
+            }).afterClosed().subscribe(hero => {
+                if (hero === undefined) {
+                    open();
+                } else {
+                    numberOfChoosenCards++;
+                    const index = board.playerHand.cards.findIndex(card => card === hero);
+                    board.playerDeck.cards.unshift(...board.playerHand.pick(index));
+                    if (numberOfChoosenCards !== 2) { open(); }
+                }
+            });
+        }
+
+        if (board.playerHand.cards.length === 6) {
+            open();
+        }
+    }
 }
 
 export class mastermind_loki implements Mastermind {
@@ -43,22 +99,22 @@ export class mastermind_loki implements Mastermind {
     tactics = [
         {
             image: 'assets/cards/mastermind/loki/loki_1.png',
-            func: () => {}
+            func: (board: BoardService, dialog: MatDialog) => { }
         },
         {
             image: 'assets/cards/mastermind/loki/loki_2.png',
-            func: () => {}
+            func: (board: BoardService, dialog: MatDialog) => { }
         },
         {
             image: 'assets/cards/mastermind/loki/loki_3.png',
-            func: () => {}
+            func: (board: BoardService, dialog: MatDialog) => { }
         },
         {
             image: 'assets/cards/mastermind/loki/loki_4.png',
-            func: () => {}
+            func: (board: BoardService, dialog: MatDialog) => { }
         }
     ];
-    masterStrike() { }
+    masterStrike(board: BoardService, dialog: MatDialog) { }
 }
 
 export class mastermind_magneto implements Mastermind {
@@ -70,22 +126,22 @@ export class mastermind_magneto implements Mastermind {
     tactics = [
         {
             image: '/assets/cards/mastermind/magneto/magento_1.png',
-            func: () => {}
+            func: (board: BoardService, dialog: MatDialog) => { }
         },
         {
             image: '/assets/cards/mastermind/magneto/magento_2.png',
-            func: () => {}
+            func: (board: BoardService, dialog: MatDialog) => { }
         },
         {
             image: '/assets/cards/mastermind/magneto/magento_3.png',
-            func: () => {}
+            func: (board: BoardService, dialog: MatDialog) => { }
         },
         {
             image: '/assets/cards/mastermind/magneto/magento_4.png',
-            func: () => {}
+            func: (board: BoardService, dialog: MatDialog) => { }
         }
     ];
-    masterStrike() { }
+    masterStrike(board: BoardService, dialog: MatDialog) { }
 }
 
 export class mastermind_red_skull implements Mastermind {
@@ -97,20 +153,20 @@ export class mastermind_red_skull implements Mastermind {
     tactics = [
         {
             image: '/assets/cards/mastermind/red_skull/red_skull_1.png',
-            func: () => {}
+            func: (board: BoardService, dialog: MatDialog) => { }
         },
         {
             image: '/assets/cards/mastermind/red_skull/red_skull_2.png',
-            func: () => {}
+            func: (board: BoardService, dialog: MatDialog) => { }
         },
         {
             image: '/assets/cards/mastermind/red_skull/red_skull_3.png',
-            func: () => {}
+            func: (board: BoardService, dialog: MatDialog) => { }
         },
         {
             image: '/assets/cards/mastermind/red_skull/red_skull_4.png',
-            func: () => {}
+            func: (board: BoardService, dialog: MatDialog) => { }
         }
     ];
-    masterStrike() { }
+    masterStrike(board: BoardService, dialog: MatDialog) { }
 }

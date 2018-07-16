@@ -173,7 +173,7 @@ export class BoardComponent implements OnInit {
       if (this.board.mastermind.tactics.length === 0) {
         console.log('Win');
       } else {
-        tactic[0].func();
+        tactic[0].func(this.board, this.dialog, tactic[0]);
       }
     }
   }

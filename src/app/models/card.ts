@@ -1,4 +1,5 @@
 import { BoardService } from '../board.service';
+import { MatDialog } from '@angular/material';
 
 export interface Card {
     type: string;
@@ -7,7 +8,7 @@ export interface Card {
 
 export interface Tactic {
     image: string;
-    func();
+    func(board: BoardService, dialog: MatDialog, tactic: Tactic);
 }
 
 export interface Hero extends Card {
@@ -26,7 +27,7 @@ export interface Mastermind extends Card {
     points: number;
     alwaysLeads: string;
     tactics: Array<Tactic>;
-    masterStrike();
+    masterStrike(board: BoardService, dialog: MatDialog);
 }
 
 export interface Villain extends Card {

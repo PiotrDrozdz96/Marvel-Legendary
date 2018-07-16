@@ -18,20 +18,22 @@ export class BoardService {
   private koImage = new BehaviorSubject<string>('');
   public drawObs = new BehaviorSubject<boolean>(false);
 
-  private playerDeck = new Deck<Hero>();
+  playerDeck = new Deck<Hero>();
   playerHand = new Deck<Hero>();
   playerCards = new Deck<Hero>();
   public discardPile = new Deck<Hero>();
   playerAttack = 0;
   playerRecrutingPoints = 0;
+  numberOfDrawing = 6;
 
   victoryPile = new Deck<Card|Villain|Bystander>();
   KO = new Deck<Card>();
+  hq: Array<Hero> = [];
   shieldDeck = new Deck<hero_shield_officer>();
   woundsDeck = new Deck<Hero>();
   bystandersDeck = new Deck<Bystander>();
   mastermind: Mastermind;
-  mastermindBystanders: Array<Bystander> = [];
+  mastermindBystanders: Array<Card> = [];
   scheme: Scheme;
   villianDeck = new Deck<Card|Villain|Bystander>();
   heroDeck = new Deck<Hero>();
@@ -39,6 +41,16 @@ export class BoardService {
   escapedVillain = new Deck<Villain>();
 
   constructor() {
+
+    /* change method draw in playerDeck*/
+    this.playerDeck.draw = (): Hero => {
+      if (this.playerDeck.cards.length === 0) {
+        this.discardPile.shuffle();
+        this.playerDeck.cards = this.discardPile.cards;
+        this.discardPile.cards = [];
+      }
+      return this.playerDeck.cards.shift();
+    };
     /* SET UP */
     /*********/
     /* 1. player deck*/
@@ -67,14 +79,10 @@ export class BoardService {
   setKOimage(image: string): void { this.koImage.next(image); }
   draw(): Observable<boolean> { return this.drawObs.asObservable(); }
   drawToPlayerHand() {
-    for (let i = 0; i < 6; i++) {
-      if (this.playerDeck.cards.length === 0) {
-        this.discardPile.shuffle();
-        this.playerDeck.cards = this.discardPile.cards;
-        this.discardPile.cards = [];
-      }
+    for (let i = 0; i < this.numberOfDrawing; i++) {
       this.playerHand.push([this.playerDeck.draw()]);
     }
+    this.numberOfDrawing = 6;
   }
 
 }

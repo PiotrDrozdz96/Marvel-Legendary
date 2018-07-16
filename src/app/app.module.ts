@@ -21,6 +21,7 @@ import { SelectHenchmenDialog } from './select-dialog/select-henchmen.dialog';
 import { SelectHeroDialog } from './select-dialog/select-hero.dialog';
 import { PlayCardsDialog } from './play-cards-dialog/play-cards.dialog';
 import { CardsListDialog } from './cards-list-dialog/cards-list.dialog';
+import { HQDialog } from './cards-dialog/hq-dialog/hq.dialog';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { CardsListDialog } from './cards-list-dialog/cards-list.dialog';
     SelectHenchmenDialog,
     SelectHeroDialog,
     PlayCardsDialog,
-    CardsListDialog
+    CardsListDialog,
+    HQDialog
   ],
   entryComponents: [
     SelectMastermindDialog,
@@ -46,7 +48,8 @@ import { CardsListDialog } from './cards-list-dialog/cards-list.dialog';
     SelectHenchmenDialog,
     SelectHeroDialog,
     PlayCardsDialog,
-    CardsListDialog
+    CardsListDialog,
+    HQDialog
   ],
   imports: [
     BrowserModule,
