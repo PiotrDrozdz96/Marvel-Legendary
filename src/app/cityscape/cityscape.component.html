@@ -1,5 +1,5 @@
 <div class="cards-list">
-    <div class="field" *ngFor="let field of fields.slice().reverse(); let index = index">
+    <div class="field" *ngFor="let field of board.fields.slice().reverse(); let index = index">
         <div class="villain">
             <app-card *ngIf="field.card!=null" [src]="field.card.image" (click)="attack(fields.length-index-1)"></app-card>
         </div>

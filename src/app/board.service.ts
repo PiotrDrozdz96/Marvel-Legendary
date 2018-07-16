@@ -40,6 +40,39 @@ export class BoardService {
 
   escapedVillain = new Deck<Villain>();
 
+  fields = [
+    {
+      place: 'sewers',
+      card: null,
+      bystanders: [],
+      attack: 0
+    },
+    {
+      place: 'bank',
+      card: null,
+      bystanders: [],
+      attack: 0
+    },
+    {
+      place: 'rooftops',
+      card: null,
+      bystanders: [],
+      attack: 0
+    },
+    {
+      place: 'streets',
+      card: null,
+      bystanders: [],
+      attack: 0
+    },
+    {
+      place: 'bridge',
+      card: null,
+      bystanders: [],
+      attack: 0
+    }
+  ];
+
   constructor() {
 
     /* change method draw in playerDeck*/
