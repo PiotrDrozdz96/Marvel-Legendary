@@ -50,19 +50,3 @@ export interface Bystander extends Card {
     // type: 'bystander';
     points: number;
 }
-
-export interface CardInVillainDeck extends Card {
-    /* type: 'villain' | 'bystanders' | 'masterStrike' | 'schemeTwist'; */
-    /* villain type extends Villain interface */
-    /* bystander type extends Bystrander interface */
-    team?: string;
-    attack?: number;
-    points?: number;
-    fight?();
-    ambush?();
-    escape?();
-    /* masterStrike type have function masterStrike() */
-    masterStrike?();
-    /* schemeTwist type have function twist() */
-    twist?();
-}
