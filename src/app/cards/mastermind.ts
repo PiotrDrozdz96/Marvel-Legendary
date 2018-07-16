@@ -35,7 +35,6 @@ export class mastermind_doctor_doom implements Mastermind {
                         } else {
                             const index = board.hq.findIndex(card => card === hero);
                             board.discardPile.push(board.hq.splice(index, 1));
-                            const newCard = board.heroDeck.draw();
                             board.hq.push(...board.heroDeck.draw());
                             heroDialog.unsubscribe();
                         }
@@ -46,20 +45,16 @@ export class mastermind_doctor_doom implements Mastermind {
         {
             image: 'assets/cards/mastermind/doctor_doom/doctor_doom_2.png',
             func: (board: BoardService, dialog: MatDialog, tactic: Tactic) => {
-                board.setKOimage(tactic.image);
                 board.playerHand.push(board.playerDeck.draw());
             }
         },
         {
             image: 'assets/cards/mastermind/doctor_doom/doctor_doom_3.png',
-            func: (board: BoardService, dialog: MatDialog, tactic: Tactic) => {
-                board.setKOimage(tactic.image);
-            }
+            func: (board: BoardService, dialog: MatDialog, tactic: Tactic) => { }
         },
         {
             image: 'assets/cards/mastermind/doctor_doom/doctor_doom_4.png',
             func: (board: BoardService, dialog: MatDialog, tactic: Tactic) => {
-                board.setKOimage(tactic.image);
                 board.numberOfDrawing = board.numberOfDrawing + 3;
             }
         }
@@ -127,7 +122,6 @@ export class mastermind_loki implements Mastermind {
         {
             image: 'assets/cards/mastermind/loki/loki_2.png',
             func: (board: BoardService, dialog: MatDialog, tactic: Tactic) => {
-                board.setKOimage(tactic.image);
                 board.discardPile.shuffle();
                 const length = 4 < board.discardPile.cards.length ? 4 : board.discardPile.cards.length;
                 const cards = [];
@@ -140,7 +134,6 @@ export class mastermind_loki implements Mastermind {
         {
             image: 'assets/cards/mastermind/loki/loki_3.png',
             func: (board: BoardService, dialog: MatDialog, tactic: Tactic) => {
-                board.setKOimage(tactic.image);
                 const villains = board.victoryPile.cards.filter(card => card.type === 'villain');
                 const rest = board.victoryPile.cards.filter(card => card.type !== 'villain');
                 board.KO.push(villains);
@@ -150,7 +143,6 @@ export class mastermind_loki implements Mastermind {
         {
             image: 'assets/cards/mastermind/loki/loki_4.png',
             func: (board: BoardService, dialog: MatDialog, tactic: Tactic) => {
-                board.setKOimage(tactic.image);
                 const bystanders = board.victoryPile.cards.filter(card => card.type === 'bystander');
                 const length = 2 < bystanders.length ? 2 : bystanders.length;
                 for (let i = 0; i < length; i++) {
@@ -174,23 +166,97 @@ export class mastermind_magneto implements Mastermind {
     alwaysLeads = 'brotherhood';
     tactics = [
         {
-            image: '/assets/cards/mastermind/magneto/magento_1.png',
-            func: (board: BoardService, dialog: MatDialog) => { }
+            image: '/assets/cards/mastermind/magneto/magneto_1.png',
+            func: (board: BoardService, dialog: MatDialog, tactic: Tactic) => {
+                const cardsList = board.hq.filter(card => card.team === 'x-men');
+                if (cardsList.length !== 0) {
+                    const heroDialog = dialog.open(HQDialog, {
+                        data: {
+                            cards: cardsList,
+                            preview: tactic.image,
+                            header: 'Recruit one Hero for free'
+                        }
+                    }).afterClosed().subscribe(hero => {
+                        if (hero === undefined) {
+                            tactic.func(board, dialog, tactic);
+                        } else {
+                            const index = board.hq.findIndex(card => card === hero);
+                            board.discardPile.push(board.hq.splice(index, 1));
+                            const newCard = board.heroDeck.draw();
+                            board.hq.push(...board.heroDeck.draw());
+                            heroDialog.unsubscribe();
+                        }
+                    });
+                }
+            }
         },
         {
-            image: '/assets/cards/mastermind/magneto/magento_2.png',
-            func: (board: BoardService, dialog: MatDialog) => { }
+            image: '/assets/cards/mastermind/magneto/magneto_2.png',
+            func: (board: BoardService, dialog: MatDialog, tactic: Tactic) => {
+                if (!board.playerCards.cards.some(card => card.team === 'x-men')) {
+                    board.playerDeck.push(board.woundsDeck.draw().concat(board.woundsDeck.draw()));
+                }
+            }
         },
         {
-            image: '/assets/cards/mastermind/magneto/magento_3.png',
-            func: (board: BoardService, dialog: MatDialog) => { }
+            image: '/assets/cards/mastermind/magneto/magneto_3.png',
+            func: (board: BoardService, dialog: MatDialog, tactic: Tactic) => {
+                const cardsList = board.playerCards.cards.filter(card => card.team === 'x-men');
+                if (cardsList.length !== 0) {
+                    const heroDialog = dialog.open(HQDialog, {
+                        data: {
+                            cards: cardsList,
+                            preview: tactic.image,
+                            header: 'Choose one Hero'
+                        }
+                    }).afterClosed().subscribe(hero => {
+                        if (hero === undefined) {
+                            tactic.func(board, dialog, tactic);
+                        } else {
+                            const index = board.playerCards.cards.findIndex(card => card === hero);
+                            board.playerDeck.cards.unshift(...board.playerCards.cards.splice(index, 1));
+                            board.numberOfDrawing = 7;
+                            heroDialog.unsubscribe();
+                        }
+                    });
+                }
+            }
         },
         {
-            image: '/assets/cards/mastermind/magneto/magento_4.png',
-            func: (board: BoardService, dialog: MatDialog) => { }
+            image: '/assets/cards/mastermind/magneto/magneto_4.png',
+            func: (board: BoardService, dialog: MatDialog, tactic: Tactic) => {
+                const length = board.playerCards.cards.filter(card => card.team === 'x-men').length;
+                for (let i = 0; i < length; i++) {
+                    board.victoryPile.push(board.bystandersDeck.draw());
+                }
+            }
         }
     ];
-    masterStrike(board: BoardService, dialog: MatDialog) { }
+    masterStrike(board: BoardService, dialog: MatDialog) {
+        function open() {
+            const HandDialog = dialog.open(HQDialog, {
+                data: {
+                    cards: board.playerHand.cards,
+                    preview: board.mastermind.image,
+                    header: 'Put card on discard Pile'
+                }
+            }).afterClosed().subscribe(hero => {
+                if (hero === undefined) {
+                    open();
+                } else {
+                    const index = board.playerHand.cards.findIndex(card => card === hero);
+                    board.discardPile.cards.unshift(...board.playerHand.pick(index));
+                    if (board.playerHand.cards.length > 4) {
+                        open();
+                    }
+                }
+            });
+        }
+
+        if (!board.playerHand.cards.some(card => card.team === 'x-men')) {
+            open();
+        }
+    }
 }
 
 export class mastermind_red_skull implements Mastermind {

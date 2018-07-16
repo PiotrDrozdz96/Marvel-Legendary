@@ -176,6 +176,7 @@ export class BoardComponent implements OnInit {
       if (this.board.mastermind.tactics.length === 0) {
         console.log('Win');
       } else {
+        this.board.setKOimage(tactic[0].image);
         tactic[0].func(this.board, this.dialog, tactic[0]);
       }
     }
