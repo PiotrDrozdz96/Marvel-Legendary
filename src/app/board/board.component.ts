@@ -106,7 +106,7 @@ export class BoardComponent implements OnInit {
         // add bystanders
         const bystanders: Array<bystander> = [];
         for (let i = 0; i < this.bystanders; i++) {
-          bystanders.push(this.board.bystandersDeck.draw());
+          bystanders.push(...this.board.bystandersDeck.draw());
         }
         this.board.villianDeck.push(bystanders);
         // add masterStrike
@@ -147,7 +147,7 @@ export class BoardComponent implements OnInit {
   recruitShieldOfficer() {
     if (this.board.playerRecrutingPoints >= this.board.shieldDeck.cards[0].cost) {
       this.board.playerRecrutingPoints -= this.board.shieldDeck.cards[0].cost;
-      this.board.discardPile.push([this.board.shieldDeck.draw()]);
+      this.board.discardPile.push(this.board.shieldDeck.draw());
     }
   }
 

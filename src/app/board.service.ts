@@ -26,7 +26,7 @@ export class BoardService {
   playerRecrutingPoints = 0;
   numberOfDrawing = 6;
 
-  victoryPile = new Deck<Card|Villain|Bystander>();
+  victoryPile = new Deck<Card | Villain | Bystander>();
   KO = new Deck<Card>();
   hq: Array<Hero> = [];
   shieldDeck = new Deck<hero_shield_officer>();
@@ -35,7 +35,7 @@ export class BoardService {
   mastermind: Mastermind;
   mastermindBystanders: Array<Card> = [];
   scheme: Scheme;
-  villianDeck = new Deck<Card|Villain|Bystander>();
+  villianDeck = new Deck<Card | Villain | Bystander>();
   heroDeck = new Deck<Hero>();
 
   escapedVillain = new Deck<Villain>();
@@ -76,13 +76,14 @@ export class BoardService {
   constructor() {
 
     /* change method draw in playerDeck*/
-    this.playerDeck.draw = (): Hero => {
+    this.playerDeck.draw = (): Array<Hero> => {
       if (this.playerDeck.cards.length === 0) {
         this.discardPile.shuffle();
         this.playerDeck.cards = this.discardPile.cards;
         this.discardPile.cards = [];
       }
-      return this.playerDeck.cards.shift();
+      const newCard = this.playerDeck.cards.shift();
+      return newCard === undefined ? [] : [newCard];
     };
     /* SET UP */
     /*********/
@@ -113,7 +114,7 @@ export class BoardService {
   draw(): Observable<boolean> { return this.drawObs.asObservable(); }
   drawToPlayerHand() {
     for (let i = 0; i < this.numberOfDrawing; i++) {
-      this.playerHand.push([this.playerDeck.draw()]);
+      this.playerHand.push(this.playerDeck.draw());
     }
     this.numberOfDrawing = 6;
   }

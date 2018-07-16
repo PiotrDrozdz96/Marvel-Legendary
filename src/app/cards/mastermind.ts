@@ -35,7 +35,8 @@ export class mastermind_doctor_doom implements Mastermind {
                         } else {
                             const index = board.hq.findIndex(card => card === hero);
                             board.discardPile.push(board.hq.splice(index, 1));
-                            board.hq.push(board.heroDeck.draw());
+                            const newCard = board.heroDeck.draw();
+                            board.hq.push(...board.heroDeck.draw());
                             heroDialog.unsubscribe();
                         }
                     });
@@ -46,7 +47,7 @@ export class mastermind_doctor_doom implements Mastermind {
             image: 'assets/cards/mastermind/doctor_doom/doctor_doom_2.png',
             func: (board: BoardService, dialog: MatDialog, tactic: Tactic) => {
                 board.setKOimage(tactic.image);
-                board.playerHand.push([board.playerDeck.draw()]);
+                board.playerHand.push(board.playerDeck.draw());
             }
         },
         {
@@ -160,7 +161,7 @@ export class mastermind_loki implements Mastermind {
     ];
     masterStrike(board: BoardService, dialog: MatDialog) {
         if (!board.playerHand.cards.some(card => card.color === 'green')) {
-            board.discardPile.push([board.woundsDeck.draw()]);
+            board.discardPile.push(board.woundsDeck.draw());
         }
     }
 }

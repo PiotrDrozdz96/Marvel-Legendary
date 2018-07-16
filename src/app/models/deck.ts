@@ -12,7 +12,10 @@ export class Deck<T> {
         this.cards = this.cards.concat(array);
     }
     push(cards: Array<T>) { this.cards = this.cards.concat(cards); }
-    draw(): T { return this.cards.shift(); }
+    draw(): Array<T> {
+        const newCard = this.cards.shift();
+        return newCard === undefined ? [] : [newCard];
+    }
     shuffle() {
         for (let i = this.cards.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
