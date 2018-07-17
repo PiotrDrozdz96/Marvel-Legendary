@@ -1,6 +1,7 @@
 import { Scheme, Card } from '../models/card';
 import { BoardService } from '../board.service';
 import { wound } from './wounds';
+import { henchman_sentinel, henchman_doombot_legion, henchman_hand_ninjas, henchman_savage_land_mutants } from '../cards/villain/henchmen';
 
 // tslint:disable:class-name
 
@@ -61,8 +62,30 @@ export class scheme_negative_zone_prison_breakout implements Scheme {
     type = 'scheme';
     image = '/assets/cards/scheme/scheme_negative_zone_prison_breakout.png';
     counterTwist = 0;
-    twist(board: BoardService) { }
-    setup(board: BoardService) { board.villianDeck.create(8, new scheme_twist); }
+    twist(board: BoardService) {
+        board.nextTurnObs.next(true);
+        board.nextTurnObs.next(true);
+    }
+    setup(board: BoardService) {
+        board.villianDeck.create(8, new scheme_twist);
+        const beforeHenchmen = board.villianDeck.cards.filter(card => card['team'] === 'henchman');
+        const henchmen = [
+            new henchman_sentinel,
+            new henchman_doombot_legion,
+            new henchman_hand_ninjas,
+            new henchman_savage_land_mutants
+        ];
+        const cards = henchmen.reduce((arr, card) => {
+            return card.image === beforeHenchmen[0].image ? arr : arr.concat([card]);
+        }, []);
+        board.villianDeck.create(10, cards[Math.floor(Math.random() * cards.length)]);
+        board.villianDeck.create(10 - beforeHenchmen.length, beforeHenchmen[0]);
+        board.nextTurn().subscribe(sub => {
+            if (board.escapedVillain.cards.filter(card => card.type === 'villain').length >= 12) {
+                console.log('Evil Wins');
+            }
+        });
+    }
 }
 
 export class scheme_portals_dark_dimension implements Scheme {

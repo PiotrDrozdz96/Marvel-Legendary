@@ -27,7 +27,7 @@ export class SelectSchemeDialog extends SelectDialog<Scheme, SelectSchemeDialog>
     new scheme_legacy_virus,
     new scheme_midtown_bank_robbery,
     new scheme_negative_zone_prison_breakout,
-    new scheme_portals_dark_dimension,
+    // new scheme_portals_dark_dimension,
     new scheme_replace_leaders_killbots,
     new scheme_secret_invasion_shapeshifters,
     new scheme_super_hero_civil_war,
