@@ -133,7 +133,7 @@ export class BoardComponent implements OnInit {
           this.selectHero();
         } else {
           this.board.heroDeck.shuffle();
-          this.board.drawObs.next(true);
+          this.board.nextTurnObs.next(true);
         }
       }
     });
@@ -161,7 +161,7 @@ export class BoardComponent implements OnInit {
     this.board.playerHand.cards = [];
     this.board.playerCards.cards = [];
     this.board.drawToPlayerHand();
-    this.board.drawObs.next(true);
+    this.board.nextTurnObs.next(true);
   }
 
   attackMastermind() {

@@ -12,7 +12,7 @@ import { CardsListDialog } from '../cards-list-dialog/cards-list.dialog';
 export class CityscapeComponent implements OnInit {
 
   constructor(public board: BoardService, public dialog: MatDialog) {
-    this.board.draw().subscribe((draw: boolean) => {
+    this.board.nextTurn().subscribe((draw: boolean) => {
       if (draw) {
         const new_cards = this.board.villianDeck.draw();
         if (new_cards.length === 1) {
@@ -41,13 +41,13 @@ export class CityscapeComponent implements OnInit {
               this.board.mastermindBystanders.push(new_card);
             }
           } else if (new_card.type === 'schemeTwist') {
-            /* function twist() in scheme */
+            board.scheme.twist(this.board);
           } else if (new_card.type === 'masterStrike') {
             this.board.mastermind.masterStrike(this.board, this.dialog);
             this.board.KO.push([new_card]);
           }
         }
-        this.board.drawObs.next(false);
+        this.board.nextTurnObs.next(false);
       }
     });
   }

@@ -100,7 +100,7 @@ export class mastermind_loki implements Mastermind {
                 if (board.fields.findIndex(field => field.card !== null) !== -1) {
                     const VillainDialog = dialog.open(HQDialog, {
                         data: {
-                            cards: board.fields.map(field => field.card),
+                            cards: board.fields.filter(field => field.card != null).map(field => field.card),
                             preview: tactic.image,
                             header: 'Defeat Villain for free'
                         }
@@ -125,11 +125,9 @@ export class mastermind_loki implements Mastermind {
             func: (board: BoardService, dialog: MatDialog, tactic: Tactic) => {
                 board.discardPile.shuffle();
                 const length = 4 < board.discardPile.cards.length ? 4 : board.discardPile.cards.length;
-                const cards = [];
                 for (let i = 0; i < length; i++) {
-                    cards.push(board.discardPile.draw());
+                    board.KO.push(board.discardPile.draw());
                 }
-                board.KO.push(cards);
             }
         },
         {

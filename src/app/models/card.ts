@@ -43,7 +43,7 @@ export interface Villain extends Card {
 export interface Scheme extends Card {
     // type: 'scheme';
     counterTwist: number;
-    twists: Array<() => void>;
+    twist(board: BoardService);
     setup(board: BoardService);
 }
 

@@ -10,7 +10,7 @@ import { Hero } from '../models/card';
 export class HqComponent implements OnInit {
 
   constructor(public board: BoardService) {
-    const observator = this.board.draw().subscribe((start: boolean) => {
+    const observator = this.board.nextTurn().subscribe((start: boolean) => {
       if (start) {
         for (let i = 0; i < 5; i++) {
           this.board.hq.push(...this.board.heroDeck.draw());
