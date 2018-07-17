@@ -72,7 +72,6 @@ export class BoardComponent implements OnInit {
         this.selectScheme();
       } else {
         this.board.scheme = scheme;
-        scheme.setup(this.board); /* after build deck*/
         this.selectVillains();
       }
     });
@@ -104,13 +103,13 @@ export class BoardComponent implements OnInit {
         // add henchman
         this.board.villianDeck.create(this.henchmanCards, villain);
         // add bystanders
-        const bystanders: Array<bystander> = [];
         for (let i = 0; i < this.bystanders; i++) {
-          bystanders.push(...this.board.bystandersDeck.draw());
+          this.board.villianDeck.push(this.board.bystandersDeck.draw());
         }
-        this.board.villianDeck.push(bystanders);
         // add masterStrike
         this.board.villianDeck.create(this.masterStrike, new master_strike);
+        // scheme setup
+        this.board.scheme.setup(this.board);
 
         this.board.villianDeck.shuffle();
         this.selectHero();

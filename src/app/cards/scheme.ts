@@ -34,8 +34,27 @@ export class scheme_midtown_bank_robbery implements Scheme {
     type = 'scheme';
     image = '/assets/cards/scheme/scheme_midtown_bank_robbery.png';
     counterTwist = 0;
-    twist(board: BoardService) { }
-    setup(board: BoardService) { board.villianDeck.create(8, new scheme_twist); }
+    twist(board: BoardService) {
+        if (board.fields[1].card != null) {
+            board.fields[1].bystanders.push(...board.bystandersDeck.draw(), ...board.bystandersDeck.draw());
+            board.fields[1].attack = board.fields[1].bystanders.length;
+        }
+    }
+    setup(board: BoardService) {
+        const length = 12 - board.villianDeck.cards.filter(card => card.type === 'bystander').length;
+        board.villianDeck.create(8, new scheme_twist);
+        for (let i = 0; i < length; i++) {
+            board.villianDeck.push(board.bystandersDeck.draw());
+        }
+        board.nextTurn().subscribe(sub => {
+            board.fields.forEach(field => {
+                field.attack = field.bystanders.length;
+            });
+            if (board.escapedVillain.cards.filter(card => card.type === 'bystander').length >= 8) {
+                console.log('Evil Wins');
+            }
+        });
+    }
 }
 
 export class scheme_negative_zone_prison_breakout implements Scheme {
