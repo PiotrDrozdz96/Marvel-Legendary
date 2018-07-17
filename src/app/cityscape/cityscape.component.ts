@@ -41,6 +41,7 @@ export class CityscapeComponent implements OnInit {
               this.board.mastermindBystanders.push(new_card);
             }
           } else if (new_card.type === 'schemeTwist') {
+            board.scheme.counterTwist++;
             board.scheme.twist(this.board);
           } else if (new_card.type === 'masterStrike') {
             this.board.mastermind.masterStrike(this.board, this.dialog);

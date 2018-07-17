@@ -6,6 +6,7 @@
         </div>
         <div class="deck scheme">
             <app-card *ngIf="board.scheme" [src]="board.scheme.image"></app-card>
+            <div class="text-in-deck" *ngIf="board.scheme">{{board.scheme.counterTwist}}</div>
         </div>
         <div class="deck mastermind">
             <div class="captured-bystanders">
