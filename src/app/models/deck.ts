@@ -1,13 +1,13 @@
 import { Card } from './card';
 
-export class Deck<T> {
+export class Deck<T extends Object> {
 
     cards: Array<T> = [];
 
     create(number: number, card: T) {
         const array = new Array(number);
         for (let i = 0; i < array.length; i++) {
-            array[i] = Object.assign({}, card);
+            array[i] = Object.create(card);
         }
         this.cards = this.cards.concat(array);
     }

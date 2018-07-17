@@ -22,6 +22,9 @@ export class CityscapeComponent implements OnInit {
             let freePlaceIndex = this.board.fields.findIndex(field => field.card === null);
             if (freePlaceIndex !== 0) {
               if (freePlaceIndex === -1) {
+                if (board.fields[4].card.escape) {
+                  board.fields[4].card.escape(this.board, this.dialog);
+                }
                 board.escapedVillain.push([this.board.fields[4].card]);
                 board.escapedVillain.push(this.board.fields[4].bystanders);
                 freePlaceIndex = 4;
@@ -33,6 +36,9 @@ export class CityscapeComponent implements OnInit {
               }
             }
             this.board.fields[0].card = new_card;
+            if (board.fields[0].card.ambush) {
+              board.fields[0].card.ambush(this.board, this.dialog);
+            }
           } else if (new_card.type === 'bystander') {
             const villainFieldIndex = this.board.fields.findIndex(field => field.card != null);
             if (villainFieldIndex !== -1) {
@@ -58,6 +64,9 @@ export class CityscapeComponent implements OnInit {
 
   attack(index: number) {
     if (this.board.playerAttack >= this.board.fields[index].attack + this.board.fields[index].card.attack) {
+      if (this.board.fields[index].card.fight) {
+        this.board.fields[index].card.fight(this.board, this.dialog);
+      }
       this.board.setKOimage('');
       this.board.playerAttack -= this.board.fields[index].attack + this.board.fields[index].card.attack;
       this.board.victoryPile.push([this.board.fields[index].card]);

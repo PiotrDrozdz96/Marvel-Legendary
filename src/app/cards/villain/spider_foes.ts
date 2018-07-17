@@ -1,4 +1,6 @@
 import { Villain } from '../../models/card';
+import { BoardService } from '../../board.service';
+import { MatDialog } from '@angular/material';
 
 // tslint:disable:class-name
 
@@ -8,6 +10,9 @@ export class villain_spider_foes_doctor_octopus implements Villain {
     team = 'spiderFoes';
     attack = 4;
     points = 2;
+    fight(board: BoardService, dialog: MatDialog) {
+        board.numberOfDrawing = 8;
+    }
 }
 
 export class villain_spider_foes_green_goblin implements Villain {
@@ -16,6 +21,9 @@ export class villain_spider_foes_green_goblin implements Villain {
     team = 'spiderFoes';
     attack = 6;
     points = 4;
+    ambush(board: BoardService, dialog: MatDialog) {
+        board.fields[0].bystanders = board.bystandersDeck.draw();
+    }
 }
 
 export class villain_spider_foes_the_lizard implements Villain {
@@ -24,6 +32,11 @@ export class villain_spider_foes_the_lizard implements Villain {
     team = 'spiderFoes';
     attack = 3;
     points = 2;
+    fight(board: BoardService, dialog: MatDialog) {
+        if (board.fields[0].card && board.fields[0].card === this) {
+            board.discardPile.push(board.woundsDeck.draw());
+        }
+    }
 }
 
 export class villain_spider_foes_venom implements Villain {
@@ -32,4 +45,7 @@ export class villain_spider_foes_venom implements Villain {
     team = 'spiderFoes';
     attack = 5;
     points = 3;
+    escape(board: BoardService, dialog: MatDialog) {
+        board.discardPile.push(board.woundsDeck.draw());
+    }
 }

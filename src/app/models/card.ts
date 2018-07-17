@@ -35,9 +35,9 @@ export interface Villain extends Card {
     team: string;
     attack: number;
     points: number;
-    fight?();
-    ambush?();
-    escape?();
+    fight?(board: BoardService, dialog: MatDialog);
+    ambush?(board: BoardService, dialog: MatDialog);
+    escape?(board: BoardService, dialog: MatDialog);
 }
 
 export interface Scheme extends Card {
