@@ -16,6 +16,7 @@ import { SelectHenchmenDialog } from '../select-dialog/select-henchmen.dialog';
 import { SelectHeroDialog } from '../select-dialog/select-hero.dialog';
 import { PlayCardsDialog } from '../play-cards-dialog/play-cards.dialog';
 import { CardsListDialog } from '../cards-list-dialog/cards-list.dialog';
+import { hero_cyclops_uncommon } from '../cards/hero/cyclops';
 
 @Component({
   selector: 'app-board',

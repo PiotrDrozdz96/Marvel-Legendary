@@ -18,7 +18,7 @@ export interface Hero extends Card {
     attack: number;
     recrutingPoints: number;
     cost: number;
-    func?();
+    func?(board: BoardService, dialog: MatDialog);
 }
 
 export interface Mastermind extends Card {

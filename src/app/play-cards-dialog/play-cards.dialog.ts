@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef, MatDialog } from '@angular/material';
 import { BoardService } from '../board.service';
 import { Hero } from '../models/card';
 
@@ -13,7 +13,7 @@ export class PlayCardsDialog {
 
     preview = '';
 
-    constructor(public dialogRef: MatDialogRef<PlayCardsDialog>, public board: BoardService) { }
+    constructor(public dialogRef: MatDialogRef<PlayCardsDialog>, public board: BoardService, public dialog: MatDialog) { }
 
     mouseEnter(src) { this.preview = src; }
     mouseLeave() { this.preview = ''; }
@@ -22,5 +22,9 @@ export class PlayCardsDialog {
         this.preview = '';
         this.board.playerAttack += card.attack;
         this.board.playerRecrutingPoints += card.recrutingPoints;
+        if (card.func) {
+            card.func(this.board, this.dialog);
+        }
+
     }
 }
