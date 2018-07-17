@@ -2,6 +2,7 @@ import { Scheme, Card } from '../models/card';
 import { BoardService } from '../board.service';
 import { wound } from './wounds';
 import { henchman_sentinel, henchman_doombot_legion, henchman_hand_ninjas, henchman_savage_land_mutants } from '../cards/villain/henchmen';
+import { bystander } from './bystanders';
 
 // tslint:disable:class-name
 
@@ -100,8 +101,32 @@ export class scheme_replace_leaders_killbots implements Scheme {
     type = 'scheme';
     image = '/assets/cards/scheme/scheme_replace_leaders_killbots.png';
     counterTwist = 0;
-    twist(board: BoardService) { }
-    setup(board: BoardService) { board.villianDeck.create(5, new scheme_twist); }
+    twist(board: BoardService) {
+        board.fields.filter(field => field.card && field.card.team === 'killbots').forEach(field => {
+            field.card.attack = board.scheme.counterTwist;
+        });
+    }
+    setup(board: BoardService) {
+        board.villianDeck.create(5, new scheme_twist);
+        board.scheme.counterTwist = 3;
+        const length = 18 - board.villianDeck.cards.filter(card => card.type === 'bystander').length;
+        const killbots = Object.assign(new bystander, {
+            image: '/assets/cards/scheme/killbot.png',
+            type: 'villain',
+            team: 'killbots',
+            attack: 3
+        });
+        board.villianDeck.cards = board.villianDeck.cards.map(card => card.type === 'bystander' ? Object.assign({}, killbots) : card);
+        board.villianDeck.create(length, killbots);
+        board.nextTurn().subscribe(sub => {
+            board.fields.filter(field => field.card && field.card.team === 'killbots').forEach(field => {
+                field.card.attack = board.scheme.counterTwist;
+            });
+            if (board.escapedVillain.cards.filter(card => card.team === 'killbots').length >= 5) {
+                console.log('Evil Wins');
+            }
+        });
+    }
 }
 
 export class scheme_secret_invasion_shapeshifters implements Scheme {

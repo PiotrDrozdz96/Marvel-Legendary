@@ -303,7 +303,7 @@ export class mastermind_red_skull implements Mastermind {
                             ko();
                         } else {
                             const index = cards.findIndex(card => card === hero);
-                            board.KO.push(cards.splice(index));
+                            board.KO.push(cards.splice(index, 1));
                             KODialog.unsubscribe();
                             if (cards.length > 0) {
                                 discard();
@@ -324,7 +324,7 @@ export class mastermind_red_skull implements Mastermind {
                             discard();
                         } else {
                             const index = cards.findIndex(card => card === hero);
-                            board.discardPile.push(cards.splice(index));
+                            board.discardPile.push(cards.splice(index, 1));
                             discardDialog.unsubscribe();
                             if (cards.length > 0) {
                                 board.playerDeck.cards.unshift(cards[0]);
