@@ -149,6 +149,24 @@ export class scheme_unleash_cosmic_cube implements Scheme {
     type = 'scheme';
     image = '/assets/cards/scheme/scheme_unleash_cosmic_cube.png';
     counterTwist = 0;
-    twist(board: BoardService) { }
+    twist(board: BoardService) {
+        switch (board.scheme.counterTwist) {
+            case 0:
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+                break;
+            case 5:
+            case 6:
+                board.discardPile.push(board.woundsDeck.draw());
+                break;
+            case 7:
+                board.discardPile.push(board.woundsDeck.draw().concat(board.woundsDeck.draw().concat(board.woundsDeck.draw())));
+                break;
+            case 8:
+                console.log('Evil Wins');
+        }
+    }
     setup(board: BoardService) { board.villianDeck.create(8, new scheme_twist); }
 }

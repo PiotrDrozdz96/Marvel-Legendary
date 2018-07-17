@@ -29,8 +29,8 @@ export class SelectSchemeDialog extends SelectDialog<Scheme, SelectSchemeDialog>
     new scheme_negative_zone_prison_breakout,
     // new scheme_portals_dark_dimension,
     new scheme_replace_leaders_killbots,
-    new scheme_secret_invasion_shapeshifters,
-    new scheme_super_hero_civil_war,
+    // new scheme_secret_invasion_shapeshifters,
+    // new scheme_super_hero_civil_war,
     new scheme_unleash_cosmic_cube
   ];
 
