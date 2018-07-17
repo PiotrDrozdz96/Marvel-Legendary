@@ -13,7 +13,7 @@ export class villain_masters_baron_zemo implements Villain {
     points = 4;
     fight(board: BoardService, dialog: MatDialog) {
         board.playerCards.cards.filter(card => card.team === 'avengers').forEach(avengers => {
-            board.victoryPile.push(board.woundsDeck.draw());
+            board.victoryPile.push(board.bystandersDeck.draw());
         });
     }
 }
