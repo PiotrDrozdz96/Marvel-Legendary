@@ -152,7 +152,8 @@ export class BoardComponent implements OnInit {
 
   nextTurn() {
     if (this.board.playerCards.cards.filter(card => card.type === 'wound').length === this.board.playerCards.cards.length) {
-      this.board.KO.push(this.board.playerCards.pick(0));
+      this.board.KO.push(this.board.playerCards.cards);
+      this.board.playerCards.cards = [];
     }
     this.board.playerAttack = 0;
     this.board.playerRecrutingPoints = 0;
