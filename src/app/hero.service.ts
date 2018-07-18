@@ -127,13 +127,13 @@ export class HeroService {
       new hero_thor_uncommon,
       new hero_thor_common_1,
       new hero_thor_common_2
-    ],
-    [
-      new hero_wolverine_rare,
-      new hero_wolverine_uncommon,
-      new hero_wolverine_common_1,
-      new hero_wolverine_common_2
-    ]
+    ]// ,
+    // [
+    //   new hero_wolverine_rare,
+    //   new hero_wolverine_uncommon,
+    //   new hero_wolverine_common_1,
+    //   new hero_wolverine_common_2
+    // ]
   ];
 
   public cardsObs = new BehaviorSubject<Array<Array<Hero>>>(this.cards);
