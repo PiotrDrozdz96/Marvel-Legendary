@@ -59,7 +59,6 @@ export class hero_black_widow_common_1 implements Hero {
                 }
             }).afterClosed().subscribe(hero => {
                 if (hero === undefined) {
-                    KODialog.unsubscribe();
                 } else {
                     let index = board.discardPile.cards.findIndex(card => card.image === hero.image);
                     if (index !== -1) {
@@ -70,6 +69,7 @@ export class hero_black_widow_common_1 implements Hero {
                     }
                     board.victoryPile.push(board.bystandersDeck.draw());
                 }
+                KODialog.unsubscribe();
             });
         }
     }

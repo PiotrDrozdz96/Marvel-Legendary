@@ -1,4 +1,8 @@
 import { Hero } from '../../models/card';
+import { BoardService } from '../../board.service';
+import { MatDialog } from '@angular/material';
+import { HQDialog } from '../../cards-dialog/hq-dialog/hq.dialog';
+import { wound } from '../wounds';
 
 // tslint:disable:class-name
 
@@ -10,6 +14,11 @@ export class hero_hulk_rare implements Hero {
     attack = 5;
     recrutingPoints = 0;
     cost = 8;
+    func(board: BoardService, dialog: MatDialog) {
+        if (board.playerCards.cards.find(card => card.color === 'green')) {
+            board.playerAttack += 5;
+        }
+    }
 }
 
 export class hero_hulk_uncommon implements Hero {
@@ -20,6 +29,9 @@ export class hero_hulk_uncommon implements Hero {
     attack = 4;
     recrutingPoints = 0;
     cost = 5;
+    func(board: BoardService, dialog: MatDialog) {
+        board.discardPile.push(board.woundsDeck.draw());
+    }
 }
 
 export class hero_hulk_common_1 implements Hero {
@@ -30,6 +42,11 @@ export class hero_hulk_common_1 implements Hero {
     attack = 2;
     recrutingPoints = 0;
     cost = 3;
+    func(board: BoardService, dialog: MatDialog) {
+        if (board.playerCards.cards.find(card => card.color === 'green')) {
+            board.playerAttack++;
+        }
+    }
 }
 
 export class hero_hulk_common_2 implements Hero {
@@ -40,4 +57,27 @@ export class hero_hulk_common_2 implements Hero {
     attack = 2;
     recrutingPoints = 0;
     cost = 4;
+    func(board: BoardService, dialog: MatDialog) {
+        if (board.playerHand.cards.concat(board.discardPile.cards).find(card => card.type === 'wound')) {
+            const WoundDialog = dialog.open(HQDialog, {
+                data: {
+                    cards: [new wound],
+                    preview: this.image,
+                    header: 'KO a Wound or nothing'
+                }
+            }).afterClosed().subscribe(woundCard => {
+                if (!woundCard === undefined) {
+                    let index = board.discardPile.cards.findIndex(card => card.type === 'wound');
+                    if (index !== -1) {
+                        board.KO.push(board.discardPile.pick(index));
+                    } else {
+                        index = board.playerHand.cards.findIndex(card => card.type === 'wound');
+                        board.KO.push(board.playerHand.pick(index));
+                    }
+                    board.playerAttack += 2;
+                }
+                WoundDialog.unsubscribe();
+            });
+        }
+    }
 }
