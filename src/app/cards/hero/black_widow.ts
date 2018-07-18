@@ -15,16 +15,56 @@ export class hero_black_widow_rare implements Hero {
     cost = 7;
     defeatedVillain = 0;
     func(board: BoardService, dialog: MatDialog) {
-        this.defeatedVillain = board.victoryPile.cards.filter(card => card.type === 'mastermind' || card.type === 'villain').length;
-        const Obs = board.nextTurn().subscribe(sub => {
-            if (board.victoryPile.cards.filter(card =>
-                card.type === 'mastermind' || card.type === 'villain').length > this.defeatedVillain
-            ) {
-                board.victoryPile.push(board.bystandersDeck.draw());
+        const cards = board.fields.filter(field => field.bystanders.length > 0).map(field => field.card);
+        if (board.mastermindBystanders.length > 0) {
+            cards.push(board.mastermind);
+        }
+        if (cards.length > 0) {
+            open();
+        }
+        function open() {
+            const VillainDialog = dialog.open(HQDialog, {
+                data: {
+                    cards: cards,
+                    preview: '',
+                    header: 'Defeat Villain'
+                }
+            }).afterClosed().subscribe(villain => {
+                if (villain === undefined) {
+                    open();
+                } else if (villain.type === 'mastermind') {
+                    attackMastermind();
+                } else {
+                    const index = board.fields.findIndex(field => field.card === villain);
+                    attackVillain(index);
+                }
+                VillainDialog.unsubscribe();
+            });
+        }
+        function attackMastermind() {
+            const tactic = board.mastermind.tactics.splice(Math.floor(Math.random() * board.mastermind.tactics.length), 1);
+            const tacticCard = Object.assign({}, board.mastermind);
+            tacticCard.image = tactic[0].image;
+            board.victoryPile.push([tacticCard]);
+            board.victoryPile.push(board.mastermindBystanders);
+            board.mastermindBystanders = [];
+            if (board.mastermind.tactics.length === 0) {
+                console.log('Win');
+            } else {
+                board.setKOimage(tactic[0].image);
+                tactic[0].func(board, dialog, tactic[0]);
             }
-            this.defeatedVillain = 0;
-            Obs.unsubscribe();
-        });
+        }
+        function attackVillain(index: number) {
+            const card = board.fields[index].card;
+            board.victoryPile.push([card]);
+            board.victoryPile.push(board.fields[index].bystanders);
+            board.fields[index].card = null;
+            board.fields[index].bystanders = [];
+            if (card.fight) {
+                card.fight(board, dialog);
+            }
+        }
     }
 }
 
@@ -58,8 +98,7 @@ export class hero_black_widow_common_1 implements Hero {
                     header: 'KOs Card or nothing'
                 }
             }).afterClosed().subscribe(hero => {
-                if (hero === undefined) {
-                } else {
+                if (hero !== undefined) {
                     let index = board.discardPile.cards.findIndex(card => card.image === hero.image);
                     if (index !== -1) {
                         board.KO.push(board.discardPile.pick(index));

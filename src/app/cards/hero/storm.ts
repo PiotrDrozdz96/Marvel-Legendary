@@ -52,6 +52,8 @@ export class hero_storm_uncommon implements Hero {
                         const nextVillain = board.fields[index + 1].card;
                         board.fields[index].card = nextVillain;
                         board.fields[index + 1].card = villain;
+                        board.fields[index].bystanders = board.fields[index + 1].bystanders;
+                        board.fields[index + 1].bystanders = [];
                     } else {
                         board.fields[index + 1].card = villain;
                         board.fields[index].card = null;

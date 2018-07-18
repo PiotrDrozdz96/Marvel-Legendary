@@ -66,7 +66,7 @@ export class hero_hulk_common_2 implements Hero {
                     header: 'KO a Wound or nothing'
                 }
             }).afterClosed().subscribe(woundCard => {
-                if (!woundCard === undefined) {
+                if (woundCard !== undefined) {
                     let index = board.discardPile.cards.findIndex(card => card.type === 'wound');
                     if (index !== -1) {
                         board.KO.push(board.discardPile.pick(index));

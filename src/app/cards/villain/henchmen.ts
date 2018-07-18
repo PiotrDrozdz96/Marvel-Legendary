@@ -43,7 +43,7 @@ export class henchman_doombot_legion implements Villain {
                 data: {
                     cards: cards,
                     preview: '',
-                    header: 'KO one Hero'
+                    header: 'KO one Card'
                 }
             }).afterClosed().subscribe(hero => {
                 if (hero === undefined) {

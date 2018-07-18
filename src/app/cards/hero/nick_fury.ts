@@ -75,12 +75,12 @@ export class hero_nick_fury_common_1 implements Hero {
     func(board: BoardService, dialog: MatDialog) {
         const KODialog = dialog.open(HQDialog, {
             data: {
-                cards: board.playerHand.cards.concat(board.discardPile.cards),
+                cards: board.playerHand.cards.concat(board.discardPile.cards).filter(card => card.team === 'shield'),
                 preview: '',
                 header: 'KOs Card or nothing'
             }
         }).afterClosed().subscribe(hero => {
-            if (!hero === undefined) {
+            if (hero !== undefined) {
                 let index = board.discardPile.cards.findIndex(card => card.image === hero.image);
                 if (index !== -1) {
                     board.KO.push(board.discardPile.pick(index));

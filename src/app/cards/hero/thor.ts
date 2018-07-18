@@ -21,7 +21,7 @@ export class hero_thor_rare implements Hero {
                 header: 'Replace recruiting points on attack or no'
             }
         }).afterClosed().subscribe(hero => {
-            if (!hero === undefined) {
+            if (hero !== undefined) {
                 board.playerRecrutingPoints -= 5;
                 board.playerAttack += 5;
             }

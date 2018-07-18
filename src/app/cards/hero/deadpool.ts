@@ -20,7 +20,7 @@ export class hero_deadpool_rare implements Hero {
                 header: 'Replace hero or nothing'
             }
         }).afterClosed().subscribe(card => {
-            if (!card === undefined) {
+            if (card !== undefined) {
                 board.playerHand.push(board.woundsDeck.draw());
                 const index = board.playerHand.cards.findIndex(hero => hero === card);
                 board.playerHand.pick(index);

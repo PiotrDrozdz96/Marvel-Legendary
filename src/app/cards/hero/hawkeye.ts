@@ -13,18 +13,6 @@ export class hero_hawkeye_rare implements Hero {
     recrutingPoints = 0;
     cost = 7;
     defeatedVillain = 0;
-    func(board: BoardService, dialog: MatDialog) {
-        this.defeatedVillain = board.victoryPile.cards.filter(card => card.type === 'mastermind' || card.type === 'villain').length;
-        const Obs = board.nextTurn().subscribe(sub => {
-            const length = board.victoryPile.cards.filter(card =>
-                card.type === 'mastermind' || card.type === 'villain').length - this.defeatedVillain;
-            for (let i = 0; i < length; i++) {
-                board.victoryPile.push([...board.bystandersDeck.draw(), ...board.bystandersDeck.draw(), ...board.bystandersDeck.draw()]);
-            }
-            this.defeatedVillain = 0;
-            Obs.unsubscribe();
-        });
-    }
 }
 
 export class hero_hawkeye_uncommon implements Hero {
