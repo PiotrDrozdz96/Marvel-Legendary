@@ -17,6 +17,7 @@ export class CityscapeComponent implements OnInit {
         this.board.fields.forEach(field => {
           field.attack = 0;
         });
+        this.board.mastermind.additionalAttack = 0;
         const new_cards = this.board.villianDeck.draw();
         if (new_cards.length === 1) {
           const new_card = new_cards[0];

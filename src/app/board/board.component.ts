@@ -166,8 +166,8 @@ export class BoardComponent implements OnInit {
   }
 
   attackMastermind() {
-    if (this.board.playerAttack >= this.board.mastermind.attack) {
-      this.board.playerAttack -= this.board.mastermind.attack;
+    if (this.board.playerAttack >= this.board.mastermind.attack + this.board.mastermind.additionalAttack) {
+      this.board.playerAttack -= this.board.mastermind.attack + this.board.mastermind.additionalAttack;
       const tactic = this.board.mastermind.tactics.splice(Math.floor(Math.random() * this.board.mastermind.tactics.length), 1);
       const tacticCard = Object.assign({}, this.board.mastermind);
       tacticCard.image = tactic[0].image;

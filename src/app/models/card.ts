@@ -24,6 +24,7 @@ export interface Hero extends Card {
 export interface Mastermind extends Card {
     // type: 'mastermind';
     attack: number;
+    additionalAttack: number;
     points: number;
     alwaysLeads: string;
     tactics: Array<Tactic>;
