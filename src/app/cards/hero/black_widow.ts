@@ -13,14 +13,16 @@ export class hero_black_widow_rare implements Hero {
     attack = 4;
     recrutingPoints = 0;
     cost = 7;
-    defeatVillain = 0;
+    defeatedVillain = 0;
     func(board: BoardService, dialog: MatDialog) {
-        this.defeatVillain = board.victoryPile.cards.filter(card => card.type === 'mastermind' || card.type === 'villain').length;
+        this.defeatedVillain = board.victoryPile.cards.filter(card => card.type === 'mastermind' || card.type === 'villain').length;
         const Obs = board.nextTurn().subscribe(sub => {
-            if (board.victoryPile.cards.filter(card => card.type === 'mastermind' || card.type === 'villain').length > this.defeatVillain) {
+            if (board.victoryPile.cards.filter(card =>
+                card.type === 'mastermind' || card.type === 'villain').length > this.defeatedVillain
+            ) {
                 board.victoryPile.push(board.bystandersDeck.draw());
             }
-            this.defeatVillain = 0;
+            this.defeatedVillain = 0;
             Obs.unsubscribe();
         });
     }
@@ -53,7 +55,7 @@ export class hero_black_widow_common_1 implements Hero {
                 data: {
                     cards: board.playerHand.cards.concat(board.discardPile.cards),
                     preview: '',
-                    header: 'KOs Hero or nothing'
+                    header: 'KOs Card or nothing'
                 }
             }).afterClosed().subscribe(hero => {
                 if (hero === undefined) {

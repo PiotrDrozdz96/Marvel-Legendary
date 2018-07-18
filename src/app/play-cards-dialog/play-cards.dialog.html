@@ -4,6 +4,6 @@
         <img *ngFor="let card of board.playerCards.cards" [src]="card.image" (mouseenter)="mouseEnter(card.image)" (mouseleave)="mouseLeave()">
     </div>
     <div class="cards-list">
-        <img *ngFor="let card of board.playerHand.cards; let index = index" [src]="card.image" (mouseenter)="mouseEnter(card.image)" (mouseleave)="mouseLeave()" (click)="pick(card,index)">
+        <img *ngFor="let card of board.playerHand.cards; let index = index" [src]="card.image" (mouseenter)="mouseEnter(card.image)" (mouseleave)="mouseLeave()" (click)="pick(index)">
     </div>
 </div>

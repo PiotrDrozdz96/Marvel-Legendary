@@ -17,14 +17,14 @@ export class PlayCardsDialog {
 
     mouseEnter(src) { this.preview = src; }
     mouseLeave() { this.preview = ''; }
-    pick(card: Hero, index: number) {
-        this.board.playerCards.push(this.board.playerHand.pick(index));
-        this.preview = '';
-        this.board.playerAttack += card.attack;
-        this.board.playerRecrutingPoints += card.recrutingPoints;
+    pick( index: number) {
+        const card = this.board.playerHand.pick(index)[0];
         if (card.func) {
             card.func(this.board, this.dialog);
         }
-
+        this.board.playerCards.push([card]);
+        this.preview = '';
+        this.board.playerAttack += card.attack;
+        this.board.playerRecrutingPoints += card.recrutingPoints;
     }
 }

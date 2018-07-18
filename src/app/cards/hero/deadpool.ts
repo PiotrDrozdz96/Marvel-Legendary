@@ -38,6 +38,26 @@ export class hero_deadpool_uncommon implements Hero {
     attack = 2;
     recrutingPoints = 0;
     cost = 3;
+    func(board: BoardService, dialog: MatDialog) {
+        if (board.playerCards.cards.length === 0) {
+            const ChooseDialog = dialog.open(HQDialog, {
+                data: {
+                    cards: [new hero_deadpool_uncommon],
+                    preview: this.image,
+                    header: 'discard or nothing'
+                }
+            }).afterClosed().subscribe(card => {
+                if (card !== undefined) {
+                    board.discardPile.push(board.playerHand.cards);
+                    board.playerHand.cards = [];
+                    for (let i = 0; i < 4; i++) {
+                        board.playerHand.push(board.playerDeck.draw());
+                    }
+                }
+                ChooseDialog.unsubscribe();
+            });
+        }
+    }
 }
 
 export class hero_deadpool_common_1 implements Hero {
@@ -47,6 +67,26 @@ export class hero_deadpool_common_1 implements Hero {
     attack = 0;
     recrutingPoints = 2;
     cost = 3;
+    func(board: BoardService, dialog: MatDialog) {
+        open();
+        function open() {
+            const ChooseDialog = dialog.open(HQDialog, {
+                data: {
+                    cards: board.fields.filter(field => field.card).map(field => field.card),
+                    preview: (new hero_deadpool_common_1).image,
+                    header: 'Choose Villain which capture bystanders'
+                }
+            }).afterClosed().subscribe(card => {
+                if (card === undefined) {
+                    open();
+                } else {
+                    const index = board.fields.findIndex(field => field.card === card);
+                    board.fields[index].bystanders.push(...board.bystandersDeck.draw());
+                }
+                ChooseDialog.unsubscribe();
+            });
+        }
+    }
 }
 
 export class hero_deadpool_common_2 implements Hero {
@@ -56,4 +96,7 @@ export class hero_deadpool_common_2 implements Hero {
     attack = 2;
     recrutingPoints = 0;
     cost = 5;
+    func(board: BoardService, dialog: MatDialog) {
+        board.playerAttack += board.playerCards.cards.filter(card => card.cost % 2 !== 0).length;
+    }
 }

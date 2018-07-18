@@ -13,7 +13,7 @@ export class hero_captain_america_rare implements Hero {
     recrutingPoints = 0;
     cost = 7;
     func(board: BoardService, dialog: MatDialog) {
-        board.playerAttack += (board.playerCards.cards.filter(card => card.team === 'avengers').length - 1) * 3;
+        board.playerAttack += board.playerCards.cards.filter(card => card.team === 'avengers').length * 3;
     }
 }
 

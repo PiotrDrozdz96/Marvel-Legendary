@@ -14,7 +14,7 @@ export class hero_cyclops_rare implements Hero {
     recrutingPoints = 0;
     cost = 8;
     func(board: BoardService, dialog: MatDialog) {
-        board.playerAttack += (board.playerCards.cards.filter(card => card.team === 'x-men').length - 1) * 2;
+        board.playerAttack += board.playerCards.cards.filter(card => card.team === 'x-men').length * 2;
     }
 }
 

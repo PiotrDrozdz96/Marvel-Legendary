@@ -66,7 +66,9 @@ export class villain_skrull_shapeshifters implements Villain {
     points = 2;
     copiedHero = undefined;
     ambush(board: BoardService, dialog: MatDialog) {
+        console.log(board.hq);
         const hero = board.hq.splice(4, 1)[0];
+        console.log(hero);
         board.hq.push(...board.heroDeck.draw());
         this.attack = hero.cost;
         this.image = hero.image;
