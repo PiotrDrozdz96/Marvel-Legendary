@@ -14,6 +14,9 @@ export class CityscapeComponent implements OnInit {
   constructor(public board: BoardService, public dialog: MatDialog) {
     this.board.nextTurn().subscribe((draw: boolean) => {
       if (draw) {
+        this.board.fields.forEach(field => {
+          field.attack = 0;
+        });
         const new_cards = this.board.villianDeck.draw();
         if (new_cards.length === 1) {
           const new_card = new_cards[0];

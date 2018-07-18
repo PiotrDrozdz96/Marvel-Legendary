@@ -80,8 +80,7 @@ export class hero_nick_fury_common_1 implements Hero {
                 header: 'KOs Card or nothing'
             }
         }).afterClosed().subscribe(hero => {
-            if (hero === undefined) {
-            } else {
+            if (!hero === undefined) {
                 let index = board.discardPile.cards.findIndex(card => card.image === hero.image);
                 if (index !== -1) {
                     board.KO.push(board.discardPile.pick(index));
