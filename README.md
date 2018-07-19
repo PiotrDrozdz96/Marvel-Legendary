@@ -32,7 +32,7 @@ spider_foes_lizard => "If you fight the Lizard in the Sewers, EACH OTHER PLAYER 
 
 cyclops_uncommon => effect considered only in cyclops_common_1 and cyclops_common_2
 
-emma_frost_rare => "Whenever you defeat a Villain or Mastermind THIS TURN, you get +3recrutingPOints" changed to "NEXT TURN"
+emma_frost_rare => not working
 
 gambit_uncommon => remove "Do the same thing to each other player`s deck.
 
