@@ -2,6 +2,7 @@ import { Hero } from '../../models/card';
 import { BoardService } from '../../board.service';
 import { MatDialog } from '@angular/material';
 import { HQDialog } from '../../cards-dialog/hq-dialog/hq.dialog';
+import { EndGameDialog } from '../../end-game-dialog/end-game.dialog';
 
 // tslint:disable:class-name
 
@@ -31,7 +32,9 @@ export class hero_nick_fury_rare implements Hero {
             board.victoryPile.push(board.mastermindBystanders);
             board.mastermindBystanders = [];
             if (board.mastermind.tactics.length === 0) {
-                console.log('Win');
+                this.dialog.open(EndGameDialog, {data: { header: 'win' }}).afterClosed().subscribe(sub => {
+                    location.reload();
+                  });
             } else {
                 board.setKOimage(tactic[0].image);
                 tactic[0].func(board, dialog, tactic[0]);

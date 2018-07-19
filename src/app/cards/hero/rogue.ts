@@ -83,7 +83,7 @@ export class hero_rogue_common_2 implements Hero {
                     header: 'KO one Card or nothing'
                 }
             }).afterClosed().subscribe(hero => {
-                if (!hero === undefined) {
+                if (hero !== undefined) {
                     let index = board.discardPile.cards.findIndex(card => card === hero);
                     if (index !== -1) {
                         board.KO.push(board.discardPile.pick(index));

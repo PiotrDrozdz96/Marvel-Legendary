@@ -135,10 +135,10 @@ export class mastermind_loki implements Mastermind {
         {
             image: 'assets/cards/mastermind/loki/loki_3.png',
             func: (board: BoardService, dialog: MatDialog, tactic: Tactic) => {
-                const villains = board.victoryPile.cards.filter(card => card.type === 'villain');
-                const rest = board.victoryPile.cards.filter(card => card.type !== 'villain');
-                board.KO.push(villains);
-                board.victoryPile.cards = rest;
+                const index = board.victoryPile.cards.findIndex(card => card.type === 'villain');
+                if (index !== -1) {
+                    board.KO.push(board.victoryPile.pick(index));
+                }
             }
         },
         {
@@ -338,7 +338,9 @@ export class mastermind_red_skull implements Mastermind {
                 }
 
                 const cards = [...board.playerDeck.draw(), ...board.playerDeck.draw(), ...board.playerDeck.draw()];
-                ko();
+                if (cards.length > 0) {
+                    ko();
+                }
             }
         }
     ];

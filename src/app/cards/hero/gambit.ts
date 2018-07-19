@@ -39,9 +39,9 @@ export class hero_gambit_uncommon implements Hero {
             }
         }).afterClosed().subscribe(card => {
             if (card === undefined) {
-                board.playerDeck.cards.unshift(card);
+                board.playerDeck.cards.unshift(cards[0]);
             } else {
-                board.discardPile.push([card]);
+                board.discardPile.push(cards);
             }
             DiscardDialog.unsubscribe();
         });

@@ -45,7 +45,7 @@ export class hero_captain_america_common_1 implements Hero {
     func(board: BoardService, dialog: MatDialog) {
         const temp = {};
         board.playerRecrutingPoints += board.playerCards.cards.concat(board.playerHand.cards)
-            .map(card => card.color).reduce((arr, current) => {
+            .map(card => card.color).concat([this.color]).reduce((arr, current) => {
                 if (temp[current]) {
                     return arr;
                 } else {
@@ -67,7 +67,7 @@ export class hero_captain_america_common_2 implements Hero {
     func(board: BoardService, dialog: MatDialog) {
         const temp = {};
         board.playerAttack += board.playerCards.cards.concat(board.playerHand.cards)
-            .map(card => card.color).reduce((arr, current) => {
+            .map(card => card.color).concat([this.color]).reduce((arr, current) => {
                 if (temp[current]) {
                     return arr;
                 } else {

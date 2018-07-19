@@ -68,7 +68,9 @@ export class hero_deadpool_common_1 implements Hero {
     recrutingPoints = 2;
     cost = 3;
     func(board: BoardService, dialog: MatDialog) {
-        open();
+        if (board.fields.find(field => field.card)) {
+            open();
+        }
         function open() {
             const ChooseDialog = dialog.open(HQDialog, {
                 data: {

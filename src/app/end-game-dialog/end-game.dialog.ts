@@ -15,8 +15,7 @@ export class EndGameDialog {
     victoryPile: Array<Villain | Bystander | Mastermind>;
     escapedVillains: Array<Villain | Bystander | Mastermind>;
     preview = '';
-    playerPoints: number;
-    villainPoints: number;
+    yourScore: number;
     h1: string;
     h2: string;
 
@@ -37,11 +36,13 @@ export class EndGameDialog {
             }
         };
         this.h1 = headers[data.header].h1;
-        this.h1 = headers[data.header].h2;
+        this.h2 = headers[data.header].h2;
         this.victoryPile = board.victoryPile.cards;
         this.escapedVillains = board.escapedVillain.cards;
-        this.playerPoints = this.victoryPile.reduce((sum, card) => sum + card.points , 0);
-        this.villainPoints = this.escapedVillains.reduce((sum, card) => sum + card.points, 0);
+        this.yourScore = this.victoryPile.reduce((sum, card) => sum + card.points, 0)
+            - 4 * this.escapedVillains.filter(card => card.type === 'bystander').length
+            - 3 * this.board.scheme.counterTwist
+            - this.escapedVillains.filter(card => card.type === 'villain').length;
     }
 
     mouseEnter(src) { this.preview = src; }

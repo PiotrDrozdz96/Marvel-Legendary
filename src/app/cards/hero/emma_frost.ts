@@ -14,18 +14,7 @@ export class hero_emma_frost_rare implements Hero {
     recrutingPoints = 0;
     cost = 7;
     defeatedVillain = 0;
-    func(board: BoardService, dialog: MatDialog) {
-        this.defeatedVillain = board.victoryPile.cards.filter(card => card.type === 'mastermind' || card.type === 'villain').length;
-        const Obs = board.nextTurn().subscribe(sub => {
-            if (board.victoryPile.cards.filter(card =>
-                card.type === 'mastermind' || card.type === 'villain').length > this.defeatedVillain
-            ) {
-                board.playerRecrutingPoints += 3;
-            }
-            this.defeatedVillain = 0;
-            Obs.unsubscribe();
-        });
-    }
+    func(board: BoardService, dialog: MatDialog) { }
 }
 
 export class hero_emma_frost_uncommon implements Hero {
