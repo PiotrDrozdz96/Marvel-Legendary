@@ -1,53 +1,46 @@
 # MarvelLegendary
 
-is a deck-building game set in the Marvel Comics universe.
+Alpha 1.0
+doctor_doom_2 -> "Choose one: each other player draws a card or each other player discards a card" changed to "draw a card" 
+doctor_doom_3 -> "Take another turn after this on" changed to "nothing happend"
+doctor-doom_masterStrike -> "Each player with exactly 6 cards in hand reveals a 'grey' Hero or puts 2 cards from their hand on top of their deck."
+			    changed to "If you have exactly 6 cards in hand and haven`t any 'Grey' hero, 
+			    puts 2 cards from their hand on top thair deck"
 
- 
+loki_2 -> add villain.func()
+loki_3 -> "Each other player KOs a Villain from their Victory Pile." changed to "KOs a Villain from yours Victory Pile."
+loki_4 -> "Each other player KOs two Bystanders from their VictoryPile" changed to "KOs two Bystanders from yours Victory Pile"
 
-To set up the game, players choose a number of hero decks from the likes of Spider-man, Hulk,
- Cyclops, or Wolverine, to name a few. Shuffle them together (since players use only a 
- handful of hero decks out of the fifteen included) allowing the hero deck to vary widely in 
- terms of what's available.
+magneto_2 -> "Each other player reveals an 'x-men' Hero or gains two Wounds" changed to "If you haven`t 'x-men' Hero gains two Wounds"
 
- 
+<scheme_portals_dark_dimension is disable>
+<scheme_secret_invasion_shapeshifters is disable>
+<scheme_super_hero_civil_was is disable>
 
-Players then choose a mastermind villain (Magneto, Loki, Dr. Doom, etc.) and stack that 
-particular villain's attack cards underneath it. Next, modify the villain deck as needed 
-based on that villain's particular scheme.
+<brotherhood_blob> -> nothing
 
- 
+asgard_ymir fight() -> "Choose a player. That player ..." changed to "You ..."
 
-Over the course of the game, players will recruit powerful hero cards to add to their deck in
-order to build a stronger and more resourceful deck.
+villain_master_melter -> "Each player reveal the top card of their deck. For each card, you choose to KO it or put it back" change to nothing
+villain_master_ultron -> "Ultron is worth +1point for each 'grey' Hero you have among all your cards AT THE END OF THE GAME" chenged to 
+			 "AT ESCAPE OR FIGHT"
 
- 
+power_skrull -> "Choose a Hero in the HQ for each player. Each player gains that Hero." changed to "Recruit Hero from HQ for free"
 
-Players need to build both their recruitment powers (to enlist more heroes) and their
-fighting ability (to combat the villains who keep popping up to cause trouble).
+spider_foes_lizard => "If you fight the Lizard in the Sewers, EACH OTHER PLAYER gains a wound" changed to "YOU"
+<spider_foes_venom> -> nothing + "EACH PLAYER gains a Wound" changed to "YOU"
 
- 
+cyclops_uncommon => effect considered only in cyclops_common_1 and cyclops_common_2
 
-Players recruit heroes from an array of six cards, with empty slots refilled as needed. At
-the start of a player's turn, he reveals a villain and adds it to the row of villains. This
-row has a limited number of spaces, and if it fills up, the earliest villain to arrive
-escapes, possibly punishing the heroes in some way.
+emma_frost_rare => "Whenever you defeat a Villain or Mastermind THIS TURN, you get +3recrutingPOints" changed to "NEXT TURN"
 
- 
+gambit_uncommon => remove "Do the same thing to each other player`s deck.
 
-Some villains also take an action when showing up for the first time, such as kidnapping an
-innocent bystander. The villain deck also contains "master strike" cards, and whenever one of
-these shows up, the mastermind villain (controlled by the game) takes a bonus action.
+hawkeye_uncommon => changed to "draw a card"
 
- 
+rogue_rare => only draw card :(
+rogue_uncommon => copy only attack,recrutingPoints and func();
 
-As players fight and defeat villains, they collect those cards, which will be worth points at
-game's end. Players can also fight the mastermind; if a player has enough fighting power, he
-claims one of the attack cards beneath the mastermind, which has a particular effect on the
-game.
+wolverine is disable
 
- 
-
-If all of these cards are claimed, the game ends and players tally their points to see who
-wins. If the mastermind completes his scheme, however  having a certain number of villains
-escape, for example, or imposing a certain number of wounds on the heroes  then the players
-all lose.
+hawkeye_rare => not working
