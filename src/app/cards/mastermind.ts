@@ -8,12 +8,12 @@ import { HQDialog } from '../cards-dialog/hq-dialog/hq.dialog';
 
 export class master_strike implements Card {
     type = 'masterStrike';
-    image = '/assets/cards/mastermind/master_strike.png';
+    image = 'assets/cards/mastermind/master_strike.png';
 }
 
 export class mastermind_doctor_doom implements Mastermind {
     type = 'mastermind';
-    image = '/assets/cards/mastermind/doctor_doom/mastermind_doctor_doom.png';
+    image = 'assets/cards/mastermind/doctor_doom/mastermind_doctor_doom.png';
     attack = 9;
     additionalAttack = 0;
     points = 5;
@@ -90,7 +90,7 @@ export class mastermind_doctor_doom implements Mastermind {
 
 export class mastermind_loki implements Mastermind {
     type = 'mastermind';
-    image = '/assets/cards/mastermind/loki/mastermind_loki.png';
+    image = 'assets/cards/mastermind/loki/mastermind_loki.png';
     attack = 10;
     additionalAttack = 0;
     points = 5;
@@ -161,14 +161,14 @@ export class mastermind_loki implements Mastermind {
 
 export class mastermind_magneto implements Mastermind {
     type = 'mastermind';
-    image = '/assets/cards/mastermind/magneto/mastermind_magneto.png';
+    image = 'assets/cards/mastermind/magneto/mastermind_magneto.png';
     attack = 8;
     additionalAttack = 0;
     points = 5;
     alwaysLeads = 'brotherhood';
     tactics = [
         {
-            image: '/assets/cards/mastermind/magneto/magneto_1.png',
+            image: 'assets/cards/mastermind/magneto/magneto_1.png',
             func: (board: BoardService, dialog: MatDialog, tactic: Tactic) => {
                 const cardsList = board.hq.filter(card => card.team === 'x-men');
                 if (cardsList.length !== 0) {
@@ -193,7 +193,7 @@ export class mastermind_magneto implements Mastermind {
             }
         },
         {
-            image: '/assets/cards/mastermind/magneto/magneto_2.png',
+            image: 'assets/cards/mastermind/magneto/magneto_2.png',
             func: (board: BoardService, dialog: MatDialog, tactic: Tactic) => {
                 if (!board.playerCards.cards.some(card => card.team === 'x-men')) {
                     board.playerDeck.push(board.woundsDeck.draw().concat(board.woundsDeck.draw()));
@@ -201,7 +201,7 @@ export class mastermind_magneto implements Mastermind {
             }
         },
         {
-            image: '/assets/cards/mastermind/magneto/magneto_3.png',
+            image: 'assets/cards/mastermind/magneto/magneto_3.png',
             func: (board: BoardService, dialog: MatDialog, tactic: Tactic) => {
                 const cardsList = board.playerCards.cards.filter(card => card.team === 'x-men');
                 if (cardsList.length !== 0) {
@@ -225,7 +225,7 @@ export class mastermind_magneto implements Mastermind {
             }
         },
         {
-            image: '/assets/cards/mastermind/magneto/magneto_4.png',
+            image: 'assets/cards/mastermind/magneto/magneto_4.png',
             func: (board: BoardService, dialog: MatDialog, tactic: Tactic) => {
                 const length = board.playerCards.cards.filter(card => card.team === 'x-men').length;
                 for (let i = 0; i < length; i++) {
@@ -264,20 +264,20 @@ export class mastermind_magneto implements Mastermind {
 
 export class mastermind_red_skull implements Mastermind {
     type = 'mastermind';
-    image = '/assets/cards/mastermind/red_skull/mastermind_red_skull.png';
+    image = 'assets/cards/mastermind/red_skull/mastermind_red_skull.png';
     attack = 7;
     additionalAttack = 0;
     points = 5;
     alwaysLeads = 'hydra';
     tactics = [
         {
-            image: '/assets/cards/mastermind/red_skull/red_skull_1.png',
+            image: 'assets/cards/mastermind/red_skull/red_skull_1.png',
             func: (board: BoardService, dialog: MatDialog, tactic: Tactic) => {
                 board.playerRecrutingPoints += 4;
             }
         },
         {
-            image: '/assets/cards/mastermind/red_skull/red_skull_2.png',
+            image: 'assets/cards/mastermind/red_skull/red_skull_2.png',
             func: (board: BoardService, dialog: MatDialog, tactic: Tactic) => {
                 const length = board.victoryPile.cards.filter(card => card['team'] === 'hydra').length + 2;
                 for (let i = 0; i < length; i++) {
@@ -286,13 +286,13 @@ export class mastermind_red_skull implements Mastermind {
             }
         },
         {
-            image: '/assets/cards/mastermind/red_skull/red_skull_3.png',
+            image: 'assets/cards/mastermind/red_skull/red_skull_3.png',
             func: (board: BoardService, dialog: MatDialog, tactic: Tactic) => {
                 board.playerAttack += 3;
             }
         },
         {
-            image: '/assets/cards/mastermind/red_skull/red_skull_4.png',
+            image: 'assets/cards/mastermind/red_skull/red_skull_4.png',
             func: (board: BoardService, dialog: MatDialog, tactic: Tactic) => {
 
                 function ko() {

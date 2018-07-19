@@ -13,7 +13,7 @@ import { mastermind_doctor_doom, mastermind_loki, mastermind_magneto, mastermind
 export class SelectMastermindDialog extends SelectDialog<Mastermind, SelectMastermindDialog> {
 
   header = 'Select one Mastermind';
-  randomImage = '/assets/back_of_card.png';
+  randomImage = 'assets/back_of_card.png';
   cards = [
     new mastermind_doctor_doom,
     new mastermind_loki,

@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material';
 
 export class hero_captain_america_rare implements Hero {
     type = 'hero';
-    image = '/assets/cards/hero/captain_america/captain_america_rare.png';
+    image = 'assets/cards/hero/captain_america/captain_america_rare.png';
     team = 'avengers';
     color = 'red';
     attack = 3;
@@ -19,7 +19,7 @@ export class hero_captain_america_rare implements Hero {
 
 export class hero_captain_america_uncommon implements Hero {
     type = 'hero';
-    image = '/assets/cards/hero/captain_america/captain_america_uncommon.png';
+    image = 'assets/cards/hero/captain_america/captain_america_uncommon.png';
     team = 'avengers';
     color = 'grey';
     attack = 4;
@@ -36,7 +36,7 @@ export class hero_captain_america_uncommon implements Hero {
 
 export class hero_captain_america_common_1 implements Hero {
     type = 'hero';
-    image = '/assets/cards/hero/captain_america/captain_america_common_1.png';
+    image = 'assets/cards/hero/captain_america/captain_america_common_1.png';
     team = 'avengers';
     color = 'yellow';
     attack = 0;
@@ -58,7 +58,7 @@ export class hero_captain_america_common_1 implements Hero {
 
 export class hero_captain_america_common_2 implements Hero {
     type = 'hero';
-    image = '/assets/cards/hero/captain_america/captain_america_common_2.png';
+    image = 'assets/cards/hero/captain_america/captain_america_common_2.png';
     team = 'avengers';
     color = 'green';
     attack = 0;

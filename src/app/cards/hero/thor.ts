@@ -7,7 +7,7 @@ import { HQDialog } from '../../cards-dialog/hq-dialog/hq.dialog';
 
 export class hero_thor_rare implements Hero {
     type = 'hero';
-    image = '/assets/cards/hero/thor/thor_rare.png';
+    image = 'assets/cards/hero/thor/thor_rare.png';
     team = 'avengers';
     color = 'white';
     attack = 0;
@@ -32,7 +32,7 @@ export class hero_thor_rare implements Hero {
 
 export class hero_thor_uncommon implements Hero {
     type = 'hero';
-    image = '/assets/cards/hero/thor/thor_uncommon.png';
+    image = 'assets/cards/hero/thor/thor_uncommon.png';
     team = 'avengers';
     color = 'white';
     attack = 3;
@@ -47,7 +47,7 @@ export class hero_thor_uncommon implements Hero {
 
 export class hero_thor_common_1 implements Hero {
     type = 'hero';
-    image = '/assets/cards/hero/thor/thor_common_1.png';
+    image = 'assets/cards/hero/thor/thor_common_1.png';
     team = 'avengers';
     color = 'white';
     attack = 0;
@@ -62,7 +62,7 @@ export class hero_thor_common_1 implements Hero {
 
 export class hero_thor_common_2 implements Hero {
     type = 'hero';
-    image = '/assets/cards/hero/thor/thor_common_2.png';
+    image = 'assets/cards/hero/thor/thor_common_2.png';
     team = 'avengers';
     color = 'green';
     attack = 0;

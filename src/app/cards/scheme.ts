@@ -10,12 +10,12 @@ import { EndGameDialog } from '../end-game-dialog/end-game.dialog';
 
 export class scheme_twist implements Card {
     type = 'schemeTwist';
-    image = '/assets/cards/scheme/scheme_twist.png';
+    image = 'assets/cards/scheme/scheme_twist.png';
 }
 
 export class scheme_legacy_virus implements Scheme {
     type = 'scheme';
-    image = '/assets/cards/scheme/scheme_legacy_virus.png';
+    image = 'assets/cards/scheme/scheme_legacy_virus.png';
     counterTwist = 0;
     twist(board: BoardService) {
         if (!board.playerHand.cards.some(card => card.color === 'grey')) {
@@ -38,7 +38,7 @@ export class scheme_legacy_virus implements Scheme {
 
 export class scheme_midtown_bank_robbery implements Scheme {
     type = 'scheme';
-    image = '/assets/cards/scheme/scheme_midtown_bank_robbery.png';
+    image = 'assets/cards/scheme/scheme_midtown_bank_robbery.png';
     counterTwist = 0;
     twist(board: BoardService) {
         if (board.fields[1].card != null) {
@@ -67,7 +67,7 @@ export class scheme_midtown_bank_robbery implements Scheme {
 
 export class scheme_negative_zone_prison_breakout implements Scheme {
     type = 'scheme';
-    image = '/assets/cards/scheme/scheme_negative_zone_prison_breakout.png';
+    image = 'assets/cards/scheme/scheme_negative_zone_prison_breakout.png';
     counterTwist = 0;
     twist(board: BoardService) {
         board.nextTurnObs.next(true);
@@ -99,7 +99,7 @@ export class scheme_negative_zone_prison_breakout implements Scheme {
 
 export class scheme_portals_dark_dimension implements Scheme {
     type = 'scheme';
-    image = '/assets/cards/scheme/scheme_portals_dark_dimension.png';
+    image = 'assets/cards/scheme/scheme_portals_dark_dimension.png';
     counterTwist = 0;
     twist(board: BoardService) { }
     setup(board: BoardService, dialog: MatDialog) { board.villianDeck.create(7, new scheme_twist); }
@@ -107,7 +107,7 @@ export class scheme_portals_dark_dimension implements Scheme {
 
 export class scheme_replace_leaders_killbots implements Scheme {
     type = 'scheme';
-    image = '/assets/cards/scheme/scheme_replace_leaders_killbots.png';
+    image = 'assets/cards/scheme/scheme_replace_leaders_killbots.png';
     counterTwist = 0;
     twist(board: BoardService) {
         board.fields.filter(field => field.card && field.card.team === 'killbots').forEach(field => {
@@ -119,7 +119,7 @@ export class scheme_replace_leaders_killbots implements Scheme {
         board.scheme.counterTwist = 3;
         const length = 18 - board.villianDeck.cards.filter(card => card.type === 'bystander').length;
         const killbots = Object.assign(new bystander, {
-            image: '/assets/cards/scheme/killbot.png',
+            image: 'assets/cards/scheme/killbot.png',
             type: 'villain',
             team: 'killbots',
             attack: 3
@@ -141,7 +141,7 @@ export class scheme_replace_leaders_killbots implements Scheme {
 
 export class scheme_secret_invasion_shapeshifters implements Scheme {
     type = 'scheme';
-    image = '/assets/cards/scheme/scheme_secret_invasion_shapeshifters.png';
+    image = 'assets/cards/scheme/scheme_secret_invasion_shapeshifters.png';
     counterTwist = 0;
     twist(board: BoardService) { }
     setup(board: BoardService, dialog: MatDialog) { board.villianDeck.create(8, new scheme_twist); }
@@ -149,7 +149,7 @@ export class scheme_secret_invasion_shapeshifters implements Scheme {
 
 export class scheme_super_hero_civil_war implements Scheme {
     type = 'scheme';
-    image = '/assets/cards/scheme/scheme_super_hero_civil_war.png';
+    image = 'assets/cards/scheme/scheme_super_hero_civil_war.png';
     counterTwist = 0;
     twist(board: BoardService) { }
     setup(board: BoardService, dialog: MatDialog) { board.villianDeck.create(8, new scheme_twist); }
@@ -157,7 +157,7 @@ export class scheme_super_hero_civil_war implements Scheme {
 
 export class scheme_unleash_cosmic_cube implements Scheme {
     type = 'scheme';
-    image = '/assets/cards/scheme/scheme_unleash_cosmic_cube.png';
+    image = 'assets/cards/scheme/scheme_unleash_cosmic_cube.png';
     counterTwist = 0;
     twist(board: BoardService, dialog: MatDialog) {
         switch (board.scheme.counterTwist) {

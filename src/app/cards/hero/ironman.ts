@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material';
 
 export class hero_ironman_rare implements Hero {
     type = 'hero';
-    image = '/assets/cards/hero/ironman/ironman_rare.png';
+    image = 'assets/cards/hero/ironman/ironman_rare.png';
     team = 'avengers';
     color = 'grey';
     attack = 0;
@@ -22,7 +22,7 @@ export class hero_ironman_rare implements Hero {
 
 export class hero_ironman_uncommon implements Hero {
     type = 'hero';
-    image = '/assets/cards/hero/ironman/ironman_uncommon.png';
+    image = 'assets/cards/hero/ironman/ironman_uncommon.png';
     team = 'avengers';
     color = 'grey';
     attack = 3;
@@ -35,7 +35,7 @@ export class hero_ironman_uncommon implements Hero {
 
 export class hero_ironman_common_1 implements Hero {
     type = 'hero';
-    image = '/assets/cards/hero/ironman/ironman_common_1.png';
+    image = 'assets/cards/hero/ironman/ironman_common_1.png';
     team = 'avengers';
     color = 'grey';
     attack = 0;
@@ -51,7 +51,7 @@ export class hero_ironman_common_1 implements Hero {
 
 export class hero_ironman_common_2 implements Hero {
     type = 'hero';
-    image = '/assets/cards/hero/ironman/ironman_common_2.png';
+    image = 'assets/cards/hero/ironman/ironman_common_2.png';
     team = 'avengers';
     color = 'white';
     attack = 2;

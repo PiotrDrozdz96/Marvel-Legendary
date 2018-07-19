@@ -7,7 +7,7 @@ import { HQDialog } from '../../cards-dialog/hq-dialog/hq.dialog';
 
 export class hero_black_widow_rare implements Hero {
     type = 'hero';
-    image = '/assets/cards/hero/black_widow/black_widow_rare.png';
+    image = 'assets/cards/hero/black_widow/black_widow_rare.png';
     team = 'avengers';
     color = 'red';
     attack = 4;
@@ -70,7 +70,7 @@ export class hero_black_widow_rare implements Hero {
 
 export class hero_black_widow_uncommon implements Hero {
     type = 'hero';
-    image = '/assets/cards/hero/black_widow/black_widow_uncommon.png';
+    image = 'assets/cards/hero/black_widow/black_widow_uncommon.png';
     team = 'avengers';
     color = 'red';
     attack = 0;
@@ -83,7 +83,7 @@ export class hero_black_widow_uncommon implements Hero {
 
 export class hero_black_widow_common_1 implements Hero {
     type = 'hero';
-    image = '/assets/cards/hero/black_widow/black_widow_common_1.png';
+    image = 'assets/cards/hero/black_widow/black_widow_common_1.png';
     team = 'avengers';
     color = 'red';
     attack = 2;
@@ -116,7 +116,7 @@ export class hero_black_widow_common_1 implements Hero {
 
 export class hero_black_widow_common_2 implements Hero {
     type = 'hero';
-    image = '/assets/cards/hero/black_widow/black_widow_common_2.png';
+    image = 'assets/cards/hero/black_widow/black_widow_common_2.png';
     team = 'avengers';
     color = 'grey';
     attack = 0;

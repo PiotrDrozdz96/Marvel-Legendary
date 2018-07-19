@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material';
 
 export class villain_hydra_endless_armies_hydra implements Villain {
     type = 'villain';
-    image = '/assets/cards/villain/hydra/villain_hydra_endless_armies_hydra.png';
+    image = 'assets/cards/villain/hydra/villain_hydra_endless_armies_hydra.png';
     team = 'hydra';
     attack = 4;
     points = 3;
@@ -18,7 +18,7 @@ export class villain_hydra_endless_armies_hydra implements Villain {
 
 export class villain_hydra_kidnappers implements Villain {
     type = 'villain';
-    image = '/assets/cards/villain/hydra/villain_hydra_kidnappers.png';
+    image = 'assets/cards/villain/hydra/villain_hydra_kidnappers.png';
     team = 'hydra';
     attack = 3;
     points = 1;
@@ -29,7 +29,7 @@ export class villain_hydra_kidnappers implements Villain {
 
 export class villain_hydra_supreme_hydra implements Villain {
     type = 'villain';
-    image = '/assets/cards/villain/hydra/villain_hydra_supreme_hydra.png';
+    image = 'assets/cards/villain/hydra/villain_hydra_supreme_hydra.png';
     team = 'hydra';
     attack = 6;
     points = 3;
@@ -41,7 +41,7 @@ export class villain_hydra_supreme_hydra implements Villain {
 
 export class villain_hydra_viper implements Villain {
     type = 'villain';
-    image = '/assets/cards/villain/hydra/villain_hydra_viper.png';
+    image = 'assets/cards/villain/hydra/villain_hydra_viper.png';
     team = 'hydra';
     attack = 5;
     points = 3;

@@ -7,7 +7,7 @@ import { HQDialog } from '../../cards-dialog/hq-dialog/hq.dialog';
 
 export class hero_nick_fury_rare implements Hero {
     type = 'hero';
-    image = '/assets/cards/hero/nick_fury/nick_fury_rare.png';
+    image = 'assets/cards/hero/nick_fury/nick_fury_rare.png';
     team = 'shield';
     color = 'grey';
     attack = 0;
@@ -53,7 +53,7 @@ export class hero_nick_fury_rare implements Hero {
 
 export class hero_nick_fury_uncommon implements Hero {
     type = 'hero';
-    image = '/assets/cards/hero/nick_fury/nick_fury_uncommon.png';
+    image = 'assets/cards/hero/nick_fury/nick_fury_uncommon.png';
     team = 'shield';
     color = 'green';
     attack = 1;
@@ -66,7 +66,7 @@ export class hero_nick_fury_uncommon implements Hero {
 
 export class hero_nick_fury_common_1 implements Hero {
     type = 'hero';
-    image = '/assets/cards/hero/nick_fury/nick_fury_common_1.png';
+    image = 'assets/cards/hero/nick_fury/nick_fury_common_1.png';
     team = 'shield';
     color = 'red';
     attack = 0;
@@ -97,7 +97,7 @@ export class hero_nick_fury_common_1 implements Hero {
 
 export class hero_nick_fury_common_2 implements Hero {
     type = 'hero';
-    image = '/assets/cards/hero/nick_fury/nick_fury_common_2.png';
+    image = 'assets/cards/hero/nick_fury/nick_fury_common_2.png';
     team = 'shield';
     color = 'grey';
     attack = 2;

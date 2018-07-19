@@ -22,7 +22,7 @@ import {
 export class SelectSchemeDialog extends SelectDialog<Scheme, SelectSchemeDialog> {
 
   header = 'Select one Scheme';
-  randomImage = '/assets/back_of_card.png';
+  randomImage = 'assets/back_of_card.png';
   cards: Array<Scheme> = [
     new scheme_legacy_virus,
     new scheme_midtown_bank_robbery,

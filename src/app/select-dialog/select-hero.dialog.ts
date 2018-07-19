@@ -14,7 +14,7 @@ import { HeroService } from '../hero.service';
 export class SelectHeroDialog {
 
     header = 'Select Hero Group';
-    randomImage = '/assets/back_of_card.png';
+    randomImage = 'assets/back_of_card.png';
     cards: Array<Array<Hero>>;
     preview = '';
 

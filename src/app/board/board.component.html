@@ -1,8 +1,8 @@
 <div class="board">
     <div class="left-board">
         <div class="additional-block">
-            <img src="/assets/ko.jpg" (click)="viewCards('KO',board.KO.cards)">
-            <img src="/assets/victory_pile.jpg" (click)="viewCards('Victory Pile',board.victoryPile.cards)">
+            <img src="assets/ko.jpg" (click)="viewCards('KO',board.KO.cards)">
+            <img src="assets/victory_pile.jpg" (click)="viewCards('Victory Pile',board.victoryPile.cards)">
         </div>
         <div class="deck scheme">
             <app-card *ngIf="board.scheme" [src]="board.scheme.image"></app-card>
@@ -41,8 +41,8 @@
                 <li>Attack: {{board.playerAttack}}</li>
                 <li>Recruting Points: {{board.playerRecrutingPoints}}</li>
             </ul>
-            <img src="/assets/player_hand.jpg" (click)="playerHand()">
-            <img src="/assets/next_turn.jpg" (click)="nextTurn()">
+            <img src="assets/player_hand.jpg" (click)="playerHand()">
+            <img src="assets/next_turn.jpg" (click)="nextTurn()">
         </div>
         <div class="deck bystanders">
             <app-card *ngIf="board.bystandersDeck.cards.length != 0" [src]="board.bystandersDeck.cards[0].image"></app-card>

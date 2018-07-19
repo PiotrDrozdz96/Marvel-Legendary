@@ -7,7 +7,7 @@ import { HQDialog } from '../../cards-dialog/hq-dialog/hq.dialog';
 
 export class hero_storm_rare implements Hero {
     type = 'hero';
-    image = '/assets/cards/hero/storm/storm_rare.png';
+    image = 'assets/cards/hero/storm/storm_rare.png';
     team = 'x-men';
     color = 'white';
     attack = 5;
@@ -23,7 +23,7 @@ export class hero_storm_rare implements Hero {
 
 export class hero_storm_uncommon implements Hero {
     type = 'hero';
-    image = '/assets/cards/hero/storm/storm_uncommon.png';
+    image = 'assets/cards/hero/storm/storm_uncommon.png';
     team = 'x-men';
     color = 'red';
     attack = 4;
@@ -67,7 +67,7 @@ export class hero_storm_uncommon implements Hero {
 
 export class hero_storm_common_1 implements Hero {
     type = 'hero';
-    image = '/assets/cards/hero/storm/storm_common_1.png';
+    image = 'assets/cards/hero/storm/storm_common_1.png';
     team = 'x-men';
     color = 'white';
     attack = 0;
@@ -82,7 +82,7 @@ export class hero_storm_common_1 implements Hero {
 
 export class hero_storm_common_2 implements Hero {
     type = 'hero';
-    image = '/assets/cards/hero/storm/storm_common_2.png';
+    image = 'assets/cards/hero/storm/storm_common_2.png';
     team = 'x-men';
     color = 'white';
     attack = 2;

@@ -13,7 +13,7 @@ import { henchman_sentinel, henchman_doombot_legion, henchman_hand_ninjas, hench
 export class SelectHenchmenDialog extends SelectDialog<Villain, SelectHenchmenDialog> {
 
   header = 'Select one Henchman Group';
-  randomImage = '/assets/back_of_card.png';
+  randomImage = 'assets/back_of_card.png';
   cards = [
     new henchman_sentinel,
     new henchman_doombot_legion,

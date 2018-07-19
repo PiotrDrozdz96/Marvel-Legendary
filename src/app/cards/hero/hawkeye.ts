@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material';
 
 export class hero_hawkeye_rare implements Hero {
     type = 'hero';
-    image = '/assets/cards/hero/hawkeye/hawkeye_rare.png';
+    image = 'assets/cards/hero/hawkeye/hawkeye_rare.png';
     team = 'avengers';
     color = 'grey';
     attack = 5;
@@ -17,7 +17,7 @@ export class hero_hawkeye_rare implements Hero {
 
 export class hero_hawkeye_uncommon implements Hero {
     type = 'hero';
-    image = '/assets/cards/hero/hawkeye/hawkeye_uncommon.png';
+    image = 'assets/cards/hero/hawkeye/hawkeye_uncommon.png';
     team = 'avengers';
     color = 'grey';
     attack = 3;
@@ -32,7 +32,7 @@ export class hero_hawkeye_uncommon implements Hero {
 
 export class hero_hawkeye_common_1 implements Hero {
     type = 'hero';
-    image = '/assets/cards/hero/hawkeye/hawkeye_common_1.png';
+    image = 'assets/cards/hero/hawkeye/hawkeye_common_1.png';
     team = 'avengers';
     color = 'yellow';
     attack = 1;
@@ -45,7 +45,7 @@ export class hero_hawkeye_common_1 implements Hero {
 
 export class hero_hawkeye_common_2 implements Hero {
     type = 'hero';
-    image = '/assets/cards/hero/hawkeye/hawkeye_common_2.png';
+    image = 'assets/cards/hero/hawkeye/hawkeye_common_2.png';
     team = 'avengers';
     color = 'grey';
     attack = 2;

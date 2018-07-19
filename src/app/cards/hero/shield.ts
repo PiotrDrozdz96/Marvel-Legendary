@@ -4,7 +4,7 @@ import { Hero } from '../../models/card';
 
 export class hero_shield_officer implements Hero {
     type = 'hero';
-    image = '/assets/cards/hero/shield/shield_officer.png';
+    image = 'assets/cards/hero/shield/shield_officer.png';
     team = 'shield';
     attack = 0;
     recrutingPoints = 2;
@@ -13,7 +13,7 @@ export class hero_shield_officer implements Hero {
 
 export class hero_shield_agent implements Hero {
     type = 'hero';
-    image = '/assets/cards/hero/shield/shield_agent.png';
+    image = 'assets/cards/hero/shield/shield_agent.png';
     team = 'shield';
     attack = 0;
     recrutingPoints = 1;
@@ -22,7 +22,7 @@ export class hero_shield_agent implements Hero {
 
 export class hero_shield_trooper implements Hero {
     type = 'hero';
-    image = '/assets/cards/hero/shield/shield_trooper.png';
+    image = 'assets/cards/hero/shield/shield_trooper.png';
     team = 'shield';
     attack = 1;
     recrutingPoints = 0;

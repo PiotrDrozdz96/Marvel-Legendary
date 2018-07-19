@@ -4,7 +4,7 @@ import { Hero } from '../../models/card';
 
 export class hero_wolverine_rare implements Hero {
     type = 'hero';
-    image = '/assets/cards/hero/wolverine/wolverine_rare.png';
+    image = 'assets/cards/hero/wolverine/wolverine_rare.png';
     team = 'x-men';
     color = 'yellow';
     attack = 0;
@@ -14,7 +14,7 @@ export class hero_wolverine_rare implements Hero {
 
 export class hero_wolverine_uncommon implements Hero {
     type = 'hero';
-    image = '/assets/cards/hero/wolverine/wolverine_uncommon.png';
+    image = 'assets/cards/hero/wolverine/wolverine_uncommon.png';
     team = 'x-men';
     color = 'yellow';
     attack = 2;
@@ -24,7 +24,7 @@ export class hero_wolverine_uncommon implements Hero {
 
 export class hero_wolverine_common_1 implements Hero {
     type = 'hero';
-    image = '/assets/cards/hero/wolverine/wolverine_common_1.png';
+    image = 'assets/cards/hero/wolverine/wolverine_common_1.png';
     team = 'x-men';
     color = 'yellow';
     attack = 2;
@@ -34,7 +34,7 @@ export class hero_wolverine_common_1 implements Hero {
 
 export class hero_wolverine_common_2 implements Hero {
     type = 'hero';
-    image = '/assets/cards/hero/wolverine/wolverine_common_2.png';
+    image = 'assets/cards/hero/wolverine/wolverine_common_2.png';
     team = 'x-men';
     color = 'green';
     attack = 1;

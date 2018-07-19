@@ -7,7 +7,7 @@ import { HQDialog } from '../../cards-dialog/hq-dialog/hq.dialog';
 
 export class hero_emma_frost_rare implements Hero {
     type = 'hero';
-    image = '/assets/cards/hero/emma_frost/emma_frost_rare.png';
+    image = 'assets/cards/hero/emma_frost/emma_frost_rare.png';
     team = 'x-men';
     color = 'green';
     attack = 5;
@@ -30,7 +30,7 @@ export class hero_emma_frost_rare implements Hero {
 
 export class hero_emma_frost_uncommon implements Hero {
     type = 'hero';
-    image = '/assets/cards/hero/emma_frost/emma_frost_uncommon.png';
+    image = 'assets/cards/hero/emma_frost/emma_frost_uncommon.png';
     team = 'x-men';
     color = 'yellow';
     attack = 3;
@@ -45,7 +45,7 @@ export class hero_emma_frost_uncommon implements Hero {
 
 export class hero_emma_frost_common_1 implements Hero {
     type = 'hero';
-    image = '/assets/cards/hero/emma_frost/emma_frost_common_1.png';
+    image = 'assets/cards/hero/emma_frost/emma_frost_common_1.png';
     team = 'x-men';
     color = 'white';
     attack = 0;
@@ -58,7 +58,7 @@ export class hero_emma_frost_common_1 implements Hero {
 
 export class hero_emma_frost_common_2 implements Hero {
     type = 'hero';
-    image = '/assets/cards/hero/emma_frost/emma_frost_common_2.png';
+    image = 'assets/cards/hero/emma_frost/emma_frost_common_2.png';
     team = 'x-men';
     color = 'red';
     attack = 2;

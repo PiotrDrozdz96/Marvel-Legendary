@@ -14,7 +14,7 @@ import { VillainsService } from '../villains.service';
 export class SelectVillainsDialog {
 
     header = 'Select Villains Group';
-    randomImage = '/assets/back_of_card.png';
+    randomImage = 'assets/back_of_card.png';
     cards: Array<Array<Villain>>;
     preview = '';
 

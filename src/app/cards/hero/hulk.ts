@@ -8,7 +8,7 @@ import { wound } from '../wounds';
 
 export class hero_hulk_rare implements Hero {
     type = 'hero';
-    image = '/assets/cards/hero/hulk/hulk_rare.png';
+    image = 'assets/cards/hero/hulk/hulk_rare.png';
     team = 'avengers';
     color = 'green';
     attack = 5;
@@ -23,7 +23,7 @@ export class hero_hulk_rare implements Hero {
 
 export class hero_hulk_uncommon implements Hero {
     type = 'hero';
-    image = '/assets/cards/hero/hulk/hulk_uncommon.png';
+    image = 'assets/cards/hero/hulk/hulk_uncommon.png';
     team = 'avengers';
     color = 'green';
     attack = 4;
@@ -36,7 +36,7 @@ export class hero_hulk_uncommon implements Hero {
 
 export class hero_hulk_common_1 implements Hero {
     type = 'hero';
-    image = '/assets/cards/hero/hulk/hulk_common_1.png';
+    image = 'assets/cards/hero/hulk/hulk_common_1.png';
     team = 'avengers';
     color = 'green';
     attack = 2;
@@ -51,7 +51,7 @@ export class hero_hulk_common_1 implements Hero {
 
 export class hero_hulk_common_2 implements Hero {
     type = 'hero';
-    image = '/assets/cards/hero/hulk/hulk_common_2.png';
+    image = 'assets/cards/hero/hulk/hulk_common_2.png';
     team = 'avengers';
     color = 'yellow';
     attack = 2;
