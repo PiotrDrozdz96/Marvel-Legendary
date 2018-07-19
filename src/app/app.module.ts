@@ -21,6 +21,7 @@ import { SelectHenchmenDialog } from './select-dialog/select-henchmen.dialog';
 import { SelectHeroDialog } from './select-dialog/select-hero.dialog';
 import { PlayCardsDialog } from './play-cards-dialog/play-cards.dialog';
 import { CardsListDialog } from './cards-list-dialog/cards-list.dialog';
+import { EndGameDialog } from './end-game-dialog/end-game.dialog';
 import { HQDialog } from './cards-dialog/hq-dialog/hq.dialog';
 
 
@@ -39,6 +40,7 @@ import { HQDialog } from './cards-dialog/hq-dialog/hq.dialog';
     SelectHeroDialog,
     PlayCardsDialog,
     CardsListDialog,
+    EndGameDialog,
     HQDialog
   ],
   entryComponents: [
@@ -49,6 +51,7 @@ import { HQDialog } from './cards-dialog/hq-dialog/hq.dialog';
     SelectHeroDialog,
     PlayCardsDialog,
     CardsListDialog,
+    EndGameDialog,
     HQDialog
   ],
   imports: [

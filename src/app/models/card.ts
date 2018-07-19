@@ -44,8 +44,8 @@ export interface Villain extends Card {
 export interface Scheme extends Card {
     // type: 'scheme';
     counterTwist: number;
-    twist(board: BoardService);
-    setup(board: BoardService);
+    twist(board: BoardService, dialog?: MatDialog);
+    setup(board: BoardService, dialog?: MatDialog);
 }
 
 export interface Bystander extends Card {

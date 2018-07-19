@@ -17,6 +17,7 @@ import { SelectHeroDialog } from '../select-dialog/select-hero.dialog';
 import { PlayCardsDialog } from '../play-cards-dialog/play-cards.dialog';
 import { CardsListDialog } from '../cards-list-dialog/cards-list.dialog';
 import { hero_cyclops_uncommon } from '../cards/hero/cyclops';
+import { EndGameDialog } from '../end-game-dialog/end-game.dialog';
 
 @Component({
   selector: 'app-board',
@@ -110,7 +111,7 @@ export class BoardComponent implements OnInit {
         // add masterStrike
         this.board.villianDeck.create(this.masterStrike, new master_strike);
         // scheme setup
-        this.board.scheme.setup(this.board);
+        this.board.scheme.setup(this.board, this.dialog);
 
         this.board.villianDeck.shuffle();
         this.selectHero();
@@ -175,7 +176,9 @@ export class BoardComponent implements OnInit {
       this.board.victoryPile.push(this.board.mastermindBystanders);
       this.board.mastermindBystanders = [];
       if (this.board.mastermind.tactics.length === 0) {
-        console.log('Win');
+        this.dialog.open(EndGameDialog, {data: { header: 'win' }}).afterClosed().subscribe(sub => {
+          location.reload();
+        });
       } else {
         this.board.setKOimage(tactic[0].image);
         tactic[0].func(this.board, this.dialog, tactic[0]);

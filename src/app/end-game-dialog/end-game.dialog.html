@@ -1,0 +1,12 @@
+<div class="preview"><img *ngIf="preview!=''" [src]="preview"></div>
+<h1>{{h1}}</h1>
+<h2>{{h2}}</h2>
+<div class="cards">
+    <img [src]="board.mastermind.image" (mouseenter)="mouseEnter(board.mastermind.image)" (mouseleave)="mouseLeave()">
+    <img [src]="board.scheme.image" (mouseenter)="mouseEnter(board.scheme.image)" (mouseleave)="mouseLeave()">
+</div>
+<h2>Commander {{playerPoints}} Points VS {{villainPoints}} Points Mastermind</h2>
+<h2>Your Victory Pile</h2>
+<img *ngFor="let card of victoryPile" [src]="card.image" (mouseenter)="mouseEnter(card.image)" (mouseleave)="mouseLeave()">
+<h2>Escaped Villains</h2>
+<img *ngFor="let card of escapedVillains" [src]="card.image" (mouseenter)="mouseEnter(card.image)" (mouseleave)="mouseLeave()">

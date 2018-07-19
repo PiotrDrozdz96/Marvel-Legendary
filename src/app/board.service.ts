@@ -27,14 +27,14 @@ export class BoardService {
   playerRecrutingPoints = 0;
   numberOfDrawing = 6;
 
-  victoryPile = new Deck<Card | Villain | Bystander>();
+  victoryPile = new Deck<Villain | Bystander | Mastermind>();
   KO = new Deck<Card>();
   hq: Array<Hero> = [];
   shieldDeck = new Deck<hero_shield_officer>();
   woundsDeck = new Deck<Hero>();
   bystandersDeck = new Deck<Bystander>();
   mastermind: Mastermind;
-  mastermindBystanders: Array<Card> = [];
+  mastermindBystanders: Array<Bystander> = [];
   scheme: Scheme;
   villianDeck = new Deck<Card | Villain | Bystander>();
   heroDeck = new Deck<Hero>();

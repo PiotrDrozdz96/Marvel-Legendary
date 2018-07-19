@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BoardService } from '../board.service';
 import { MatDialog } from '@angular/material';
-import { Card } from '../models/card';
+import { Card, Bystander } from '../models/card';
 import { CardsListDialog } from '../cards-list-dialog/cards-list.dialog';
 
 @Component({
@@ -48,11 +48,11 @@ export class CityscapeComponent implements OnInit {
             if (villainFieldIndex !== -1) {
               this.board.fields[villainFieldIndex].bystanders.push(new_card);
             } else {
-              this.board.mastermindBystanders.push(new_card);
+              this.board.mastermindBystanders.push(new_card as Bystander);
             }
           } else if (new_card.type === 'schemeTwist') {
             board.scheme.counterTwist++;
-            board.scheme.twist(this.board);
+            board.scheme.twist(this.board, this.dialog);
           } else if (new_card.type === 'masterStrike') {
             this.board.mastermind.masterStrike(this.board, this.dialog);
             this.board.KO.push([new_card]);

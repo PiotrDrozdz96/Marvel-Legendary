@@ -41,7 +41,9 @@ export class hero_rogue_uncommon implements Hero {
                 } else {
                     board.playerAttack += hero.attack;
                     board.playerRecrutingPoints += hero.recrutingPoints;
-                    hero.func(board, dialog);
+                    if (hero.func) {
+                        hero.func(board, dialog);
+                    }
                 }
                 ChooseDialog.unsubscribe();
             });
@@ -89,7 +91,7 @@ export class hero_rogue_common_2 implements Hero {
                         index = board.playerHand.cards.findIndex(card => card === hero);
                         board.KO.push(board.playerHand.pick(index));
                     }
-                    board.playerRecrutingPoints ++;
+                    board.playerRecrutingPoints++;
                 }
                 KODialog.unsubscribe();
             });
