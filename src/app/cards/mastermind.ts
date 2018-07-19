@@ -15,6 +15,7 @@ export class mastermind_doctor_doom implements Mastermind {
     type = 'mastermind';
     image = '/assets/cards/mastermind/doctor_doom/mastermind_doctor_doom.png';
     attack = 9;
+    additionalAttack = 0;
     points = 5;
     alwaysLeads = 'doombotLegion';
     tactics = [
@@ -91,6 +92,7 @@ export class mastermind_loki implements Mastermind {
     type = 'mastermind';
     image = '/assets/cards/mastermind/loki/mastermind_loki.png';
     attack = 10;
+    additionalAttack = 0;
     points = 5;
     alwaysLeads = 'enemiesOfAsgard';
     tactics = [
@@ -161,6 +163,7 @@ export class mastermind_magneto implements Mastermind {
     type = 'mastermind';
     image = '/assets/cards/mastermind/magneto/mastermind_magneto.png';
     attack = 8;
+    additionalAttack = 0;
     points = 5;
     alwaysLeads = 'brotherhood';
     tactics = [
@@ -263,6 +266,7 @@ export class mastermind_red_skull implements Mastermind {
     type = 'mastermind';
     image = '/assets/cards/mastermind/red_skull/mastermind_red_skull.png';
     attack = 7;
+    additionalAttack = 0;
     points = 5;
     alwaysLeads = 'hydra';
     tactics = [
