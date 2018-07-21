@@ -13,7 +13,7 @@ export class hero_captain_america_rare implements Hero {
     recrutingPoints = 0;
     cost = 7;
     func(board: BoardService, dialog: MatDialog) {
-        board.playerAttack += board.playerCards.cards.filter(card => card.team === 'avengers').length * 3;
+        board.playerAttack += board.playerCards.filter(card => card.team === 'avengers').length * 3;
     }
 }
 
@@ -26,10 +26,10 @@ export class hero_captain_america_uncommon implements Hero {
     recrutingPoints = 0;
     cost = 6;
     func(board: BoardService, dialog: MatDialog) {
-        const index = () => board.playerHand.cards.findIndex(card => card.type === 'wound');
+        const index = () => board.playerHand.findIndex(card => card.type === 'wound');
         while (index() !== -1) {
-            board.discardPile.push(board.playerHand.pick(index()));
-            board.playerHand.push(board.playerDeck.draw());
+            board.discardPile.put(board.playerHand.pick(index()));
+            board.playerHand.put(board.playerDeck.draw());
         }
     }
 }
@@ -44,8 +44,8 @@ export class hero_captain_america_common_1 implements Hero {
     cost = 3;
     func(board: BoardService, dialog: MatDialog) {
         const temp = {};
-        board.playerRecrutingPoints += board.playerCards.cards.concat(board.playerHand.cards)
-            .map(card => card.color).concat([this.color]).reduce((arr, current) => {
+        board.playerRecrutingPoints += (board.playerCards.concat(board.playerHand)
+            .map(card => card.color) as Array<string>).concat([this.color]).reduce((arr, current) => {
                 if (temp[current]) {
                     return arr;
                 } else {
@@ -66,8 +66,8 @@ export class hero_captain_america_common_2 implements Hero {
     cost = 4;
     func(board: BoardService, dialog: MatDialog) {
         const temp = {};
-        board.playerAttack += board.playerCards.cards.concat(board.playerHand.cards)
-            .map(card => card.color).concat([this.color]).reduce((arr, current) => {
+        board.playerAttack += (board.playerCards.concat(board.playerHand)
+            .map(card => card.color) as Array<string>).concat([this.color]).reduce((arr, current) => {
                 if (temp[current]) {
                     return arr;
                 } else {

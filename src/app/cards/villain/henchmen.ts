@@ -14,7 +14,7 @@ export class henchman_sentinel implements Villain {
     fight(board: BoardService, dialog: MatDialog) {
         const CardDialog = dialog.open(HQDialog, {
             data: {
-                cards: board.playerCards.cards.filter(card => card.type === 'hero'),
+                cards: board.playerCards.filter(card => card.type === 'hero'),
                 preview: '',
                 header: 'KO one Hero'
             }
@@ -22,8 +22,8 @@ export class henchman_sentinel implements Villain {
             if (hero === undefined) {
                 this.fight(board, dialog);
             } else {
-                const index = board.playerCards.cards.findIndex(card => card === hero);
-                board.KO.push(board.playerCards.pick(index));
+                const index = board.playerCards.findIndex(card => card === hero);
+                board.KO.put(board.playerCards.pick(index));
             }
         });
     }
@@ -50,8 +50,8 @@ export class henchman_doombot_legion implements Villain {
                     open();
                 } else {
                     const index = cards.findIndex(card => card === hero);
-                    board.KO.push([cards[index]]);
-                    board.playerDeck.cards.unshift(cards[1 - index]);
+                    board.KO.push(cards[index]);
+                    board.playerDeck.unshift(cards[1 - index]);
                 }
             });
         }

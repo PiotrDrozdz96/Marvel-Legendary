@@ -37,8 +37,8 @@ export class EndGameDialog {
         };
         this.h1 = headers[data.header].h1;
         this.h2 = headers[data.header].h2;
-        this.victoryPile = board.victoryPile.cards;
-        this.escapedVillains = board.escapedVillain.cards;
+        this.victoryPile = board.victoryPile;
+        this.escapedVillains = board.escapedVillain;
         this.yourScore = this.victoryPile.reduce((sum, card) => sum + card.points, 0)
             - 4 * this.escapedVillains.filter(card => card.type === 'bystander').length
             - 3 * this.board.scheme.counterTwist

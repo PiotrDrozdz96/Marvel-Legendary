@@ -39,7 +39,7 @@ export class hero_thor_uncommon implements Hero {
     recrutingPoints = 0;
     cost = 6;
     func(board: BoardService, dialog: MatDialog) {
-        if (board.playerCards.cards.find(card => card.color === 'white')) {
+        if (board.playerCards.find(card => card.color === 'white')) {
             board.playerAttack += 3;
         }
     }
@@ -69,7 +69,7 @@ export class hero_thor_common_2 implements Hero {
     recrutingPoints = 2;
     cost = 3;
     func(board: BoardService, dialog: MatDialog) {
-        if (board.playerCards.cards.find(card => card.color === 'green')) {
+        if (board.playerCards.find(card => card.color === 'green')) {
             board.playerRecrutingPoints += 2;
         }
     }

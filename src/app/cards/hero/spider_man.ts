@@ -16,9 +16,9 @@ export class hero_spider_man_rare implements Hero {
         const cards = [...board.playerDeck.draw(), ...board.playerDeck.draw(), ...board.playerDeck.draw()];
         const less = cards.filter(card => card.cost <= 2);
         const rest = cards.filter(card => card.cost > 2);
-        board.playerHand.push(less);
+        board.playerHand.put(less);
         for (let i = 0; i < rest.length; i++) {
-            board.playerDeck.cards.unshift(rest[i]);
+            board.playerDeck.unshift(rest[i]);
         }
     }
 }
@@ -32,12 +32,12 @@ export class hero_spider_man_uncommon implements Hero {
     recrutingPoints = 0;
     cost = 2;
     func(board: BoardService, dialog: MatDialog) {
-        board.victoryPile.push(board.bystandersDeck.draw());
+        board.victoryPile.put(board.bystandersDeck.draw());
         const card = board.playerDeck.draw()[0];
         if (card.cost <= 2) {
-            board.playerHand.push([card]);
+            board.playerHand.push(card);
         } else {
-            board.playerDeck.cards.unshift(card);
+            board.playerDeck.unshift(card);
         }
     }
 }
@@ -53,9 +53,9 @@ export class hero_spider_man_common_1 implements Hero {
     func(board: BoardService, dialog: MatDialog) {
         const card = board.playerDeck.draw()[0];
         if (card.cost <= 2) {
-            board.playerHand.push([card]);
+            board.playerHand.push(card);
         } else {
-            board.playerDeck.cards.unshift(card);
+            board.playerDeck.unshift(card);
         }
     }
 }
@@ -71,9 +71,9 @@ export class hero_spider_man_common_2 implements Hero {
     func(board: BoardService, dialog: MatDialog) {
         const card = board.playerDeck.draw()[0];
         if (card.cost <= 2) {
-            board.playerHand.push([card]);
+            board.playerHand.push(card);
         } else {
-            board.playerDeck.cards.unshift(card);
+            board.playerDeck.unshift(card);
         }
     }
 }

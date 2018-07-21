@@ -17,7 +17,7 @@ export class BoardService {
 
   private koImage = new BehaviorSubject<string>('');
   public nextTurnObs = new BehaviorSubject<boolean>(false);
-  public startObs  = new BehaviorSubject<boolean>(false);
+  public startObs = new BehaviorSubject<boolean>(false);
 
   playerDeck = new Deck<Hero>();
   playerHand = new Deck<Hero>();
@@ -29,7 +29,7 @@ export class BoardService {
 
   victoryPile = new Deck<Villain | Bystander | Mastermind>();
   KO = new Deck<Card>();
-  hq: Array<Hero> = [];
+  hq =  new Deck<Hero>();
   shieldDeck = new Deck<hero_shield_officer>();
   woundsDeck = new Deck<Hero>();
   bystandersDeck = new Deck<Bystander>();
@@ -75,15 +75,13 @@ export class BoardService {
   ];
 
   constructor() {
-
     /* change method draw in playerDeck*/
     this.playerDeck.draw = (): Array<Hero> => {
-      if (this.playerDeck.cards.length === 0) {
+      if (this.playerDeck.length === 0) {
         this.discardPile.shuffle();
-        this.playerDeck.cards = this.discardPile.cards;
-        this.discardPile.cards = [];
+        this.playerDeck.put(this.discardPile.take());
       }
-      const newCard = this.playerDeck.cards.shift();
+      const newCard = this.playerDeck.shift();
       return newCard === undefined ? [] : [newCard];
     };
     /* SET UP */
@@ -116,7 +114,7 @@ export class BoardService {
   start(): Observable<boolean> { return this.startObs.asObservable(); }
   drawToPlayerHand() {
     for (let i = 0; i < this.numberOfDrawing; i++) {
-      this.playerHand.push(this.playerDeck.draw());
+      this.playerHand.put(this.playerDeck.draw());
     }
     this.numberOfDrawing = 6;
   }

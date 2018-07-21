@@ -13,9 +13,9 @@ export class hero_ironman_rare implements Hero {
     recrutingPoints = 0;
     cost = 7;
     func(board: BoardService, dialog: MatDialog) {
-        const length = board.playerCards.cards.find(card => card.color === 'grey') ? 4 : 2;
+        const length = board.playerCards.find(card => card.color === 'grey') ? 4 : 2;
         for (let i = 0; i < length; i++) {
-            board.playerHand.push(board.playerDeck.draw());
+            board.playerHand.put(board.playerDeck.draw());
         }
     }
 }
@@ -29,7 +29,7 @@ export class hero_ironman_uncommon implements Hero {
     recrutingPoints = 0;
     cost = 5;
     func(board: BoardService, dialog: MatDialog) {
-        board.playerAttack += board.playerCards.cards.filter(card => card.color === 'grey').length;
+        board.playerAttack += board.playerCards.filter(card => card.color === 'grey').length;
     }
 }
 
@@ -42,9 +42,9 @@ export class hero_ironman_common_1 implements Hero {
     recrutingPoints = 0;
     cost = 3;
     func(board: BoardService, dialog: MatDialog) {
-        const length = board.playerCards.cards.find(card => card.color === 'grey') ? 2 : 1;
+        const length = board.playerCards.find(card => card.color === 'grey') ? 2 : 1;
         for (let i = 0; i < length; i++) {
-            board.playerHand.push(board.playerDeck.draw());
+            board.playerHand.put(board.playerDeck.draw());
         }
     }
 }
@@ -58,7 +58,7 @@ export class hero_ironman_common_2 implements Hero {
     recrutingPoints = 0;
     cost = 3;
     func(board: BoardService, dialog: MatDialog) {
-        if (board.playerCards.cards.find(card => card.color === 'white')) {
+        if (board.playerCards.find(card => card.color === 'white')) {
             board.playerAttack++;
         }
     }

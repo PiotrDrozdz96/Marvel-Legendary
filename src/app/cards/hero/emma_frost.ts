@@ -26,8 +26,8 @@ export class hero_emma_frost_uncommon implements Hero {
     recrutingPoints = 0;
     cost = 5;
     func(board: BoardService, dialog: MatDialog) {
-        if (board.playerHand.cards.concat(board.playerCards.cards).find(card => card.team === 'x-men')) {
-            board.playerHand.push(board.playerDeck.draw());
+        if (board.playerHand.concat(board.playerCards).find(card => card.team === 'x-men')) {
+            board.playerHand.put(board.playerDeck.draw());
         }
     }
 }
@@ -41,7 +41,7 @@ export class hero_emma_frost_common_1 implements Hero {
     recrutingPoints = 1;
     cost = 3;
     func(board: BoardService, dialog: MatDialog) {
-        board.playerHand.push(board.playerDeck.draw());
+        board.playerHand.put(board.playerDeck.draw());
     }
 }
 
@@ -54,7 +54,7 @@ export class hero_emma_frost_common_2 implements Hero {
     recrutingPoints = 0;
     cost = 4;
     func(board: BoardService, dialog: MatDialog) {
-        if (board.playerCards.cards.find(card => card.color === 'red')) {
+        if (board.playerCards.find(card => card.color === 'red')) {
             const DrawDialog = dialog.open(HQDialog, {
                 data: {
                     cards: [new hero_emma_frost_common_2],

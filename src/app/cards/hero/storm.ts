@@ -15,7 +15,7 @@ export class hero_storm_rare implements Hero {
     cost = 7;
     func(board: BoardService, dialog: MatDialog) {
         board.fields[4].attack -= 2;
-        if (board.playerCards.cards.find(card => card.color === 'white')) {
+        if (board.playerCards.find(card => card.color === 'white')) {
             board.mastermind.additionalAttack -= 2;
         }
     }
@@ -40,10 +40,10 @@ export class hero_storm_uncommon implements Hero {
             }).afterClosed().subscribe(villain => {
                 if (villain !== undefined) {
                     const index = board.fields.findIndex(field => field.card === villain);
-                    board.victoryPile.push(board.fields[index].bystanders);
+                    board.victoryPile.put(board.fields[index].bystanders);
                     board.fields[index].bystanders = [];
                     if (index === 4) {
-                        board.escapedVillain.push([villain]);
+                        board.escapedVillain.push(villain);
                         board.fields[4].card = null;
                         if (villain.escape) {
                             villain.escape(board, dialog);
@@ -74,8 +74,8 @@ export class hero_storm_common_1 implements Hero {
     recrutingPoints = 2;
     cost = 3;
     func(board: BoardService, dialog: MatDialog) {
-        if (board.playerCards.cards.find(card => card.color === 'white')) {
-            board.playerHand.push(board.playerDeck.draw());
+        if (board.playerCards.find(card => card.color === 'white')) {
+            board.playerHand.put(board.playerDeck.draw());
         }
     }
 }

@@ -15,16 +15,16 @@ export class hero_deadpool_rare implements Hero {
     func(board: BoardService, dialog: MatDialog) {
         const WoundDialog = dialog.open(HQDialog, {
             data: {
-                cards: board.playerHand.cards,
+                cards: board.playerHand,
                 preview: this.image,
                 header: 'Replace hero or nothing'
             }
         }).afterClosed().subscribe(card => {
             if (card !== undefined) {
-                board.playerHand.push(board.woundsDeck.draw());
-                const index = board.playerHand.cards.findIndex(hero => hero === card);
+                board.playerHand.put(board.woundsDeck.draw());
+                const index = board.playerHand.findIndex(hero => hero === card);
                 board.playerHand.pick(index);
-                board.playerHand.push(board.heroDeck.draw());
+                board.playerHand.put(board.heroDeck.draw());
             }
             WoundDialog.unsubscribe();
         });
@@ -39,7 +39,7 @@ export class hero_deadpool_uncommon implements Hero {
     recrutingPoints = 0;
     cost = 3;
     func(board: BoardService, dialog: MatDialog) {
-        if (board.playerCards.cards.length === 0) {
+        if (board.playerCards.length === 0) {
             const ChooseDialog = dialog.open(HQDialog, {
                 data: {
                     cards: [new hero_deadpool_uncommon],
@@ -48,10 +48,9 @@ export class hero_deadpool_uncommon implements Hero {
                 }
             }).afterClosed().subscribe(card => {
                 if (card !== undefined) {
-                    board.discardPile.push(board.playerHand.cards);
-                    board.playerHand.cards = [];
+                    board.discardPile.put(board.playerHand.take());
                     for (let i = 0; i < 4; i++) {
-                        board.playerHand.push(board.playerDeck.draw());
+                        board.playerHand.put(board.playerDeck.draw());
                     }
                 }
                 ChooseDialog.unsubscribe();
@@ -99,6 +98,6 @@ export class hero_deadpool_common_2 implements Hero {
     recrutingPoints = 0;
     cost = 5;
     func(board: BoardService, dialog: MatDialog) {
-        board.playerAttack += board.playerCards.cards.filter(card => card.cost % 2 !== 0).length;
+        board.playerAttack += board.playerCards.filter(card => card.cost % 2 !== 0).length;
     }
 }

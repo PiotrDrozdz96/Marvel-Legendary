@@ -1,8 +1,8 @@
 <div class="board">
     <div class="left-board">
         <div class="additional-block">
-            <img src="assets/ko.jpg" (click)="viewCards('KO',board.KO.cards)">
-            <img src="assets/victory_pile.jpg" (click)="viewCards('Victory Pile',board.victoryPile.cards)">
+            <img src="assets/ko.jpg" (click)="viewCards('KO',board.KO)">
+            <img src="assets/victory_pile.jpg" (click)="viewCards('Victory Pile',board.victoryPile)">
         </div>
         <div class="deck scheme">
             <app-card *ngIf="board.scheme" [src]="board.scheme.image"></app-card>
@@ -18,21 +18,21 @@
             <div class="text-in-deck" *ngIf="board.mastermind">{{board.mastermind.tactics.length}}</div>
         </div>
         <div class="deck shield">
-            <app-card *ngIf="board.shieldDeck.cards.length != 0" [src]="board.shieldDeck.cards[0].image" (click)="recruitShieldOfficer()"></app-card>
+            <app-card *ngIf="board.shieldDeck.length != 0" [src]="board.shieldDeck[0].image" (click)="recruitShieldOfficer()"></app-card>
         </div>
     </div>
     <div class="center-board">
         <app-cityscape></app-cityscape>
         <app-hq></app-hq>
         <div class="deck escapedVillains">
-            <app-card *ngIf="board.escapedVillain.cards[board.escapedVillain.cards.length - 1]" 
-                      [src]="board.escapedVillain.cards[board.escapedVillain.cards.length - 1].image"
-                      (click)="viewCards('Escaped Villains',board.escapedVillain.cards)">
+            <app-card *ngIf="board.escapedVillain[board.escapedVillain.length - 1]" 
+                      [src]="board.escapedVillain[board.escapedVillain.length - 1].image"
+                      (click)="viewCards('Escaped Villains',board.escapedVillain)">
             </app-card>
         </div>
         <app-ko></app-ko>
         <div class="deck wounds">
-            <app-card *ngIf="board.woundsDeck.cards.length != 0" [src]="board.woundsDeck.cards[0].image"></app-card>
+            <app-card *ngIf="board.woundsDeck.length != 0" [src]="board.woundsDeck[0].image"></app-card>
         </div>
     </div>
     <div class="right-board">
@@ -45,7 +45,7 @@
             <img src="assets/next_turn.jpg" (click)="nextTurn()">
         </div>
         <div class="deck bystanders">
-            <app-card *ngIf="board.bystandersDeck.cards.length != 0" [src]="board.bystandersDeck.cards[0].image"></app-card>
+            <app-card *ngIf="board.bystandersDeck.length != 0" [src]="board.bystandersDeck[0].image"></app-card>
         </div>
     </div>
 </div>

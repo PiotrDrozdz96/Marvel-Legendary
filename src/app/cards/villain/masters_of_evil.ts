@@ -12,8 +12,8 @@ export class villain_masters_baron_zemo implements Villain {
     attack = 6;
     points = 4;
     fight(board: BoardService, dialog: MatDialog) {
-        board.playerCards.cards.filter(card => card.team === 'avengers').forEach(avengers => {
-            board.victoryPile.push(board.bystandersDeck.draw());
+        board.playerCards.filter(card => card.team === 'avengers').forEach(avengers => {
+            board.victoryPile.put(board.bystandersDeck.draw());
         });
     }
 }
@@ -33,13 +33,13 @@ export class villain_masters_ultron implements Villain {
     attack = 6;
     points = 2;
     fight(board: BoardService, dialog: MatDialog) {
-        this.points += board.playerHand.cards.concat(board.playerDeck.cards.concat(board.discardPile.cards))
+        this.points += board.playerHand.concat(board.playerDeck.concat(board.discardPile))
             .filter(card => card.color === 'grey').length;
     }
     escape(board: BoardService, dialog: MatDialog) {
         this.fight(board, dialog);
-        if (!board.playerCards.cards.find(card => card.color === 'grey')) {
-            board.discardPile.push(board.woundsDeck.draw());
+        if (!board.playerCards.find(card => card.color === 'grey')) {
+            board.discardPile.put(board.woundsDeck.draw());
         }
     }
 }
@@ -59,7 +59,7 @@ export class villain_masters_whirlwind implements Villain {
         function open() {
             const DiscardDialog = dialog.open(HQDialog, {
                 data: {
-                    cards: board.playerCards.cards.filter(card => card.type === 'hero'),
+                    cards: board.playerCards.filter(card => card.type === 'hero'),
                     preview: '',
                     header: 'KOs Hero'
                 }
@@ -68,8 +68,8 @@ export class villain_masters_whirlwind implements Villain {
                     open();
                 } else {
                     KOCounter++;
-                    const index = board.playerCards.cards.findIndex(card => card === hero);
-                    board.KO.push(board.playerCards.pick(index));
+                    const index = board.playerCards.findIndex(card => card === hero);
+                    board.KO.put(board.playerCards.pick(index));
                     DiscardDialog.unsubscribe();
                     if (KOCounter < 2) {
                         open();

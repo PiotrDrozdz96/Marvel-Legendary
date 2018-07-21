@@ -23,7 +23,7 @@ export class villain_hydra_kidnappers implements Villain {
     attack = 3;
     points = 1;
     fight(board: BoardService, dialog: MatDialog) {
-        board.discardPile.push(board.shieldDeck.draw());
+        board.discardPile.put(board.shieldDeck.draw());
     }
 }
 
@@ -34,7 +34,7 @@ export class villain_hydra_supreme_hydra implements Villain {
     attack = 6;
     points = 3;
     fight(board: BoardService, dialog: MatDialog) {
-        this.points = this.points * board.victoryPile.cards.filter(card => card['team'] === 'hydra').length;
+        this.points = this.points * board.victoryPile.filter(card => card['team'] === 'hydra').length;
     }
     escape = (board: BoardService, dialog: MatDialog) => this.fight(board, dialog);
 }
@@ -46,8 +46,8 @@ export class villain_hydra_viper implements Villain {
     attack = 5;
     points = 3;
     fight(board: BoardService, dialog: MatDialog) {
-        if (!board.victoryPile.cards.find(card => card['team'] === 'hydra')) {
-            board.discardPile.push(board.woundsDeck.draw());
+        if (!board.victoryPile.find(card => card['team'] === 'hydra')) {
+            board.discardPile.put(board.woundsDeck.draw());
         }
     }
     escape = (board: BoardService, dialog: MatDialog) => this.fight(board, dialog);

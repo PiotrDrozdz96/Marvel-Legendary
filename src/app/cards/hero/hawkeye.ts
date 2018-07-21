@@ -24,8 +24,8 @@ export class hero_hawkeye_uncommon implements Hero {
     recrutingPoints = 0;
     cost = 5;
     func(board: BoardService, dialog: MatDialog) {
-        if (board.playerCards.cards.find(card => card.color === 'grey')) {
-            board.playerHand.push(board.playerDeck.draw());
+        if (board.playerCards.find(card => card.color === 'grey')) {
+            board.playerHand.put(board.playerDeck.draw());
         }
     }
 }
@@ -39,7 +39,7 @@ export class hero_hawkeye_common_1 implements Hero {
     recrutingPoints = 0;
     cost = 3;
     func(board: BoardService, dialog: MatDialog) {
-        board.playerHand.push(board.playerDeck.draw());
+        board.playerHand.put(board.playerDeck.draw());
     }
 }
 
@@ -52,7 +52,7 @@ export class hero_hawkeye_common_2 implements Hero {
     recrutingPoints = 0;
     cost = 4;
     func(board: BoardService, dialog: MatDialog) {
-        if (board.playerCards.cards.find(card => card.team === 'avengers')) {
+        if (board.playerCards.find(card => card.team === 'avengers')) {
             board.playerAttack++;
         }
     }

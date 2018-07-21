@@ -18,6 +18,7 @@ import { PlayCardsDialog } from '../play-cards-dialog/play-cards.dialog';
 import { CardsListDialog } from '../cards-list-dialog/cards-list.dialog';
 import { hero_cyclops_uncommon } from '../cards/hero/cyclops';
 import { EndGameDialog } from '../end-game-dialog/end-game.dialog';
+import { Deck } from '../models/deck';
 
 @Component({
   selector: 'app-board',
@@ -106,7 +107,7 @@ export class BoardComponent implements OnInit {
         this.board.villianDeck.create(this.henchmanCards, villain);
         // add bystanders
         for (let i = 0; i < this.bystanders; i++) {
-          this.board.villianDeck.push(this.board.bystandersDeck.draw());
+          this.board.villianDeck.put(this.board.bystandersDeck.draw());
         }
         // add masterStrike
         this.board.villianDeck.create(this.masterStrike, new master_strike);
@@ -146,22 +147,19 @@ export class BoardComponent implements OnInit {
   }
 
   recruitShieldOfficer() {
-    if (this.board.playerRecrutingPoints >= this.board.shieldDeck.cards[0].cost) {
-      this.board.playerRecrutingPoints -= this.board.shieldDeck.cards[0].cost;
-      this.board.discardPile.push(this.board.shieldDeck.draw());
+    if (this.board.playerRecrutingPoints >= this.board.shieldDeck[0].cost) {
+      this.board.playerRecrutingPoints -= this.board.shieldDeck[0].cost;
+      this.board.discardPile.put(this.board.shieldDeck.draw());
     }
   }
 
   nextTurn() {
-    if (this.board.playerCards.cards.filter(card => card.type === 'wound').length === this.board.playerCards.cards.length) {
-      this.board.KO.push(this.board.playerCards.cards);
-      this.board.playerCards.cards = [];
+    if (this.board.playerCards.filter(card => card.type === 'wound').length === this.board.playerCards.length) {
+      this.board.KO.put(this.board.playerCards.take());
     }
     this.board.playerAttack = 0;
     this.board.playerRecrutingPoints = 0;
-    this.board.discardPile.push(this.board.playerHand.cards.concat(this.board.playerCards.cards));
-    this.board.playerHand.cards = [];
-    this.board.playerCards.cards = [];
+    this.board.discardPile.put(this.board.playerHand.take().concat(this.board.playerCards.take()));
     this.board.drawToPlayerHand();
     this.board.nextTurnObs.next(true);
   }
@@ -172,8 +170,8 @@ export class BoardComponent implements OnInit {
       const tactic = this.board.mastermind.tactics.splice(Math.floor(Math.random() * this.board.mastermind.tactics.length), 1);
       const tacticCard = Object.assign({}, this.board.mastermind);
       tacticCard.image = tactic[0].image;
-      this.board.victoryPile.push([tacticCard]);
-      this.board.victoryPile.push(this.board.mastermindBystanders);
+      this.board.victoryPile.push(tacticCard);
+      this.board.victoryPile.put(this.board.mastermindBystanders);
       this.board.mastermindBystanders = [];
       if (this.board.mastermind.tactics.length === 0) {
         this.dialog.open(EndGameDialog, {data: { header: 'win' }}).afterClosed().subscribe(sub => {

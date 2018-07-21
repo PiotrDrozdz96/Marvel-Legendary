@@ -1,4 +1,5 @@
-import { Scheme, Card } from '../models/card';
+import { Deck } from '../models/deck';
+import { Scheme, Card, Villain } from '../models/card';
 import { BoardService } from '../board.service';
 import { wound } from './wounds';
 import { henchman_sentinel, henchman_doombot_legion, henchman_hand_ninjas, henchman_savage_land_mutants } from '../cards/villain/henchmen';
@@ -18,16 +19,16 @@ export class scheme_legacy_virus implements Scheme {
     image = 'assets/cards/scheme/scheme_legacy_virus.png';
     counterTwist = 0;
     twist(board: BoardService) {
-        if (!board.playerHand.cards.some(card => card.color === 'grey')) {
-            board.discardPile.push(board.woundsDeck.draw());
+        if (!board.playerHand.some(card => card.color === 'grey')) {
+            board.discardPile.put(board.woundsDeck.draw());
         }
     }
     setup(board: BoardService, dialog: MatDialog) {
         board.villianDeck.create(8, new scheme_twist);
-        board.woundsDeck.cards = [];
+        board.woundsDeck.take();
         board.woundsDeck.create(6, new wound);
         board.nextTurn().subscribe(sub => {
-            if (board.woundsDeck.cards.length === 0) {
+            if (board.woundsDeck.length === 0) {
                 dialog.open(EndGameDialog, { data: { header: 'lose' } }).afterClosed().subscribe(subs => {
                     location.reload();
                 });
@@ -47,16 +48,16 @@ export class scheme_midtown_bank_robbery implements Scheme {
         }
     }
     setup(board: BoardService, dialog: MatDialog) {
-        const length = 12 - board.villianDeck.cards.filter(card => card.type === 'bystander').length;
+        const length = 12 - board.villianDeck.filter(card => card.type === 'bystander').length;
         board.villianDeck.create(8, new scheme_twist);
         for (let i = 0; i < length; i++) {
-            board.villianDeck.push(board.bystandersDeck.draw());
+            board.villianDeck.put(board.bystandersDeck.draw());
         }
         board.nextTurn().subscribe(sub => {
             board.fields.forEach(field => {
                 field.attack = field.bystanders.length;
             });
-            if (board.escapedVillain.cards.filter(card => card.type === 'bystander').length >= 8) {
+            if (board.escapedVillain.filter(card => card.type === 'bystander').length >= 8) {
                 dialog.open(EndGameDialog, { data: { header: 'lose' } }).afterClosed().subscribe(subs => {
                     location.reload();
                 });
@@ -75,7 +76,7 @@ export class scheme_negative_zone_prison_breakout implements Scheme {
     }
     setup(board: BoardService, dialog: MatDialog) {
         board.villianDeck.create(8, new scheme_twist);
-        const beforeHenchmen = board.villianDeck.cards.filter(card => card['team'] === 'henchman');
+        const beforeHenchmen = board.villianDeck.filter(card => card['team'] === 'henchman');
         const henchmen = [
             new henchman_sentinel,
             new henchman_doombot_legion,
@@ -88,7 +89,7 @@ export class scheme_negative_zone_prison_breakout implements Scheme {
         board.villianDeck.create(10, cards[Math.floor(Math.random() * cards.length)]);
         board.villianDeck.create(10 - beforeHenchmen.length, beforeHenchmen[0]);
         board.nextTurn().subscribe(sub => {
-            if (board.escapedVillain.cards.filter(card => card.type === 'villain').length >= 12) {
+            if (board.escapedVillain.filter(card => card.type === 'villain').length >= 12) {
                 dialog.open(EndGameDialog, { data: { header: 'lose' } }).afterClosed().subscribe(subs => {
                     location.reload();
                 });
@@ -117,20 +118,21 @@ export class scheme_replace_leaders_killbots implements Scheme {
     setup(board: BoardService, dialog: MatDialog) {
         board.villianDeck.create(5, new scheme_twist);
         board.scheme.counterTwist = 3;
-        const length = 18 - board.villianDeck.cards.filter(card => card.type === 'bystander').length;
+        const length = 18 - board.villianDeck.filter(card => card.type === 'bystander').length;
         const killbots = Object.assign(new bystander, {
             image: 'assets/cards/scheme/killbot.png',
             type: 'villain',
             team: 'killbots',
             attack: 3
         });
-        board.villianDeck.cards = board.villianDeck.cards.map(card => card.type === 'bystander' ? Object.assign({}, killbots) : card);
+        board.villianDeck = board.villianDeck.map(card => card.type === 'bystander' ?
+            Object.assign({}, killbots) : card, undefined, true) as Deck<Card>;
         board.villianDeck.create(length, killbots);
         board.nextTurn().subscribe(sub => {
             board.fields.filter(field => field.card && field.card.team === 'killbots').forEach(field => {
                 field.card.attack = board.scheme.counterTwist;
             });
-            if (board.escapedVillain.cards.filter(card => card.team === 'killbots').length >= 5) {
+            if (board.escapedVillain.filter(card => card.team === 'killbots').length >= 5) {
                 dialog.open(EndGameDialog, { data: { header: 'lose' } }).afterClosed().subscribe(subs => {
                     location.reload();
                 });
@@ -169,10 +171,10 @@ export class scheme_unleash_cosmic_cube implements Scheme {
                 break;
             case 5:
             case 6:
-                board.discardPile.push(board.woundsDeck.draw());
+                board.discardPile.put(board.woundsDeck.draw());
                 break;
             case 7:
-                board.discardPile.push(board.woundsDeck.draw().concat(board.woundsDeck.draw().concat(board.woundsDeck.draw())));
+                board.discardPile.put(board.woundsDeck.draw().concat(board.woundsDeck.draw(), board.woundsDeck.draw()));
                 break;
             case 8:
                 dialog.open(EndGameDialog, { data: { header: 'lose' } }).afterClosed().subscribe(sub => {

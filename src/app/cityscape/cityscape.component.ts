@@ -29,8 +29,8 @@ export class CityscapeComponent implements OnInit {
                 if (board.fields[4].card.escape) {
                   board.fields[4].card.escape(this.board, this.dialog);
                 }
-                board.escapedVillain.push([this.board.fields[4].card]);
-                board.escapedVillain.push(this.board.fields[4].bystanders);
+                board.escapedVillain.put([this.board.fields[4].card]);
+                board.escapedVillain.put(this.board.fields[4].bystanders);
                 freePlaceIndex = 4;
               }
               for (freePlaceIndex; freePlaceIndex > 0; freePlaceIndex--) {
@@ -55,7 +55,7 @@ export class CityscapeComponent implements OnInit {
             board.scheme.twist(this.board, this.dialog);
           } else if (new_card.type === 'masterStrike') {
             this.board.mastermind.masterStrike(this.board, this.dialog);
-            this.board.KO.push([new_card]);
+            this.board.KO.push(new_card);
           }
         }
         this.board.nextTurnObs.next(false);
@@ -71,8 +71,8 @@ export class CityscapeComponent implements OnInit {
       const card = this.board.fields[index].card;
       this.board.setKOimage('');
       this.board.playerAttack -= this.board.fields[index].attack + this.board.fields[index].card.attack;
-      this.board.victoryPile.push([card]);
-      this.board.victoryPile.push(this.board.fields[index].bystanders);
+      this.board.victoryPile.push(card);
+      this.board.victoryPile.put(this.board.fields[index].bystanders);
       this.board.fields[index].card = null;
       this.board.fields[index].bystanders = [];
       if (card.fight) {

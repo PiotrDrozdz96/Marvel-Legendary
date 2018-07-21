@@ -34,7 +34,7 @@ export class villain_spider_foes_the_lizard implements Villain {
     points = 2;
     fight(board: BoardService, dialog: MatDialog) {
         if (board.fields[0].card && board.fields[0].card === this) {
-            board.discardPile.push(board.woundsDeck.draw());
+            board.discardPile.put(board.woundsDeck.draw());
         }
     }
 }
@@ -46,6 +46,6 @@ export class villain_spider_foes_venom implements Villain {
     attack = 5;
     points = 3;
     escape(board: BoardService, dialog: MatDialog) {
-        board.discardPile.push(board.woundsDeck.draw());
+        board.discardPile.put(board.woundsDeck.draw());
     }
 }

@@ -23,7 +23,7 @@ export class villain_skrull_power_skrull implements Villain {
                 this.fight(board, dialog);
             } else {
                 const index = board.hq.findIndex(card => card === hero);
-                board.discardPile.push(board.hq.splice(index, 1));
+                board.discardPile.put(board.hq.pick(index));
                 const newCard = board.heroDeck.draw();
                 board.hq.push(...board.heroDeck.draw());
                 heroDialog.unsubscribe();
@@ -90,7 +90,7 @@ export class villain_skrull_super_skrull implements Villain {
     fight(board: BoardService, dialog: MatDialog) {
         const CardDialog = dialog.open(HQDialog, {
             data: {
-                cards: board.playerCards.cards.filter(card => card.type === 'hero'),
+                cards: board.playerCards.filter(card => card.type === 'hero'),
                 preview: '',
                 header: 'KO one Hero'
             }
@@ -98,8 +98,8 @@ export class villain_skrull_super_skrull implements Villain {
             if (hero === undefined) {
                 this.fight(board, dialog);
             } else {
-                const index = board.playerCards.cards.findIndex(card => card === hero);
-                board.KO.push(board.playerCards.pick(index));
+                const index = board.playerCards.findIndex(card => card === hero);
+                board.KO.put(board.playerCards.pick(index));
             }
         });
     }

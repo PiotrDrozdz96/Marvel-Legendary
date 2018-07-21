@@ -22,7 +22,7 @@ export class PlayCardsDialog {
         if (card.func) {
             card.func(this.board, this.dialog);
         }
-        this.board.playerCards.push([card]);
+        this.board.playerCards.push(card);
         this.preview = '';
         this.board.playerAttack += card.attack;
         this.board.playerRecrutingPoints += card.recrutingPoints;

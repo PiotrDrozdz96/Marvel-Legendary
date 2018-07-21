@@ -24,7 +24,7 @@ export class villain_brotherhood_juggernaut implements Villain {
         function open() {
             const DiscardDialog = dialog.open(HQDialog, {
                 data: {
-                    cards: board.discardPile.cards.filter(card => card.type === 'hero'),
+                    cards: board.discardPile.filter(card => card.type === 'hero'),
                     preview: '',
                     header: 'KOs Hero'
                 }
@@ -33,16 +33,16 @@ export class villain_brotherhood_juggernaut implements Villain {
                     open();
                 } else {
                     KOCounter++;
-                    const index = board.discardPile.cards.findIndex(card => card === hero);
-                    board.KO.push(board.discardPile.pick(index));
+                    const index = board.discardPile.findIndex(card => card === hero);
+                    board.KO.put(board.discardPile.pick(index));
                     DiscardDialog.unsubscribe();
-                    if (KOCounter < 2 && board.discardPile.cards.length > 0) {
+                    if (KOCounter < 2 && board.discardPile.length > 0) {
                         open();
                     }
                 }
             });
         }
-        if (board.discardPile.cards.length > 0) {
+        if (board.discardPile.length > 0) {
             open();
         }
     }
@@ -52,7 +52,7 @@ export class villain_brotherhood_juggernaut implements Villain {
         function open() {
             const DiscardDialog = dialog.open(HQDialog, {
                 data: {
-                    cards: board.playerHand.cards.filter(card => card.type === 'hero'),
+                    cards: board.playerHand.filter(card => card.type === 'hero'),
                     preview: '',
                     header: 'KOs Hero'
                 }
@@ -61,8 +61,8 @@ export class villain_brotherhood_juggernaut implements Villain {
                     open();
                 } else {
                     KOCounter++;
-                    const index = board.playerHand.cards.findIndex(card => card === hero);
-                    board.KO.push(board.playerHand.pick(index));
+                    const index = board.playerHand.findIndex(card => card === hero);
+                    board.KO.put(board.playerHand.pick(index));
                     DiscardDialog.unsubscribe();
                     if (KOCounter < 2) {
                         open();
@@ -92,8 +92,8 @@ export class villain_brotherhood_sabertooth implements Villain {
     attack = 5;
     points = 3;
     fight(board: BoardService, dialog: MatDialog) {
-        if (!board.playerHand.cards.concat(board.playerCards.cards).find(card => card.team === 'x-men')) {
-            board.discardPile.push(board.woundsDeck.draw());
+        if (!board.playerHand.concat(board.playerCards).find(card => card.team === 'x-men')) {
+            board.discardPile.put(board.woundsDeck.draw());
         }
     }
     escape = (board: BoardService, dialog: MatDialog) => this.fight(board, dialog);

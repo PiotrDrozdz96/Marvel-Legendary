@@ -27,8 +27,8 @@ export class HqComponent implements OnInit {
   recruit(index: number) {
     if (this.board.playerRecrutingPoints >= this.board.hq[index].cost) {
       this.board.playerRecrutingPoints -= this.board.hq[index].cost;
-      this.board.discardPile.push(this.board.hq.splice(index, 1));
-      this.board.hq.push(...this.board.heroDeck.draw());
+      this.board.discardPile.put(this.board.hq.pick(index));
+      this.board.hq.put(this.board.heroDeck.draw());
     }
   }
 

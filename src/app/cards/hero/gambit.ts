@@ -17,7 +17,7 @@ export class hero_gambit_rare implements Hero {
         const card = board.playerDeck.draw()[0];
         board.setKOimage(card.image);
         board.playerAttack += card.cost;
-        board.playerDeck.cards.unshift(card);
+        board.playerDeck.unshift(card);
     }
 }
 
@@ -39,9 +39,9 @@ export class hero_gambit_uncommon implements Hero {
             }
         }).afterClosed().subscribe(card => {
             if (card === undefined) {
-                board.playerDeck.cards.unshift(cards[0]);
+                board.playerDeck.unshift(cards[0]);
             } else {
-                board.discardPile.push(cards);
+                board.discardPile.put(cards);
             }
             DiscardDialog.unsubscribe();
         });
@@ -59,9 +59,9 @@ export class hero_gambit_common_1 implements Hero {
     func(board: BoardService, dialog: MatDialog) {
         const card = board.playerDeck.draw()[0];
         if (card.team === 'x-men') {
-            board.playerHand.push([card]);
+            board.playerHand.push(card);
         } else {
-            board.playerDeck.cards.unshift(card);
+            board.playerDeck.unshift(card);
         }
     }
 }
@@ -75,12 +75,12 @@ export class hero_gambit_common_2 implements Hero {
     recrutingPoints = 0;
     cost = 2;
     func(board: BoardService, dialog: MatDialog) {
-        board.playerHand.push(board.playerDeck.draw().concat(board.playerDeck.draw()));
+        board.playerHand.put(board.playerDeck.draw().concat(board.playerDeck.draw()));
         open();
         function open() {
             const GetBackDialog = dialog.open(HQDialog, {
                 data: {
-                    cards: board.playerHand.cards,
+                    cards: board.playerHand,
                     preview: (new hero_gambit_common_2).image,
                     header: 'Get back one card'
                 }
@@ -88,8 +88,8 @@ export class hero_gambit_common_2 implements Hero {
                 if (card === undefined) {
                     open();
                 } else {
-                    const index = board.playerHand.cards.findIndex(hero => hero === card);
-                    board.playerDeck.cards.unshift(board.playerHand.pick(index)[0]);
+                    const index = board.playerHand.findIndex(hero => hero === card);
+                    board.playerDeck.unshift(board.playerHand.pick(index)[0]);
                 }
                 GetBackDialog.unsubscribe();
             });

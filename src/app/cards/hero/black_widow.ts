@@ -45,8 +45,8 @@ export class hero_black_widow_rare implements Hero {
             const tactic = board.mastermind.tactics.splice(Math.floor(Math.random() * board.mastermind.tactics.length), 1);
             const tacticCard = Object.assign({}, board.mastermind);
             tacticCard.image = tactic[0].image;
-            board.victoryPile.push([tacticCard]);
-            board.victoryPile.push(board.mastermindBystanders);
+            board.victoryPile.push(tacticCard);
+            board.victoryPile.put(board.mastermindBystanders);
             board.mastermindBystanders = [];
             if (board.mastermind.tactics.length === 0) {
                 console.log('Win');
@@ -57,8 +57,8 @@ export class hero_black_widow_rare implements Hero {
         }
         function attackVillain(index: number) {
             const card = board.fields[index].card;
-            board.victoryPile.push([card]);
-            board.victoryPile.push(board.fields[index].bystanders);
+            board.victoryPile.push(card);
+            board.victoryPile.put(board.fields[index].bystanders);
             board.fields[index].card = null;
             board.fields[index].bystanders = [];
             if (card.fight) {
@@ -77,7 +77,7 @@ export class hero_black_widow_uncommon implements Hero {
     recrutingPoints = 0;
     cost = 4;
     func(board: BoardService, dialog: MatDialog) {
-        board.playerAttack += board.victoryPile.cards.filter(card => card.type === 'bystander').length;
+        board.playerAttack += board.victoryPile.filter(card => card.type === 'bystander').length;
     }
 }
 
@@ -90,23 +90,23 @@ export class hero_black_widow_common_1 implements Hero {
     recrutingPoints = 0;
     cost = 3;
     func(board: BoardService, dialog: MatDialog) {
-        if (board.playerCards.cards.find(card => card.color === 'red')) {
+        if (board.playerCards.find(card => card.color === 'red')) {
             const KODialog = dialog.open(HQDialog, {
                 data: {
-                    cards: board.playerHand.cards.concat(board.discardPile.cards),
+                    cards: board.playerHand.concat(board.discardPile),
                     preview: '',
                     header: 'KOs Card or nothing'
                 }
             }).afterClosed().subscribe(hero => {
                 if (hero !== undefined) {
-                    let index = board.discardPile.cards.findIndex(card => card.image === hero.image);
+                    let index = board.discardPile.findIndex(card => card.image === hero.image);
                     if (index !== -1) {
-                        board.KO.push(board.discardPile.pick(index));
+                        board.KO.put(board.discardPile.pick(index));
                     } else {
-                        index = board.playerHand.cards.findIndex(card => card.image === hero.image);
-                        board.KO.push(board.playerHand.pick(index));
+                        index = board.playerHand.findIndex(card => card.image === hero.image);
+                        board.KO.put(board.playerHand.pick(index));
                     }
-                    board.victoryPile.push(board.bystandersDeck.draw());
+                    board.victoryPile.put(board.bystandersDeck.draw());
                 }
                 KODialog.unsubscribe();
             });
@@ -123,9 +123,9 @@ export class hero_black_widow_common_2 implements Hero {
     recrutingPoints = 0;
     cost = 2;
     func(board: BoardService, dialog: MatDialog) {
-        board.playerHand.push(board.playerDeck.draw());
-        if (board.playerCards.cards.find(card => card.color === 'grey')) {
-            board.victoryPile.push(board.bystandersDeck.draw());
+        board.playerHand.put(board.playerDeck.draw());
+        if (board.playerCards.find(card => card.color === 'grey')) {
+            board.victoryPile.put(board.bystandersDeck.draw());
         }
     }
 }
