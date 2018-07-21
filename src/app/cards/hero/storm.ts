@@ -15,7 +15,7 @@ export class hero_storm_rare implements Hero {
     cost = 7;
     func(board: BoardService, dialog: MatDialog) {
         board.fields[4].attack -= 2;
-        if (board.playerCards.find(card => card.color === 'white')) {
+        if (board.checkPlayedCards('color', 'white')) {
             board.mastermind.additionalAttack -= 2;
         }
     }
@@ -74,7 +74,7 @@ export class hero_storm_common_1 implements Hero {
     recrutingPoints = 2;
     cost = 3;
     func(board: BoardService, dialog: MatDialog) {
-        if (board.playerCards.find(card => card.color === 'white')) {
+        if (board.checkPlayedCards('color', 'white')) {
             board.playerHand.put(board.playerDeck.draw());
         }
     }

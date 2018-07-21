@@ -108,7 +108,7 @@ export class hero_nick_fury_common_2 implements Hero {
     recrutingPoints = 0;
     cost = 3;
     func(board: BoardService, dialog: MatDialog) {
-        if (board.playerCards.find(card => card.color === 'grey')) {
+        if (board.checkPlayedCards('color', 'grey')) {
             board.playerAttack++;
         }
     }

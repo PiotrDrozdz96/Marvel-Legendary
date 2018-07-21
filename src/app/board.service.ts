@@ -29,7 +29,7 @@ export class BoardService {
 
   victoryPile = new Deck<Villain | Bystander | Mastermind>();
   KO = new Deck<Card>();
-  hq =  new Deck<Hero>();
+  hq = new Deck<Hero>();
   shieldDeck = new Deck<hero_shield_officer>();
   woundsDeck = new Deck<Hero>();
   bystandersDeck = new Deck<Bystander>();
@@ -117,6 +117,10 @@ export class BoardService {
       this.playerHand.put(this.playerDeck.draw());
     }
     this.numberOfDrawing = 6;
+  }
+
+  checkPlayedCards(param: string, arg: string): boolean {
+    return this.playerCards.find(card => card[param] === arg) !== undefined;
   }
 
 }

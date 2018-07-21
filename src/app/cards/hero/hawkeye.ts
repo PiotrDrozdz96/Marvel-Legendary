@@ -24,7 +24,7 @@ export class hero_hawkeye_uncommon implements Hero {
     recrutingPoints = 0;
     cost = 5;
     func(board: BoardService, dialog: MatDialog) {
-        if (board.playerCards.find(card => card.color === 'grey')) {
+        if (board.checkPlayedCards('color', 'grey')) {
             board.playerHand.put(board.playerDeck.draw());
         }
     }
@@ -52,7 +52,7 @@ export class hero_hawkeye_common_2 implements Hero {
     recrutingPoints = 0;
     cost = 4;
     func(board: BoardService, dialog: MatDialog) {
-        if (board.playerCards.find(card => card.team === 'avengers')) {
+        if (board.checkPlayedCards('team', 'avengers')) {
             board.playerAttack++;
         }
     }

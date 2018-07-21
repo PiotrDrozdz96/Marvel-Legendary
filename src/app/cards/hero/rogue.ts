@@ -60,7 +60,7 @@ export class hero_rogue_common_1 implements Hero {
     recrutingPoints = 0;
     cost = 4;
     func(board: BoardService, dialog: MatDialog) {
-        if (board.playerCards.find(card => card.color === 'green')) {
+        if (board.checkPlayedCards('color', 'green')) {
             board.playerAttack += 3;
         }
     }
@@ -75,7 +75,7 @@ export class hero_rogue_common_2 implements Hero {
     recrutingPoints = 0;
     cost = 3;
     func(board: BoardService, dialog: MatDialog) {
-        if (board.playerCards.find(card => card.color === 'red')) {
+        if (board.checkPlayedCards('color', 'red')) {
             const KODialog = dialog.open(HQDialog, {
                 data: {
                     cards: board.playerHand.concat(board.discardPile),

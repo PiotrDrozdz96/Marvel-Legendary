@@ -15,7 +15,7 @@ export class hero_hulk_rare implements Hero {
     recrutingPoints = 0;
     cost = 8;
     func(board: BoardService, dialog: MatDialog) {
-        if (board.playerCards.find(card => card.color === 'green')) {
+        if (board.checkPlayedCards('color', 'green')) {
             board.playerAttack += 5;
         }
     }
@@ -43,7 +43,7 @@ export class hero_hulk_common_1 implements Hero {
     recrutingPoints = 0;
     cost = 3;
     func(board: BoardService, dialog: MatDialog) {
-        if (board.playerCards.find(card => card.color === 'green')) {
+        if (board.checkPlayedCards('color', 'green')) {
             board.playerAttack++;
         }
     }

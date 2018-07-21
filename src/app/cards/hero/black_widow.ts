@@ -90,7 +90,7 @@ export class hero_black_widow_common_1 implements Hero {
     recrutingPoints = 0;
     cost = 3;
     func(board: BoardService, dialog: MatDialog) {
-        if (board.playerCards.find(card => card.color === 'red')) {
+        if (board.checkPlayedCards('color', 'red')) {
             const KODialog = dialog.open(HQDialog, {
                 data: {
                     cards: board.playerHand.concat(board.discardPile),
@@ -124,7 +124,7 @@ export class hero_black_widow_common_2 implements Hero {
     cost = 2;
     func(board: BoardService, dialog: MatDialog) {
         board.playerHand.put(board.playerDeck.draw());
-        if (board.playerCards.find(card => card.color === 'grey')) {
+        if (board.checkPlayedCards('color', 'grey')) {
             board.victoryPile.put(board.bystandersDeck.draw());
         }
     }

@@ -54,7 +54,7 @@ export class hero_emma_frost_common_2 implements Hero {
     recrutingPoints = 0;
     cost = 4;
     func(board: BoardService, dialog: MatDialog) {
-        if (board.playerCards.find(card => card.color === 'red')) {
+        if (board.checkPlayedCards('color', 'red')) {
             const DrawDialog = dialog.open(HQDialog, {
                 data: {
                     cards: [new hero_emma_frost_common_2],
