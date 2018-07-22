@@ -1,48 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { Villain } from './models/card';
-import {
-    villain_brotherhood_blob,
-    villain_brotherhood_juggernaut,
-    villain_brotherhood_mystique,
-    villain_brotherhood_sabertooth
-} from './cards/villain/brootherhood';
-import {
-    villain_asgard_destroyer,
-    villain_asgard_enchantress,
-    villain_asgard_frost_giant,
-    villain_asgard_ymir
-} from './cards/villain/enemies_of_asgard';
-import {
-    villain_hydra_endless_armies_hydra,
-    villain_hydra_kidnappers,
-    villain_hydra_supreme_hydra,
-    villain_hydra_viper
-} from './cards/villain/hydra';
-import {
-    villain_masters_baron_zemo,
-    villain_masters_melter,
-    villain_masters_ultron,
-    villain_masters_whirlwind
-} from './cards/villain/masters_of_evil';
-import {
-    villain_radiation_abomination,
-    villain_radiation_maestro,
-    villain_radiation_theleader,
-    villain_radiation_zzzax
-} from './cards/villain/radiation';
-import {
-    villain_skrull_power_skrull,
-    villain_skrull_queen_veranke,
-    villain_skrull_shapeshifters,
-    villain_skrull_super_skrull
-} from './cards/villain/skrulls';
-import {
-    villain_spider_foes_doctor_octopus,
-    villain_spider_foes_green_goblin,
-    villain_spider_foes_the_lizard,
-    villain_spider_foes_venom
-} from './cards/villain/spider_foes';
+import * as villain_brotherhood from './cards/villain/brootherhood';
+import * as villain_asgard from './cards/villain/enemies_of_asgard';
+import * as villain_hydra from './cards/villain/hydra';
+import * as villain_masters from './cards/villain/masters_of_evil';
+import * as villain_radiation from './cards/villain/radiation';
+import * as villain_skrull from './cards/villain/skrulls';
+import * as villain_spider_foes from './cards/villain/spider_foes';
 
 @Injectable({
     providedIn: 'root'
@@ -51,46 +16,46 @@ export class VillainsService {
 
     private cards = [
         [
-            new villain_brotherhood_blob,
-            new villain_brotherhood_juggernaut,
-            new villain_brotherhood_mystique,
-            new villain_brotherhood_sabertooth
+            new villain_brotherhood.blob,
+            new villain_brotherhood.juggernaut,
+            new villain_brotherhood.mystique,
+            new villain_brotherhood.sabertooth
         ],
         [
-            new villain_asgard_destroyer,
-            new villain_asgard_enchantress,
-            new villain_asgard_frost_giant,
-            new villain_asgard_ymir
+            new villain_asgard.destroyer,
+            new villain_asgard.enchantress,
+            new villain_asgard.frost_giant,
+            new villain_asgard.ymir
         ],
         [
-            new villain_hydra_endless_armies_hydra,
-            new villain_hydra_kidnappers,
-            new villain_hydra_supreme_hydra,
-            new villain_hydra_viper
+            new villain_hydra.endless_armies_hydra,
+            new villain_hydra.kidnappers,
+            new villain_hydra.supreme_hydra,
+            new villain_hydra.viper
         ],
         [
-            new villain_masters_baron_zemo,
-            new villain_masters_melter,
-            new villain_masters_ultron,
-            new villain_masters_whirlwind
+            new villain_masters.baron_zemo,
+            new villain_masters.melter,
+            new villain_masters.ultron,
+            new villain_masters.whirlwind
         ],
         [
-            new villain_radiation_abomination,
-            new villain_radiation_maestro,
-            new villain_radiation_theleader,
-            new villain_radiation_zzzax
+            new villain_radiation.abomination,
+            new villain_radiation.maestro,
+            new villain_radiation.theleader,
+            new villain_radiation.zzzax
         ],
         [
-            new villain_skrull_power_skrull,
-            new villain_skrull_queen_veranke,
-            new villain_skrull_shapeshifters,
-            new villain_skrull_super_skrull
+            new villain_skrull.power_skrull,
+            new villain_skrull.queen_veranke,
+            new villain_skrull.shapeshifters,
+            new villain_skrull.super_skrull
         ],
         [
-            new villain_spider_foes_doctor_octopus,
-            new villain_spider_foes_green_goblin,
-            new villain_spider_foes_the_lizard,
-            new villain_spider_foes_venom
+            new villain_spider_foes.doctor_octopus,
+            new villain_spider_foes.green_goblin,
+            new villain_spider_foes.the_lizard,
+            new villain_spider_foes.venom
         ]
     ];
 

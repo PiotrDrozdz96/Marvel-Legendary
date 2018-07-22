@@ -5,7 +5,7 @@ import { HQDialog } from '../../cards-dialog/hq-dialog/hq.dialog';
 
 // tslint:disable:class-name
 
-export class hero_thor_rare implements Hero {
+export class rare implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/thor/thor_rare.png';
     team = 'avengers';
@@ -30,7 +30,7 @@ export class hero_thor_rare implements Hero {
     }
 }
 
-export class hero_thor_uncommon implements Hero {
+export class uncommon implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/thor/thor_uncommon.png';
     team = 'avengers';
@@ -45,7 +45,7 @@ export class hero_thor_uncommon implements Hero {
     }
 }
 
-export class hero_thor_common_1 implements Hero {
+export class common_1 implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/thor/thor_common_1.png';
     team = 'avengers';
@@ -60,7 +60,7 @@ export class hero_thor_common_1 implements Hero {
     }
 }
 
-export class hero_thor_common_2 implements Hero {
+export class common_2 implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/thor/thor_common_2.png';
     team = 'avengers';

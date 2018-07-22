@@ -5,7 +5,7 @@ import { HQDialog } from '../../cards-dialog/hq-dialog/hq.dialog';
 
 // tslint:disable:class-name
 
-export class hero_gambit_rare implements Hero {
+export class rare implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/gambit/gambit_rare.png';
     team = 'x-men';
@@ -21,7 +21,7 @@ export class hero_gambit_rare implements Hero {
     }
 }
 
-export class hero_gambit_uncommon implements Hero {
+export class uncommon implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/gambit/gambit_uncommon.png';
     team = 'x-men';
@@ -48,7 +48,7 @@ export class hero_gambit_uncommon implements Hero {
     }
 }
 
-export class hero_gambit_common_1 implements Hero {
+export class common_1 implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/gambit/gambit_common_1.png';
     team = 'x-men';
@@ -66,7 +66,7 @@ export class hero_gambit_common_1 implements Hero {
     }
 }
 
-export class hero_gambit_common_2 implements Hero {
+export class common_2 implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/gambit/gambit_common_2.png';
     team = 'x-men';
@@ -81,7 +81,7 @@ export class hero_gambit_common_2 implements Hero {
             const GetBackDialog = dialog.open(HQDialog, {
                 data: {
                     cards: board.playerHand,
-                    preview: (new hero_gambit_common_2).image,
+                    preview: (new common_2).image,
                     header: 'Get back one card'
                 }
             }).afterClosed().subscribe(card => {

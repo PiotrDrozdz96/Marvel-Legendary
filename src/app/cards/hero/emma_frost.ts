@@ -5,7 +5,7 @@ import { HQDialog } from '../../cards-dialog/hq-dialog/hq.dialog';
 
 // tslint:disable:class-name
 
-export class hero_emma_frost_rare implements Hero {
+export class rare implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/emma_frost/emma_frost_rare.png';
     team = 'x-men';
@@ -17,7 +17,7 @@ export class hero_emma_frost_rare implements Hero {
     func(board: BoardService, dialog: MatDialog) { }
 }
 
-export class hero_emma_frost_uncommon implements Hero {
+export class uncommon implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/emma_frost/emma_frost_uncommon.png';
     team = 'x-men';
@@ -32,7 +32,7 @@ export class hero_emma_frost_uncommon implements Hero {
     }
 }
 
-export class hero_emma_frost_common_1 implements Hero {
+export class common_1 implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/emma_frost/emma_frost_common_1.png';
     team = 'x-men';
@@ -45,7 +45,7 @@ export class hero_emma_frost_common_1 implements Hero {
     }
 }
 
-export class hero_emma_frost_common_2 implements Hero {
+export class common_2 implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/emma_frost/emma_frost_common_2.png';
     team = 'x-men';
@@ -57,7 +57,7 @@ export class hero_emma_frost_common_2 implements Hero {
         if (board.checkPlayedCards('color', 'red')) {
             const DrawDialog = dialog.open(HQDialog, {
                 data: {
-                    cards: [new hero_emma_frost_common_2],
+                    cards: [new common_2],
                     preview: this.image,
                     header: 'Draw Villain and get +2 attack or nothing'
                 }

@@ -5,7 +5,7 @@ import { HQDialog } from '../../cards-dialog/hq-dialog/hq.dialog';
 
 // tslint:disable:class-name
 
-export class hero_cyclops_rare implements Hero {
+export class rare implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/cyclops/cyclops_rare.png';
     team = 'x-men';
@@ -18,7 +18,7 @@ export class hero_cyclops_rare implements Hero {
     }
 }
 
-export class hero_cyclops_uncommon implements Hero {
+export class uncommon implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/cyclops/cyclops_uncommon.png';
     team = 'x-men';
@@ -28,7 +28,7 @@ export class hero_cyclops_uncommon implements Hero {
     cost = 6;
 }
 
-export class hero_cyclops_common_1 implements Hero {
+export class common_1 implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/cyclops/cyclops_common_1.png';
     team = 'x-men';
@@ -49,7 +49,7 @@ export class hero_cyclops_common_1 implements Hero {
                 board.playerHand.put(board.playerCards.pick(index));
                 board.playerAttack -= this.attack;
             } else {
-                if (card.image !== (new hero_cyclops_uncommon).image) {
+                if (card.image !== (new uncommon).image) {
                     const index = board.playerHand.findIndex( hero => hero === card );
                     board.discardPile.put(board.playerHand.pick(index));
                 }
@@ -59,7 +59,7 @@ export class hero_cyclops_common_1 implements Hero {
     }
 }
 
-export class hero_cyclops_common_2 implements Hero {
+export class common_2 implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/cyclops/cyclops_common_2.png';
     team = 'x-men';
@@ -80,7 +80,7 @@ export class hero_cyclops_common_2 implements Hero {
                 board.playerHand.put(board.playerCards.pick(index));
                 board.playerAttack -= this.attack;
             } else {
-                if (card.image !== (new hero_cyclops_uncommon).image) {
+                if (card.image !== (new uncommon).image) {
                     const index = board.playerHand.findIndex( hero => hero === card );
                     board.discardPile.put(board.playerHand.pick(index));
                 }

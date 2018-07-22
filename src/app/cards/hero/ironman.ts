@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material';
 
 // tslint:disable:class-name
 
-export class hero_ironman_rare implements Hero {
+export class rare implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/ironman/ironman_rare.png';
     team = 'avengers';
@@ -20,7 +20,7 @@ export class hero_ironman_rare implements Hero {
     }
 }
 
-export class hero_ironman_uncommon implements Hero {
+export class uncommon implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/ironman/ironman_uncommon.png';
     team = 'avengers';
@@ -33,7 +33,7 @@ export class hero_ironman_uncommon implements Hero {
     }
 }
 
-export class hero_ironman_common_1 implements Hero {
+export class common_1 implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/ironman/ironman_common_1.png';
     team = 'avengers';
@@ -49,7 +49,7 @@ export class hero_ironman_common_1 implements Hero {
     }
 }
 
-export class hero_ironman_common_2 implements Hero {
+export class common_2 implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/ironman/ironman_common_2.png';
     team = 'avengers';

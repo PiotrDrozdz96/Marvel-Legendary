@@ -7,7 +7,7 @@ import { Hero } from '../../models/card';
 
 // tslint:disable:class-name
 
-export class hero_nick_fury_rare implements Hero {
+export class rare implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/nick_fury/nick_fury_rare.png';
     team = 'shield';
@@ -55,7 +55,7 @@ export class hero_nick_fury_rare implements Hero {
     }
 }
 
-export class hero_nick_fury_uncommon implements Hero {
+export class uncommon implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/nick_fury/nick_fury_uncommon.png';
     team = 'shield';
@@ -68,7 +68,7 @@ export class hero_nick_fury_uncommon implements Hero {
     }
 }
 
-export class hero_nick_fury_common_1 implements Hero {
+export class common_1 implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/nick_fury/nick_fury_common_1.png';
     team = 'shield';
@@ -99,7 +99,7 @@ export class hero_nick_fury_common_1 implements Hero {
     }
 }
 
-export class hero_nick_fury_common_2 implements Hero {
+export class common_2 implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/nick_fury/nick_fury_common_2.png';
     team = 'shield';

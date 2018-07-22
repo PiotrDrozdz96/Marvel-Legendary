@@ -5,7 +5,7 @@ import { HQDialog } from '../../cards-dialog/hq-dialog/hq.dialog';
 
 // tslint:disable:class-name
 
-export class villain_asgard_destroyer implements Villain {
+export class destroyer implements Villain {
     type = 'villain';
     image = 'assets/cards/villain/enemies_of_asgard/villain_asgard_destroyer.png';
     team = 'enemiesOfAsgard';
@@ -44,7 +44,7 @@ export class villain_asgard_destroyer implements Villain {
     }
 }
 
-export class villain_asgard_enchantress implements Villain {
+export class enchantress implements Villain {
     type = 'villain';
     image = 'assets/cards/villain/enemies_of_asgard/villain_asgard_enchantress.png';
     team = 'enemiesOfAsgard';
@@ -55,7 +55,7 @@ export class villain_asgard_enchantress implements Villain {
     }
 }
 
-export class villain_asgard_frost_giant implements Villain {
+export class frost_giant implements Villain {
     type = 'villain';
     image = 'assets/cards/villain/enemies_of_asgard/villain_asgard_frost_giant.png';
     team = 'enemiesOfAsgard';
@@ -69,7 +69,7 @@ export class villain_asgard_frost_giant implements Villain {
     escape = (board: BoardService, dialog: MatDialog) => this.fight(board, dialog);
 }
 
-export class villain_asgard_ymir implements Villain {
+export class ymir implements Villain {
     type = 'villain';
     image = 'assets/cards/villain/enemies_of_asgard/villain_asgard_ymir.png';
     team = 'enemiesOfAsgard';

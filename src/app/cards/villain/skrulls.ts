@@ -5,7 +5,7 @@ import { HQDialog } from '../../cards-dialog/hq-dialog/hq.dialog';
 
 // tslint:disable:class-name
 
-export class villain_skrull_power_skrull implements Villain {
+export class power_skrull implements Villain {
     type = 'villain';
     image = 'assets/cards/villain/skrulls/villain_skrull_power_skrull.png';
     team = 'skrulls';
@@ -32,7 +32,7 @@ export class villain_skrull_power_skrull implements Villain {
     }
 }
 
-export class villain_skrull_queen_veranke implements Villain {
+export class queen_veranke implements Villain {
     type = 'villain';
     image = 'assets/cards/villain/skrulls/villain_skrull_queen_veranke.png';
     team = 'skrulls';
@@ -50,7 +50,7 @@ export class villain_skrull_queen_veranke implements Villain {
         this.copiedHero = hero;
     }
     escape(board: BoardService, dialog: MatDialog) {
-        this.image = (new villain_skrull_queen_veranke).image;
+        this.image = (new queen_veranke).image;
     }
     fight(board: BoardService, dialog: MatDialog) {
         board.discardPile.push(this.copiedHero);
@@ -58,7 +58,7 @@ export class villain_skrull_queen_veranke implements Villain {
     }
 }
 
-export class villain_skrull_shapeshifters implements Villain {
+export class shapeshifters implements Villain {
     type = 'villain';
     image = 'assets/cards/villain/skrulls/villain_skrull_shapeshifters.png';
     team = 'skrulls';
@@ -73,7 +73,7 @@ export class villain_skrull_shapeshifters implements Villain {
         this.copiedHero = hero;
     }
     escape(board: BoardService, dialog: MatDialog) {
-        this.image = (new villain_skrull_shapeshifters).image;
+        this.image = (new shapeshifters).image;
     }
     fight(board: BoardService, dialog: MatDialog) {
         board.discardPile.push(this.copiedHero);
@@ -81,7 +81,7 @@ export class villain_skrull_shapeshifters implements Villain {
     }
 }
 
-export class villain_skrull_super_skrull implements Villain {
+export class super_skrull implements Villain {
     type = 'villain';
     image = 'assets/cards/villain/skrulls/villain_skrull_super_skrull.png';
     team = 'skrulls';

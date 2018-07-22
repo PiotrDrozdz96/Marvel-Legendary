@@ -6,7 +6,7 @@ import { wound } from '../wounds';
 
 // tslint:disable:class-name
 
-export class hero_hulk_rare implements Hero {
+export class rare implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/hulk/hulk_rare.png';
     team = 'avengers';
@@ -21,7 +21,7 @@ export class hero_hulk_rare implements Hero {
     }
 }
 
-export class hero_hulk_uncommon implements Hero {
+export class uncommon implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/hulk/hulk_uncommon.png';
     team = 'avengers';
@@ -34,7 +34,7 @@ export class hero_hulk_uncommon implements Hero {
     }
 }
 
-export class hero_hulk_common_1 implements Hero {
+export class common_1 implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/hulk/hulk_common_1.png';
     team = 'avengers';
@@ -49,7 +49,7 @@ export class hero_hulk_common_1 implements Hero {
     }
 }
 
-export class hero_hulk_common_2 implements Hero {
+export class common_2 implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/hulk/hulk_common_2.png';
     team = 'avengers';

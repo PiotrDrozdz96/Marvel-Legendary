@@ -5,7 +5,7 @@ import { HQDialog } from '../../cards-dialog/hq-dialog/hq.dialog';
 
 // tslint:disable:class-name
 
-export class henchman_sentinel implements Villain {
+export class sentinel implements Villain {
     type = 'villain';
     image = 'assets/cards/villain/henchman/henchman_sentinel.png';
     team = 'henchman';
@@ -29,7 +29,7 @@ export class henchman_sentinel implements Villain {
     }
 }
 
-export class henchman_doombot_legion implements Villain {
+export class doombot_legion implements Villain {
     type = 'villain';
     image = 'assets/cards/villain/henchman/henchman_doombot_legion.png';
     team = 'henchman';
@@ -58,7 +58,7 @@ export class henchman_doombot_legion implements Villain {
     }
 }
 
-export class henchman_hand_ninjas implements Villain {
+export class hand_ninjas implements Villain {
     type = 'villain';
     image = 'assets/cards/villain/henchman/henchman_hand_ninjas.png';
     team = 'henchman';
@@ -69,7 +69,7 @@ export class henchman_hand_ninjas implements Villain {
     }
 }
 
-export class henchman_savage_land_mutants implements Villain {
+export class savage_land_mutants implements Villain {
     type = 'villain';
     image = 'assets/cards/villain/henchman/henchman_savage_land_mutants.png';
     team = 'henchman';

@@ -5,7 +5,7 @@ import { HQDialog } from '../../cards-dialog/hq-dialog/hq.dialog';
 
 // tslint:disable:class-name
 
-export class villain_brotherhood_blob implements Villain {
+export class blob implements Villain {
     type = 'villain';
     image = 'assets/cards/villain/brotherhood/villain_brotherhood_blob.png';
     team = 'brotherhood';
@@ -13,7 +13,7 @@ export class villain_brotherhood_blob implements Villain {
     points = 2;
 }
 
-export class villain_brotherhood_juggernaut implements Villain {
+export class juggernaut implements Villain {
     type = 'villain';
     image = 'assets/cards/villain/brotherhood/villain_brotherhood_juggernaut.png';
     team = 'brotherhood';
@@ -73,7 +73,7 @@ export class villain_brotherhood_juggernaut implements Villain {
     }
 }
 
-export class villain_brotherhood_mystique implements Villain {
+export class mystique implements Villain {
     type = 'villain';
     image = 'assets/cards/villain/brotherhood/villain_brotherhood_mystique.png';
     team = 'brotherhood';
@@ -85,7 +85,7 @@ export class villain_brotherhood_mystique implements Villain {
     }
 }
 
-export class villain_brotherhood_sabertooth implements Villain {
+export class sabertooth implements Villain {
     type = 'villain';
     image = 'assets/cards/villain/brotherhood/villain_brotherhood_sabertooth.png';
     team = 'brotherhood';

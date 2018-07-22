@@ -1,41 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { Hero } from './models/card';
-import {
-  hero_black_widow_common_1,
-  hero_black_widow_common_2,
-  hero_black_widow_rare,
-  hero_black_widow_uncommon
-} from './cards/hero/black_widow';
-import {
-  hero_captain_america_rare,
-  hero_captain_america_uncommon,
-  hero_captain_america_common_1,
-  hero_captain_america_common_2
-} from './cards/hero/captain_america';
-import { hero_cyclops_rare, hero_cyclops_uncommon, hero_cyclops_common_1, hero_cyclops_common_2 } from './cards/hero/cyclops';
-import { hero_deadpool_rare, hero_deadpool_uncommon, hero_deadpool_common_1, hero_deadpool_common_2 } from './cards/hero/deadpool';
-import {
-  hero_emma_frost_rare,
-  hero_emma_frost_uncommon,
-  hero_emma_frost_common_1,
-  hero_emma_frost_common_2
-} from './cards/hero/emma_frost';
-import { hero_gambit_rare, hero_gambit_uncommon, hero_gambit_common_1, hero_gambit_common_2 } from './cards/hero/gambit';
-import { hero_hawkeye_rare, hero_hawkeye_uncommon, hero_hawkeye_common_1, hero_hawkeye_common_2 } from './cards/hero/hawkeye';
-import { hero_hulk_rare, hero_hulk_uncommon, hero_hulk_common_1, hero_hulk_common_2 } from './cards/hero/hulk';
-import { hero_ironman_rare, hero_ironman_uncommon, hero_ironman_common_1, hero_ironman_common_2 } from './cards/hero/ironman';
-import { hero_nick_fury_rare, hero_nick_fury_uncommon, hero_nick_fury_common_1, hero_nick_fury_common_2 } from './cards/hero/nick_fury';
-import { hero_rogue_rare, hero_rogue_uncommon, hero_rogue_common_1, hero_rogue_common_2 } from './cards/hero/rogue';
-import {
-  hero_spider_man_rare,
-  hero_spider_man_uncommon,
-  hero_spider_man_common_1,
-  hero_spider_man_common_2
-} from './cards/hero/spider_man';
-import { hero_storm_rare, hero_storm_uncommon, hero_storm_common_1, hero_storm_common_2 } from './cards/hero/storm';
-import { hero_thor_rare, hero_thor_uncommon, hero_thor_common_1, hero_thor_common_2 } from './cards/hero/thor';
-import { hero_wolverine_rare, hero_wolverine_uncommon, hero_wolverine_common_1, hero_wolverine_common_2 } from './cards/hero/wolverine';
+import * as hero_black_widow from './cards/hero/black_widow';
+import * as hero_captain_america from './cards/hero/captain_america';
+import * as hero_cyclops from './cards/hero/cyclops';
+import * as hero_deadpool from './cards/hero/deadpool';
+import * as hero_emma_frost from './cards/hero/emma_frost';
+import * as hero_gambit from './cards/hero/gambit';
+import * as hero_hawkeye from './cards/hero/hawkeye';
+import * as hero_hulk from './cards/hero/hulk';
+import * as hero_ironman from './cards/hero/ironman';
+import * as hero_nick_fury from './cards/hero/nick_fury';
+import * as hero_rogue from './cards/hero/rogue';
+import * as hero_spider_man from './cards/hero/spider_man';
+import * as hero_storm from './cards/hero/storm';
+import * as hero_thor from './cards/hero/thor';
+import * as hero_wolverine from './cards/hero/wolverine';
 
 
 @Injectable({
@@ -45,94 +25,94 @@ export class HeroService {
 
   private cards = [
     [
-      new hero_black_widow_rare,
-      new hero_black_widow_uncommon,
-      new hero_black_widow_common_1,
-      new hero_black_widow_common_2
+      new hero_black_widow.rare,
+      new hero_black_widow.uncommon,
+      new hero_black_widow.common_1,
+      new hero_black_widow.common_2
     ],
     [
-      new hero_captain_america_rare,
-      new hero_captain_america_uncommon,
-      new hero_captain_america_common_1,
-      new hero_captain_america_common_2
+      new hero_captain_america.rare,
+      new hero_captain_america.uncommon,
+      new hero_captain_america.common_1,
+      new hero_captain_america.common_2
     ],
     [
-      new hero_cyclops_rare,
-      new hero_cyclops_uncommon,
-      new hero_cyclops_common_1,
-      new hero_cyclops_common_2
+      new hero_cyclops.rare,
+      new hero_cyclops.uncommon,
+      new hero_cyclops.common_1,
+      new hero_cyclops.common_2
     ],
     [
-      new hero_deadpool_rare,
-      new hero_deadpool_uncommon,
-      new hero_deadpool_common_1,
-      new hero_deadpool_common_2
+      new hero_deadpool.rare,
+      new hero_deadpool.uncommon,
+      new hero_deadpool.common_1,
+      new hero_deadpool.common_2
     ],
     [
-      new hero_emma_frost_rare,
-      new hero_emma_frost_uncommon,
-      new hero_emma_frost_common_1,
-      new hero_emma_frost_common_2
+      new hero_emma_frost.rare,
+      new hero_emma_frost.uncommon,
+      new hero_emma_frost.common_1,
+      new hero_emma_frost.common_2
     ],
     [
-      new hero_gambit_rare,
-      new hero_gambit_uncommon,
-      new hero_gambit_common_1,
-      new hero_gambit_common_2
+      new hero_gambit.rare,
+      new hero_gambit.uncommon,
+      new hero_gambit.common_1,
+      new hero_gambit.common_2
     ],
     [
-      new hero_hawkeye_rare,
-      new hero_hawkeye_uncommon,
-      new hero_hawkeye_common_1,
-      new hero_hawkeye_common_2
+      new hero_hawkeye.rare,
+      new hero_hawkeye.uncommon,
+      new hero_hawkeye.common_1,
+      new hero_hawkeye.common_2
     ],
     [
-      new hero_hulk_rare,
-      new hero_hulk_uncommon,
-      new hero_hulk_common_1,
-      new hero_hulk_common_2
+      new hero_hulk.rare,
+      new hero_hulk.uncommon,
+      new hero_hulk.common_1,
+      new hero_hulk.common_2
     ],
     [
-      new hero_ironman_rare,
-      new hero_ironman_uncommon,
-      new hero_ironman_common_1,
-      new hero_ironman_common_2
+      new hero_ironman.rare,
+      new hero_ironman.uncommon,
+      new hero_ironman.common_1,
+      new hero_ironman.common_2
     ],
     [
-      new hero_nick_fury_rare,
-      new hero_nick_fury_uncommon,
-      new hero_nick_fury_common_1,
-      new hero_nick_fury_common_2
+      new hero_nick_fury.rare,
+      new hero_nick_fury.uncommon,
+      new hero_nick_fury.common_1,
+      new hero_nick_fury.common_2
     ],
     [
-      new hero_rogue_rare,
-      new hero_rogue_uncommon,
-      new hero_rogue_common_1,
-      new hero_rogue_common_2
+      new hero_rogue.rare,
+      new hero_rogue.uncommon,
+      new hero_rogue.common_1,
+      new hero_rogue.common_2
     ],
     [
-      new hero_spider_man_rare,
-      new hero_spider_man_uncommon,
-      new hero_spider_man_common_1,
-      new hero_spider_man_common_2
+      new hero_spider_man.rare,
+      new hero_spider_man.uncommon,
+      new hero_spider_man.common_1,
+      new hero_spider_man.common_2
     ],
     [
-      new hero_storm_rare,
-      new hero_storm_uncommon,
-      new hero_storm_common_1,
-      new hero_storm_common_2
+      new hero_storm.rare,
+      new hero_storm.uncommon,
+      new hero_storm.common_1,
+      new hero_storm.common_2
     ],
     [
-      new hero_thor_rare,
-      new hero_thor_uncommon,
-      new hero_thor_common_1,
-      new hero_thor_common_2
+      new hero_thor.rare,
+      new hero_thor.uncommon,
+      new hero_thor.common_1,
+      new hero_thor.common_2
     ]// ,
     // [
-    //   new hero_wolverine_rare,
-    //   new hero_wolverine_uncommon,
-    //   new hero_wolverine_common_1,
-    //   new hero_wolverine_common_2
+    //   new hero_wolverine.rare,
+    //   new hero_wolverine.uncommon,
+    //   new hero_wolverine.common_1,
+    //   new hero_wolverine.common_2
     // ]
   ];
 

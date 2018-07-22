@@ -1,11 +1,11 @@
-import { Deck } from '../models/deck';
-import { Scheme, Card, Villain } from '../models/card';
 import { BoardService } from '../board.service';
-import { wound } from './wounds';
-import { henchman_sentinel, henchman_doombot_legion, henchman_hand_ninjas, henchman_savage_land_mutants } from '../cards/villain/henchmen';
-import { bystander } from './bystanders';
 import { MatDialog } from '@angular/material';
 import { EndGameDialog } from '../end-game-dialog/end-game.dialog';
+import { Deck } from '../models/deck';
+import { Scheme, Card, Villain } from '../models/card';
+import { wound } from './wounds';
+import { bystander } from './bystanders';
+import * as henchman from './villain/henchmen';
 
 // tslint:disable:class-name
 
@@ -78,10 +78,10 @@ export class scheme_negative_zone_prison_breakout implements Scheme {
         board.villianDeck.create(8, new scheme_twist);
         const beforeHenchmen = board.villianDeck.filter(card => card['team'] === 'henchman');
         const henchmen = [
-            new henchman_sentinel,
-            new henchman_doombot_legion,
-            new henchman_hand_ninjas,
-            new henchman_savage_land_mutants
+            new henchman.sentinel,
+            new henchman.doombot_legion,
+            new henchman.hand_ninjas,
+            new henchman.savage_land_mutants
         ];
         const cards = henchmen.reduce((arr, card) => {
             return card.image === beforeHenchmen[0].image ? arr : arr.concat([card]);

@@ -5,7 +5,7 @@ import { HQDialog } from '../../cards-dialog/hq-dialog/hq.dialog';
 
 // tslint:disable:class-name
 
-export class villain_radiation_abomination implements Villain {
+export class abomination implements Villain {
     type = 'villain';
     image = 'assets/cards/villain/radiation/villain_radiation_abomination.png';
     team = 'radiation';
@@ -19,7 +19,7 @@ export class villain_radiation_abomination implements Villain {
     }
 }
 
-export class villain_radiation_maestro implements Villain {
+export class maestro implements Villain {
     type = 'villain';
     image = 'assets/cards/villain/radiation/villain_radiation_maestro.png';
     team = 'radiation';
@@ -54,7 +54,7 @@ export class villain_radiation_maestro implements Villain {
     }
 }
 
-export class villain_radiation_theleader implements Villain {
+export class theleader implements Villain {
     type = 'villain';
     image = 'assets/cards/villain/radiation/villain_radiation_theleader.png';
     team = 'radiation';
@@ -65,7 +65,7 @@ export class villain_radiation_theleader implements Villain {
     }
 }
 
-export class villain_radiation_zzzax implements Villain {
+export class zzzax implements Villain {
     type = 'villain';
     image = 'assets/cards/villain/radiation/villain_radiation_zzzax.png';
     team = 'radiation';

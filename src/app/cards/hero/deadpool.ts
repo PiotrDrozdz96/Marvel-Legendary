@@ -5,7 +5,7 @@ import { HQDialog } from '../../cards-dialog/hq-dialog/hq.dialog';
 
 // tslint:disable:class-name
 
-export class hero_deadpool_rare implements Hero {
+export class rare implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/deadpool/deadpool_rare.png';
     color = 'yellow';
@@ -31,7 +31,7 @@ export class hero_deadpool_rare implements Hero {
     }
 }
 
-export class hero_deadpool_uncommon implements Hero {
+export class uncommon implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/deadpool/deadpool_uncommon.png';
     color = 'yellow';
@@ -42,7 +42,7 @@ export class hero_deadpool_uncommon implements Hero {
         if (board.playerCards.length === 0) {
             const ChooseDialog = dialog.open(HQDialog, {
                 data: {
-                    cards: [new hero_deadpool_uncommon],
+                    cards: [new uncommon],
                     preview: this.image,
                     header: 'discard or nothing'
                 }
@@ -59,7 +59,7 @@ export class hero_deadpool_uncommon implements Hero {
     }
 }
 
-export class hero_deadpool_common_1 implements Hero {
+export class common_1 implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/deadpool/deadpool_common_1.png';
     color = 'grey';
@@ -74,7 +74,7 @@ export class hero_deadpool_common_1 implements Hero {
             const ChooseDialog = dialog.open(HQDialog, {
                 data: {
                     cards: board.fields.filter(field => field.card).map(field => field.card),
-                    preview: (new hero_deadpool_common_1).image,
+                    preview: (new common_1).image,
                     header: 'Choose Villain which capture bystanders'
                 }
             }).afterClosed().subscribe(card => {
@@ -90,7 +90,7 @@ export class hero_deadpool_common_1 implements Hero {
     }
 }
 
-export class hero_deadpool_common_2 implements Hero {
+export class common_2 implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/deadpool/deadpool_common_2.png';
     color = 'red';

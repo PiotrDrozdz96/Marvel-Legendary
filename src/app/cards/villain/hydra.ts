@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material';
 
 // tslint:disable:class-name
 
-export class villain_hydra_endless_armies_hydra implements Villain {
+export class endless_armies_hydra implements Villain {
     type = 'villain';
     image = 'assets/cards/villain/hydra/villain_hydra_endless_armies_hydra.png';
     team = 'hydra';
@@ -16,7 +16,7 @@ export class villain_hydra_endless_armies_hydra implements Villain {
     }
 }
 
-export class villain_hydra_kidnappers implements Villain {
+export class kidnappers implements Villain {
     type = 'villain';
     image = 'assets/cards/villain/hydra/villain_hydra_kidnappers.png';
     team = 'hydra';
@@ -27,7 +27,7 @@ export class villain_hydra_kidnappers implements Villain {
     }
 }
 
-export class villain_hydra_supreme_hydra implements Villain {
+export class supreme_hydra implements Villain {
     type = 'villain';
     image = 'assets/cards/villain/hydra/villain_hydra_supreme_hydra.png';
     team = 'hydra';
@@ -39,7 +39,7 @@ export class villain_hydra_supreme_hydra implements Villain {
     escape = (board: BoardService, dialog: MatDialog) => this.fight(board, dialog);
 }
 
-export class villain_hydra_viper implements Villain {
+export class viper implements Villain {
     type = 'villain';
     image = 'assets/cards/villain/hydra/villain_hydra_viper.png';
     team = 'hydra';

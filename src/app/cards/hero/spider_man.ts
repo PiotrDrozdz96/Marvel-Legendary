@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material';
 
 // tslint:disable:class-name
 
-export class hero_spider_man_rare implements Hero {
+export class rare implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/spider_man/spider_man_rare.png';
     team = 'spider';
@@ -23,7 +23,7 @@ export class hero_spider_man_rare implements Hero {
     }
 }
 
-export class hero_spider_man_uncommon implements Hero {
+export class uncommon implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/spider_man/spider_man_uncommon.png';
     team = 'spider';
@@ -42,7 +42,7 @@ export class hero_spider_man_uncommon implements Hero {
     }
 }
 
-export class hero_spider_man_common_1 implements Hero {
+export class common_1 implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/spider_man/spider_man_common_1.png';
     team = 'spider';
@@ -60,7 +60,7 @@ export class hero_spider_man_common_1 implements Hero {
     }
 }
 
-export class hero_spider_man_common_2 implements Hero {
+export class common_2 implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/spider_man/spider_man_common_2.png';
     team = 'spider';

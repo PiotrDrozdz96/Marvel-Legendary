@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 import { SelectDialog } from './select.dialog';
 import { Villain } from '../models/card';
-import { henchman_sentinel, henchman_doombot_legion, henchman_hand_ninjas, henchman_savage_land_mutants } from '../cards/villain/henchmen';
+import * as henchman from '../cards/villain/henchmen';
 
 @Component({
   selector: 'app-select-mastermind',
@@ -15,10 +15,10 @@ export class SelectHenchmenDialog extends SelectDialog<Villain, SelectHenchmenDi
   header = 'Select one Henchman Group';
   randomImage = 'assets/back_of_card.png';
   cards = [
-    new henchman_sentinel,
-    new henchman_doombot_legion,
-    new henchman_hand_ninjas,
-    new henchman_savage_land_mutants
+    new henchman.sentinel,
+    new henchman.doombot_legion,
+    new henchman.hand_ninjas,
+    new henchman.savage_land_mutants
   ];
 
   constructor(dialogRef: MatDialogRef<SelectHenchmenDialog>) { super(dialogRef); }
