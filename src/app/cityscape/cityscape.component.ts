@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { BoardService } from '../board.service';
+import { BoardService } from '../services/board.service';
 import { MatDialog } from '@angular/material';
 import { Card, Bystander } from '../models/card';
-import { CardsListDialog } from '../cards-list-dialog/cards-list.dialog';
+import { CardsListDialog } from '../dialogs/cards-list-dialog/cards-list.dialog';
 
 @Component({
   selector: 'app-cityscape',

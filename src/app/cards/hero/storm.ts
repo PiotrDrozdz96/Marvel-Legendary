@@ -1,7 +1,7 @@
 import { Hero } from '../../models/card';
-import { BoardService } from '../../board.service';
+import { BoardService } from '../../services/board.service';
 import { MatDialog } from '@angular/material';
-import { HQDialog } from '../../cards-dialog/hq-dialog/hq.dialog';
+import { SelectDialog } from '../../dialogs/cards-list-dialog/select.dialog';
 
 // tslint:disable:class-name
 
@@ -31,35 +31,34 @@ export class uncommon implements Hero {
     cost = 6;
     func(board: BoardService, dialog: MatDialog) {
         if (board.fields.find(field => field.card)) {
-            const VillainDialog = dialog.open(HQDialog, {
+            dialog.open(SelectDialog, {
                 data: {
-                    cards: board.fields.filter(field => field.card).map(field => field.card),
+                    array: board.fields.filter(field => field.card).map(field => field.card),
                     preview: this.image,
                     header: 'Move Villain or nothing'
                 }
-            }).afterClosed().subscribe(villain => {
-                if (villain !== undefined) {
-                    const index = board.fields.findIndex(field => field.card === villain);
+            }).afterClosed().subscribe(choosen => {
+                if (choosen !== undefined) {
+                    const index = board.fields.findIndex(field => field.card === choosen.card);
                     board.victoryPile.put(board.fields[index].bystanders);
                     board.fields[index].bystanders = [];
                     if (index === 4) {
-                        board.escapedVillain.push(villain);
+                        board.escapedVillain.push(choosen.card);
                         board.fields[4].card = null;
-                        if (villain.escape) {
-                            villain.escape(board, dialog);
+                        if (choosen.card.escape) {
+                            choosen.card.escape(board, dialog);
                         }
                     } else if (board.fields[index + 1].card) {
                         const nextVillain = board.fields[index + 1].card;
                         board.fields[index].card = nextVillain;
-                        board.fields[index + 1].card = villain;
+                        board.fields[index + 1].card = choosen.card;
                         board.fields[index].bystanders = board.fields[index + 1].bystanders;
                         board.fields[index + 1].bystanders = [];
                     } else {
-                        board.fields[index + 1].card = villain;
+                        board.fields[index + 1].card = choosen.card;
                         board.fields[index].card = null;
                     }
                 }
-                VillainDialog.unsubscribe();
             });
         }
     }

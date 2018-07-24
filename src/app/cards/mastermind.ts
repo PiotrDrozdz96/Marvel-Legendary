@@ -1,8 +1,7 @@
 import { Mastermind, Card, Tactic } from '../models/card';
-import { BoardService } from '../board.service';
+import { BoardService } from '../services/board.service';
 import { MatDialog } from '@angular/material';
-import { SelectHeroDialog } from '../select-dialog/select-hero.dialog';
-import { HQDialog } from '../cards-dialog/hq-dialog/hq.dialog';
+import { SelectDialog } from '../dialogs/cards-list-dialog/select.dialog';
 
 // tslint:disable:class-name
 
@@ -11,7 +10,7 @@ export class master_strike implements Card {
     image = 'assets/cards/mastermind/master_strike.png';
 }
 
-export class mastermind_doctor_doom implements Mastermind {
+export class doctor_doom implements Mastermind {
     type = 'mastermind';
     image = 'assets/cards/mastermind/doctor_doom/mastermind_doctor_doom.png';
     attack = 9;
@@ -24,20 +23,19 @@ export class mastermind_doctor_doom implements Mastermind {
             func: (board: BoardService, dialog: MatDialog, tactic: Tactic) => {
                 const cardsList = board.hq.filter(card => card.color === 'grey' || card.color === 'white');
                 if (cardsList.length !== 0) {
-                    const heroDialog = dialog.open(HQDialog, {
+                    dialog.open(SelectDialog, {
                         data: {
-                            cards: cardsList,
+                            array: cardsList,
                             preview: tactic.image,
                             header: 'Recruit one Hero for free'
                         }
-                    }).afterClosed().subscribe(hero => {
-                        if (hero === undefined) {
+                    }).afterClosed().subscribe(choosen => {
+                        if (choosen === undefined) {
                             tactic.func(board, dialog, tactic);
                         } else {
-                            const index = board.hq.findIndex(card => card === hero);
+                            const index = board.hq.findIndex(card => card === choosen.card);
                             board.discardPile.put(board.hq.pick(index));
                             board.hq.put(board.heroDeck.draw());
-                            heroDialog.unsubscribe();
                         }
                     });
                 }
@@ -63,20 +61,18 @@ export class mastermind_doctor_doom implements Mastermind {
     masterStrike(board: BoardService, dialog: MatDialog) {
         let numberOfChoosenCards = 0;
         function open() {
-            const HandDialog = dialog.open(HQDialog, {
+            dialog.open(SelectDialog, {
                 data: {
-                    cards: board.playerHand,
+                    array: board.playerHand,
                     preview: board.mastermind.image,
                     header: 'Put card on top their deck'
                 }
-            }).afterClosed().subscribe(hero => {
-                if (hero === undefined) {
+            }).afterClosed().subscribe(choosen => {
+                if (choosen === undefined) {
                     open();
                 } else {
                     numberOfChoosenCards++;
-                    const index = board.playerHand.findIndex(card => card === hero);
-                    board.playerDeck.unshift(...board.playerHand.pick(index));
-                    HandDialog.unsubscribe();
+                    board.playerDeck.unshift(...board.playerHand.pick(choosen.index));
                     if (numberOfChoosenCards !== 2) { open(); }
                 }
             });
@@ -88,7 +84,7 @@ export class mastermind_doctor_doom implements Mastermind {
     }
 }
 
-export class mastermind_loki implements Mastermind {
+export class loki implements Mastermind {
     type = 'mastermind';
     image = 'assets/cards/mastermind/loki/mastermind_loki.png';
     attack = 10;
@@ -100,23 +96,22 @@ export class mastermind_loki implements Mastermind {
             image: 'assets/cards/mastermind/loki/loki_1.png',
             func: (board: BoardService, dialog: MatDialog, tactic: Tactic) => {
                 if (board.fields.findIndex(field => field.card !== null) !== -1) {
-                    const VillainDialog = dialog.open(HQDialog, {
+                    dialog.open(SelectDialog, {
                         data: {
-                            cards: board.fields.filter(field => field.card != null).map(field => field.card),
+                            array: board.fields.filter(field => field.card != null).map(field => field.card),
                             preview: tactic.image,
                             header: 'Defeat Villain for free'
                         }
-                    }).afterClosed().subscribe(card => {
-                        if (card === undefined) {
+                    }).afterClosed().subscribe(choosen => {
+                        if (choosen === undefined) {
                             tactic.func(board, dialog, tactic);
                         } else {
-                            const index = board.fields.findIndex(field => field.card === card);
+                            const index = board.fields.findIndex(field => field.card === choosen.card);
                             board.victoryPile.push(board.fields[index].card);
                             board.victoryPile.put(board.fields[index].bystanders);
                             board.fields[index].card = null;
                             board.fields[index].bystanders = [];
-                            /* card fight function*/
-                            VillainDialog.unsubscribe();
+                            /* card fight function?*/
                         }
                     });
                 }
@@ -159,7 +154,7 @@ export class mastermind_loki implements Mastermind {
     }
 }
 
-export class mastermind_magneto implements Mastermind {
+export class magneto implements Mastermind {
     type = 'mastermind';
     image = 'assets/cards/mastermind/magneto/mastermind_magneto.png';
     attack = 8;
@@ -172,21 +167,19 @@ export class mastermind_magneto implements Mastermind {
             func: (board: BoardService, dialog: MatDialog, tactic: Tactic) => {
                 const cardsList = board.hq.filter(card => card.team === 'x-men');
                 if (cardsList.length !== 0) {
-                    const heroDialog = dialog.open(HQDialog, {
+                    dialog.open(SelectDialog, {
                         data: {
-                            cards: cardsList,
+                            array: cardsList,
                             preview: tactic.image,
                             header: 'Recruit one Hero for free'
                         }
-                    }).afterClosed().subscribe(hero => {
-                        if (hero === undefined) {
+                    }).afterClosed().subscribe(choosen => {
+                        if (choosen === undefined) {
                             tactic.func(board, dialog, tactic);
                         } else {
-                            const index = board.hq.findIndex(card => card === hero);
-                            board.discardPile.put(board.hq.pick(index));
+                            board.discardPile.put(board.hq.pick(choosen.index));
                             const newCard = board.heroDeck.draw();
                             board.hq.put(board.heroDeck.draw());
-                            heroDialog.unsubscribe();
                         }
                     });
                 }
@@ -205,20 +198,18 @@ export class mastermind_magneto implements Mastermind {
             func: (board: BoardService, dialog: MatDialog, tactic: Tactic) => {
                 const cardsList = board.playerCards.filter(card => card.team === 'x-men');
                 if (cardsList.length !== 0) {
-                    const heroDialog = dialog.open(HQDialog, {
+                    dialog.open(SelectDialog, {
                         data: {
-                            cards: cardsList,
+                            array: cardsList,
                             preview: tactic.image,
                             header: 'Choose one Hero'
                         }
-                    }).afterClosed().subscribe(hero => {
-                        if (hero === undefined) {
+                    }).afterClosed().subscribe(choosen => {
+                        if (choosen === undefined) {
                             tactic.func(board, dialog, tactic);
                         } else {
-                            const index = board.playerCards.findIndex(card => card === hero);
-                            board.playerDeck.unshift(...board.playerCards.splice(index, 1));
+                            board.playerDeck.unshift(...board.playerCards.splice(choosen.index, 1));
                             board.numberOfDrawing = 7;
-                            heroDialog.unsubscribe();
                         }
                     });
                 }
@@ -236,19 +227,17 @@ export class mastermind_magneto implements Mastermind {
     ];
     masterStrike(board: BoardService, dialog: MatDialog) {
         function open() {
-            const HandDialog = dialog.open(HQDialog, {
+            dialog.open(SelectDialog, {
                 data: {
-                    cards: board.playerHand,
+                    array: board.playerHand,
                     preview: board.mastermind.image,
                     header: 'Put card on discard Pile'
                 }
-            }).afterClosed().subscribe(hero => {
-                if (hero === undefined) {
+            }).afterClosed().subscribe(choosen => {
+                if (choosen === undefined) {
                     open();
                 } else {
-                    const index = board.playerHand.findIndex(card => card === hero);
-                    board.discardPile.unshift(...board.playerHand.pick(index));
-                    HandDialog.unsubscribe();
+                    board.discardPile.unshift(...board.playerHand.pick(choosen.index));
                     if (board.playerHand.length > 4) {
                         open();
                     }
@@ -262,7 +251,7 @@ export class mastermind_magneto implements Mastermind {
     }
 }
 
-export class mastermind_red_skull implements Mastermind {
+export class red_skull implements Mastermind {
     type = 'mastermind';
     image = 'assets/cards/mastermind/red_skull/mastermind_red_skull.png';
     attack = 7;
@@ -294,21 +283,23 @@ export class mastermind_red_skull implements Mastermind {
         {
             image: 'assets/cards/mastermind/red_skull/red_skull_4.png',
             func: (board: BoardService, dialog: MatDialog, tactic: Tactic) => {
+                const cards = [...board.playerDeck.draw(), ...board.playerDeck.draw(), ...board.playerDeck.draw()];
+                if (cards.length > 0) {
+                    ko();
+                }
 
                 function ko() {
-                    const KODialog = dialog.open(HQDialog, {
+                    dialog.open(SelectDialog, {
                         data: {
-                            cards: cards,
+                            array: cards,
                             preview: tactic.image,
                             header: 'KOs one card'
                         }
-                    }).afterClosed().subscribe(hero => {
-                        if (hero === undefined) {
+                    }).afterClosed().subscribe(choosen => {
+                        if (choosen === undefined) {
                             ko();
                         } else {
-                            const index = cards.findIndex(card => card === hero);
-                            board.KO.put(cards.splice(index, 1));
-                            KODialog.unsubscribe();
+                            board.KO.put(cards.splice(choosen.index, 1));
                             if (cards.length > 0) {
                                 discard();
                             }
@@ -317,29 +308,22 @@ export class mastermind_red_skull implements Mastermind {
                 }
 
                 function discard() {
-                    const discardDialog = dialog.open(HQDialog, {
+                    dialog.open(SelectDialog, {
                         data: {
-                            cards: cards,
+                            array: cards,
                             preview: tactic.image,
                             header: 'Discard one card'
                         }
-                    }).afterClosed().subscribe(hero => {
-                        if (hero === undefined) {
+                    }).afterClosed().subscribe(choosen => {
+                        if (choosen === undefined) {
                             discard();
                         } else {
-                            const index = cards.findIndex(card => card === hero);
-                            board.discardPile.put(cards.splice(index, 1));
-                            discardDialog.unsubscribe();
+                            board.discardPile.put(cards.splice(choosen.index, 1));
                             if (cards.length > 0) {
                                 board.playerDeck.unshift(cards[0]);
                             }
                         }
                     });
-                }
-
-                const cards = [...board.playerDeck.draw(), ...board.playerDeck.draw(), ...board.playerDeck.draw()];
-                if (cards.length > 0) {
-                    ko();
                 }
             }
         }

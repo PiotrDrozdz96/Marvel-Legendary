@@ -1,0 +1,12 @@
+.cards-list {
+    width: 76.2vh;
+    height: 20.4vh;
+    text-align: left;
+    color: white;
+    border-bottom: 2px solid #207aad;
+    overflow-y: scroll;
+}
+
+img{
+    cursor: pointer;
+}

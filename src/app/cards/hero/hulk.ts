@@ -1,7 +1,7 @@
 import { Hero } from '../../models/card';
-import { BoardService } from '../../board.service';
+import { BoardService } from '../../services/board.service';
 import { MatDialog } from '@angular/material';
-import { HQDialog } from '../../cards-dialog/hq-dialog/hq.dialog';
+import { SelectDialog } from '../../dialogs/cards-list-dialog/select.dialog';
 import { wound } from '../wounds';
 
 // tslint:disable:class-name
@@ -59,14 +59,14 @@ export class common_2 implements Hero {
     cost = 4;
     func(board: BoardService, dialog: MatDialog) {
         if (board.playerHand.concat(board.discardPile).find(card => card.type === 'wound')) {
-            const WoundDialog = dialog.open(HQDialog, {
+            dialog.open(SelectDialog, {
                 data: {
-                    cards: [new wound],
+                    array: [new wound],
                     preview: this.image,
                     header: 'KO a Wound or nothing'
                 }
-            }).afterClosed().subscribe(woundCard => {
-                if (woundCard !== undefined) {
+            }).afterClosed().subscribe(choosen => {
+                if (choosen !== undefined) {
                     let index = board.discardPile.findIndex(card => card.type === 'wound');
                     if (index !== -1) {
                         board.KO.put(board.discardPile.pick(index));
@@ -76,7 +76,6 @@ export class common_2 implements Hero {
                     }
                     board.playerAttack += 2;
                 }
-                WoundDialog.unsubscribe();
             });
         }
     }

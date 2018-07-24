@@ -1,7 +1,7 @@
 import { Hero } from '../../models/card';
-import { BoardService } from '../../board.service';
+import { BoardService } from '../../services/board.service';
 import { MatDialog } from '@angular/material';
-import { HQDialog } from '../../cards-dialog/hq-dialog/hq.dialog';
+import { SelectDialog } from '../../dialogs/cards-list-dialog/select.dialog';
 
 // tslint:disable:class-name
 
@@ -55,18 +55,17 @@ export class common_2 implements Hero {
     cost = 4;
     func(board: BoardService, dialog: MatDialog) {
         if (board.checkPlayedCards('color', 'red')) {
-            const DrawDialog = dialog.open(HQDialog, {
+            dialog.open(SelectDialog, {
                 data: {
-                    cards: [new common_2],
+                    array: [this],
                     preview: this.image,
                     header: 'Draw Villain and get +2 attack or nothing'
                 }
-            }).afterClosed().subscribe(card => {
-                if (!card === undefined) {
+            }).afterClosed().subscribe(choosen => {
+                if (choosen !== undefined) {
                     board.nextTurnObs.next(true);
                     board.playerAttack += 2;
                 }
-                DrawDialog.unsubscribe();
             });
         }
     }

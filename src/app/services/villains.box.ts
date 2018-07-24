@@ -1,20 +1,15 @@
-import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { Villain } from './models/card';
-import * as villain_brotherhood from './cards/villain/brootherhood';
-import * as villain_asgard from './cards/villain/enemies_of_asgard';
-import * as villain_hydra from './cards/villain/hydra';
-import * as villain_masters from './cards/villain/masters_of_evil';
-import * as villain_radiation from './cards/villain/radiation';
-import * as villain_skrull from './cards/villain/skrulls';
-import * as villain_spider_foes from './cards/villain/spider_foes';
+import { Box } from './box';
+import * as villain_brotherhood from '../cards/villain/brootherhood';
+import * as villain_asgard from '../cards/villain/enemies_of_asgard';
+import * as villain_hydra from '../cards/villain/hydra';
+import * as villain_masters from '../cards/villain/masters_of_evil';
+import * as villain_radiation from '../cards/villain/radiation';
+import * as villain_skrull from '../cards/villain/skrulls';
+import * as villain_spider_foes from '../cards/villain/spider_foes';
 
-@Injectable({
-    providedIn: 'root'
-})
-export class VillainsService {
+export class VillainsBox extends Box {
 
-    private cards = [
+    cards = [
         [
             new villain_brotherhood.blob,
             new villain_brotherhood.juggernaut,
@@ -58,16 +53,5 @@ export class VillainsService {
             new villain_spider_foes.venom
         ]
     ];
-
-    public cardsObs = new BehaviorSubject<Array<Array<Villain>>>(this.cards);
-
-    constructor() { }
-
-    getCards(): Observable<Array<Array<Villain>>> { return this.cardsObs.asObservable(); }
-    splice(index: number): Array<Villain> {
-        const result = this.cards[index];
-        this.cards.splice(index, 1);
-        return result;
-    }
 
 }

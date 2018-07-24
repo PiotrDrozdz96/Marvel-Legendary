@@ -1,7 +1,7 @@
-import { BoardService } from '../../board.service';
+import { BoardService } from '../../services/board.service';
 import { MatDialog } from '@angular/material';
-import { HQDialog } from '../../cards-dialog/hq-dialog/hq.dialog';
-import { EndGameDialog } from '../../end-game-dialog/end-game.dialog';
+import { SelectDialog } from '../../dialogs/cards-list-dialog/select.dialog';
+import { EndGameDialog } from '../../dialogs/end-game-dialog/end-game.dialog';
 import { Deck } from '../../models/deck';
 import { Hero } from '../../models/card';
 
@@ -77,24 +77,23 @@ export class common_1 implements Hero {
     recrutingPoints = 0;
     cost = 4;
     func(board: BoardService, dialog: MatDialog) {
-        const KODialog = dialog.open(HQDialog, {
+        dialog.open(SelectDialog, {
             data: {
-                cards: board.playerHand.concat(board.discardPile).filter(card => card.team === 'shield'),
+                array: board.playerHand.concat(board.discardPile).filter(card => card.team === 'shield'),
                 preview: '',
                 header: 'KOs Card or nothing'
             }
-        }).afterClosed().subscribe(hero => {
-            if (hero !== undefined) {
-                let index = board.discardPile.findIndex(card => card.image === hero.image);
+        }).afterClosed().subscribe(choosen => {
+            if (choosen !== undefined) {
+                let index = board.discardPile.findIndex(card => card.image === choosen.card.image);
                 if (index !== -1) {
                     board.KO.put(board.discardPile.pick(index));
                 } else {
-                    index = board.playerHand.findIndex(card => card.image === hero.image);
+                    index = board.playerHand.findIndex(card => card.image === choosen.card.image);
                     board.KO.put(board.playerHand.pick(index));
                 }
                 board.playerHand.put(board.shieldDeck.draw());
             }
-            KODialog.unsubscribe();
         });
     }
 }

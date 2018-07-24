@@ -1,7 +1,7 @@
 import { Villain } from '../../models/card';
-import { BoardService } from '../../board.service';
+import { BoardService } from '../../services/board.service';
 import { MatDialog } from '@angular/material';
-import { HQDialog } from '../../cards-dialog/hq-dialog/hq.dialog';
+import { SelectDialog } from '../../dialogs/cards-list-dialog/select.dialog';
 
 // tslint:disable:class-name
 
@@ -51,27 +51,26 @@ export class whirlwind implements Villain {
     attack = 4;
     points = 2;
     fight(board: BoardService, dialog: MatDialog) {
-        if ((board.fields[2].card && board.fields[2].card === this) ||
-            (board.fields[4].card && board.fields[4].card === this)) {
+        if ((board.playerCards.some(card => card.type === 'hero')) &&
+            ((board.fields[2].card && board.fields[2].card === this) ||
+            (board.fields[4].card && board.fields[4].card === this))) {
                 open();
         }
         let KOCounter = 0;
         function open() {
-            const DiscardDialog = dialog.open(HQDialog, {
+            dialog.open(SelectDialog, {
                 data: {
-                    cards: board.playerCards.filter(card => card.type === 'hero'),
-                    preview: '',
+                    array: board.playerCards.filter(card => card.type === 'hero'),
                     header: 'KOs Hero'
                 }
-            }).afterClosed().subscribe(hero => {
-                if (hero === undefined) {
+            }).afterClosed().subscribe(choosen => {
+                if (choosen === undefined) {
                     open();
                 } else {
                     KOCounter++;
-                    const index = board.playerCards.findIndex(card => card === hero);
+                    const index = board.playerCards.findIndex(card => card === choosen.card);
                     board.KO.put(board.playerCards.pick(index));
-                    DiscardDialog.unsubscribe();
-                    if (KOCounter < 2) {
+                    if (KOCounter < 2 && board.playerCards.some(card => card.type === 'hero')) {
                         open();
                     }
                 }

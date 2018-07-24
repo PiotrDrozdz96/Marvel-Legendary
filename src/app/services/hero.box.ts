@@ -1,29 +1,23 @@
-import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { Hero } from './models/card';
-import * as hero_black_widow from './cards/hero/black_widow';
-import * as hero_captain_america from './cards/hero/captain_america';
-import * as hero_cyclops from './cards/hero/cyclops';
-import * as hero_deadpool from './cards/hero/deadpool';
-import * as hero_emma_frost from './cards/hero/emma_frost';
-import * as hero_gambit from './cards/hero/gambit';
-import * as hero_hawkeye from './cards/hero/hawkeye';
-import * as hero_hulk from './cards/hero/hulk';
-import * as hero_ironman from './cards/hero/ironman';
-import * as hero_nick_fury from './cards/hero/nick_fury';
-import * as hero_rogue from './cards/hero/rogue';
-import * as hero_spider_man from './cards/hero/spider_man';
-import * as hero_storm from './cards/hero/storm';
-import * as hero_thor from './cards/hero/thor';
-import * as hero_wolverine from './cards/hero/wolverine';
+import { Box } from './box';
+import * as hero_black_widow from '../cards/hero/black_widow';
+import * as hero_captain_america from '../cards/hero/captain_america';
+import * as hero_cyclops from '../cards/hero/cyclops';
+import * as hero_deadpool from '../cards/hero/deadpool';
+import * as hero_emma_frost from '../cards/hero/emma_frost';
+import * as hero_gambit from '../cards/hero/gambit';
+import * as hero_hawkeye from '../cards/hero/hawkeye';
+import * as hero_hulk from '../cards/hero/hulk';
+import * as hero_ironman from '../cards/hero/ironman';
+import * as hero_nick_fury from '../cards/hero/nick_fury';
+import * as hero_rogue from '../cards/hero/rogue';
+import * as hero_spider_man from '../cards/hero/spider_man';
+import * as hero_storm from '../cards/hero/storm';
+import * as hero_thor from '../cards/hero/thor';
+import * as hero_wolverine from '../cards/hero/wolverine';
 
+export class HeroBox extends Box {
 
-@Injectable({
-  providedIn: 'root'
-})
-export class HeroService {
-
-  private cards = [
+  cards = [
     [
       new hero_black_widow.rare,
       new hero_black_widow.uncommon,
@@ -116,14 +110,4 @@ export class HeroService {
     // ]
   ];
 
-  public cardsObs = new BehaviorSubject<Array<Array<Hero>>>(this.cards);
-
-  constructor() { }
-
-  getCards(): Observable<Array<Array<Hero>>> { return this.cardsObs.asObservable(); }
-  splice(index: number): Array<Hero> {
-    const result = this.cards[index];
-    this.cards.splice(index, 1);
-    return result;
-  }
 }

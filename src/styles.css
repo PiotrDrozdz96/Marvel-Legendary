@@ -1,16 +1,4 @@
-@import '~@angular/material/prebuilt-themes/pink-bluegrey.css';
-
 body {
     background-color: black;
     margin: 0;
-}
-
-.cdk-global-overlay-wrapper{
-    top: 25vh;
-    left: 0.3vh;
-}
-
-.cdk-overlay-pane{
-    width: 81vh;
-    height: 46.7vh;
 }

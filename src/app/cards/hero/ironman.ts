@@ -1,5 +1,5 @@
 import { Hero } from '../../models/card';
-import { BoardService } from '../../board.service';
+import { BoardService } from '../../services/board.service';
 import { MatDialog } from '@angular/material';
 
 // tslint:disable:class-name

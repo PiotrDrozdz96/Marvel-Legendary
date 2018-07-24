@@ -1,6 +1,6 @@
-import { BoardService } from '../board.service';
+import { BoardService } from '../services/board.service';
 import { MatDialog } from '@angular/material';
-import { EndGameDialog } from '../end-game-dialog/end-game.dialog';
+import { EndGameDialog } from '../dialogs/end-game-dialog/end-game.dialog';
 import { Deck } from '../models/deck';
 import { Scheme, Card, Villain } from '../models/card';
 import { wound } from './wounds';
@@ -14,7 +14,7 @@ export class scheme_twist implements Card {
     image = 'assets/cards/scheme/scheme_twist.png';
 }
 
-export class scheme_legacy_virus implements Scheme {
+export class legacy_virus implements Scheme {
     type = 'scheme';
     image = 'assets/cards/scheme/scheme_legacy_virus.png';
     counterTwist = 0;
@@ -37,7 +37,7 @@ export class scheme_legacy_virus implements Scheme {
     }
 }
 
-export class scheme_midtown_bank_robbery implements Scheme {
+export class midtown_bank_robbery implements Scheme {
     type = 'scheme';
     image = 'assets/cards/scheme/scheme_midtown_bank_robbery.png';
     counterTwist = 0;
@@ -66,7 +66,7 @@ export class scheme_midtown_bank_robbery implements Scheme {
     }
 }
 
-export class scheme_negative_zone_prison_breakout implements Scheme {
+export class negative_zone_prison_breakout implements Scheme {
     type = 'scheme';
     image = 'assets/cards/scheme/scheme_negative_zone_prison_breakout.png';
     counterTwist = 0;
@@ -76,7 +76,7 @@ export class scheme_negative_zone_prison_breakout implements Scheme {
     }
     setup(board: BoardService, dialog: MatDialog) {
         board.villianDeck.create(8, new scheme_twist);
-        const beforeHenchmen = board.villianDeck.filter(card => card['team'] === 'henchman');
+        const beforeHenchmen = board.villianDeck.filter((card) => card['team'] === 'henchman');
         const henchmen = [
             new henchman.sentinel,
             new henchman.doombot_legion,
@@ -98,7 +98,7 @@ export class scheme_negative_zone_prison_breakout implements Scheme {
     }
 }
 
-export class scheme_portals_dark_dimension implements Scheme {
+export class portals_dark_dimension implements Scheme {
     type = 'scheme';
     image = 'assets/cards/scheme/scheme_portals_dark_dimension.png';
     counterTwist = 0;
@@ -106,7 +106,7 @@ export class scheme_portals_dark_dimension implements Scheme {
     setup(board: BoardService, dialog: MatDialog) { board.villianDeck.create(7, new scheme_twist); }
 }
 
-export class scheme_replace_leaders_killbots implements Scheme {
+export class replace_leaders_killbots implements Scheme {
     type = 'scheme';
     image = 'assets/cards/scheme/scheme_replace_leaders_killbots.png';
     counterTwist = 0;
@@ -141,7 +141,7 @@ export class scheme_replace_leaders_killbots implements Scheme {
     }
 }
 
-export class scheme_secret_invasion_shapeshifters implements Scheme {
+export class secret_invasion_shapeshifters implements Scheme {
     type = 'scheme';
     image = 'assets/cards/scheme/scheme_secret_invasion_shapeshifters.png';
     counterTwist = 0;
@@ -149,7 +149,7 @@ export class scheme_secret_invasion_shapeshifters implements Scheme {
     setup(board: BoardService, dialog: MatDialog) { board.villianDeck.create(8, new scheme_twist); }
 }
 
-export class scheme_super_hero_civil_war implements Scheme {
+export class super_hero_civil_war implements Scheme {
     type = 'scheme';
     image = 'assets/cards/scheme/scheme_super_hero_civil_war.png';
     counterTwist = 0;
@@ -157,7 +157,7 @@ export class scheme_super_hero_civil_war implements Scheme {
     setup(board: BoardService, dialog: MatDialog) { board.villianDeck.create(8, new scheme_twist); }
 }
 
-export class scheme_unleash_cosmic_cube implements Scheme {
+export class unleash_cosmic_cube implements Scheme {
     type = 'scheme';
     image = 'assets/cards/scheme/scheme_unleash_cosmic_cube.png';
     counterTwist = 0;

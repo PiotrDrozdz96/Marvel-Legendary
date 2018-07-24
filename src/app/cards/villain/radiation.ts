@@ -1,7 +1,7 @@
 import { Villain } from '../../models/card';
-import { BoardService } from '../../board.service';
+import { BoardService } from '../../services/board.service';
 import { MatDialog } from '@angular/material';
-import { HQDialog } from '../../cards-dialog/hq-dialog/hq.dialog';
+import { SelectDialog } from '../../dialogs/cards-list-dialog/select.dialog';
 
 // tslint:disable:class-name
 
@@ -27,25 +27,23 @@ export class maestro implements Villain {
     points = 4;
     fight(board: BoardService, dialog: MatDialog) {
         let length = board.playerCards.filter(card => card.color === 'green').length;
-        if (length > 0) {
+        if (length > 0 && board.playerCards.some(card => card.type === 'hero')) {
             open();
         }
         function open() {
-            const KODialog = dialog.open(HQDialog, {
+            dialog.open(SelectDialog, {
                 data: {
-                    cards: board.playerCards.filter(card => card.type === 'hero'),
-                    preview: '',
+                    array: board.playerCards.filter(card => card.type === 'hero'),
                     header: 'KOs Hero'
                 }
-            }).afterClosed().subscribe(hero => {
-                if (hero === undefined) {
+            }).afterClosed().subscribe(choosen => {
+                if (choosen === undefined) {
                     open();
                 } else {
                     length--;
-                    const index = board.playerCards.findIndex(card => card === hero);
+                    const index = board.playerCards.findIndex(card => card === choosen.card);
                     board.KO.put(board.playerCards.pick(index));
-                    KODialog.unsubscribe();
-                    if (length > 0) {
+                    if (length > 0 && board.playerCards.some(card => card.type === 'hero')) {
                         open();
                     }
                 }

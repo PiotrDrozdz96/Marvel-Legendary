@@ -1,5 +1,7 @@
-import { BoardService } from '../board.service';
+import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material';
+import { BoardService } from '../services/board.service';
+import { BoxService } from '../services/box.service';
 
 export interface Card {
     type: string;

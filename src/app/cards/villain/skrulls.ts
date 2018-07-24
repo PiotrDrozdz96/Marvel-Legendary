@@ -1,7 +1,7 @@
 import { Villain } from '../../models/card';
-import { BoardService } from '../../board.service';
+import { BoardService } from '../../services/board.service';
 import { MatDialog } from '@angular/material';
-import { HQDialog } from '../../cards-dialog/hq-dialog/hq.dialog';
+import { SelectDialog } from '../../dialogs/cards-list-dialog/select.dialog';
 
 // tslint:disable:class-name
 
@@ -12,21 +12,18 @@ export class power_skrull implements Villain {
     attack = 8;
     points = 3;
     fight(board: BoardService, dialog: MatDialog) {
-        const heroDialog = dialog.open(HQDialog, {
+        dialog.open(SelectDialog, {
             data: {
-                cards: board.hq,
-                preview: '',
+                array: board.hq,
                 header: 'Recruit one Hero for free'
             }
-        }).afterClosed().subscribe(hero => {
-            if (hero === undefined) {
+        }).afterClosed().subscribe(choosen => {
+            if (choosen === undefined) {
                 this.fight(board, dialog);
             } else {
-                const index = board.hq.findIndex(card => card === hero);
-                board.discardPile.put(board.hq.pick(index));
+                board.discardPile.put(board.hq.pick(choosen.index));
                 const newCard = board.heroDeck.draw();
                 board.hq.push(...board.heroDeck.draw());
-                heroDialog.unsubscribe();
             }
         });
     }
@@ -88,19 +85,20 @@ export class super_skrull implements Villain {
     attack = 4;
     points = 2;
     fight(board: BoardService, dialog: MatDialog) {
-        const CardDialog = dialog.open(HQDialog, {
-            data: {
-                cards: board.playerCards.filter(card => card.type === 'hero'),
-                preview: '',
-                header: 'KO one Hero'
-            }
-        }).afterClosed().subscribe(hero => {
-            if (hero === undefined) {
-                this.fight(board, dialog);
-            } else {
-                const index = board.playerCards.findIndex(card => card === hero);
-                board.KO.put(board.playerCards.pick(index));
-            }
-        });
+        if (board.playerCards.some(card => card.type === 'hero')) {
+            dialog.open(SelectDialog, {
+                data: {
+                    array: board.playerCards.filter(card => card.type === 'hero'),
+                    header: 'KO one Hero'
+                }
+            }).afterClosed().subscribe(choosen => {
+                if (choosen === undefined) {
+                    this.fight(board, dialog);
+                } else {
+                    const index = board.playerCards.findIndex(card => card === choosen.card);
+                    board.KO.put(board.playerCards.pick(index));
+                }
+            });
+        }
     }
 }

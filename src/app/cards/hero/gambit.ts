@@ -1,7 +1,7 @@
 import { Hero } from '../../models/card';
-import { BoardService } from '../../board.service';
+import { BoardService } from '../../services/board.service';
 import { MatDialog } from '@angular/material';
-import { HQDialog } from '../../cards-dialog/hq-dialog/hq.dialog';
+import { SelectDialog } from '../../dialogs/cards-list-dialog/select.dialog';
 
 // tslint:disable:class-name
 
@@ -31,19 +31,18 @@ export class uncommon implements Hero {
     cost = 3;
     func(board: BoardService, dialog: MatDialog) {
         const cards = board.playerDeck.draw();
-        const DiscardDialog = dialog.open(HQDialog, {
+        dialog.open(SelectDialog, {
             data: {
-                cards: cards,
+                array: cards,
                 preview: this.image,
                 header: 'Discard card or nothing'
             }
-        }).afterClosed().subscribe(card => {
-            if (card === undefined) {
+        }).afterClosed().subscribe(choosen => {
+            if (choosen === undefined) {
                 board.playerDeck.unshift(cards[0]);
             } else {
                 board.discardPile.put(cards);
             }
-            DiscardDialog.unsubscribe();
         });
     }
 }
@@ -78,20 +77,18 @@ export class common_2 implements Hero {
         board.playerHand.put(board.playerDeck.draw().concat(board.playerDeck.draw()));
         open();
         function open() {
-            const GetBackDialog = dialog.open(HQDialog, {
+            dialog.open(SelectDialog, {
                 data: {
-                    cards: board.playerHand,
+                    array: board.playerHand,
                     preview: (new common_2).image,
                     header: 'Get back one card'
                 }
-            }).afterClosed().subscribe(card => {
-                if (card === undefined) {
+            }).afterClosed().subscribe(choosen => {
+                if (choosen === undefined) {
                     open();
                 } else {
-                    const index = board.playerHand.findIndex(hero => hero === card);
-                    board.playerDeck.unshift(board.playerHand.pick(index)[0]);
+                    board.playerDeck.unshift(board.playerHand.pick(choosen.index)[0]);
                 }
-                GetBackDialog.unsubscribe();
             });
         }
     }

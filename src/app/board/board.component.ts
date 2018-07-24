@@ -2,22 +2,18 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material';
 
 import { Card, Mastermind, Scheme, Villain, Hero } from '../models/card';
+import { Deck } from '../models/deck';
 import { bystander } from '../cards/bystanders';
 import { master_strike } from '../cards/mastermind';
 
-import { BoardService } from '../board.service';
-import { VillainsService } from '../villains.service';
-import { HeroService } from '../hero.service';
+import { BoardService } from '../services/board.service';
+import { BoxService } from '../services/box.service';
 
-import { SelectMastermindDialog } from '../select-dialog/select-mastermind.dialog';
-import { SelectSchemeDialog } from '../select-dialog/select-scheme.dialog';
-import { SelectVillainsDialog } from '../select-dialog/select-villains.dialog';
-import { SelectHenchmenDialog } from '../select-dialog/select-henchmen.dialog';
-import { SelectHeroDialog } from '../select-dialog/select-hero.dialog';
-import { PlayCardsDialog } from '../play-cards-dialog/play-cards.dialog';
-import { CardsListDialog } from '../cards-list-dialog/cards-list.dialog';
-import { EndGameDialog } from '../end-game-dialog/end-game.dialog';
-import { Deck } from '../models/deck';
+import { PlayCardsDialog } from '../dialogs/play-cards-dialog/play-cards.dialog';
+import { CardsListDialog } from '../dialogs/cards-list-dialog/cards-list.dialog';
+import { SelectWithRandomDialog } from '../dialogs/cards-list-dialog/select-with-random.dialog';
+import { SelectGroupWithRandomDialog } from '../dialogs/cards-list-dialog/select-group-with-random.dialog';
+import { EndGameDialog } from '../dialogs/end-game-dialog/end-game.dialog';
 
 @Component({
   selector: 'app-board',
@@ -34,7 +30,11 @@ export class BoardComponent implements OnInit {
   private masterStrike: number;
 
 
-  constructor(public board: BoardService, private dialog: MatDialog) {
+  constructor(
+    private dialog: MatDialog,
+    public board: BoardService,
+    public box: BoxService
+   ) {
     this.numberCards('onePlayer');
     this.selectMastermind();
   }
@@ -56,35 +56,45 @@ export class BoardComponent implements OnInit {
   }
 
   selectMastermind() {
-    const dialogRef = this.dialog.open(SelectMastermindDialog);
-    dialogRef.afterClosed().subscribe((mastermind: Mastermind) => {
-      if (mastermind === undefined) {
+    const dialogRef = this.dialog.open(SelectWithRandomDialog, {data: {
+      array: this.box.mastermindBox.cards,
+      header: 'Select Mastermind'
+    }});
+    dialogRef.afterClosed().subscribe(data => {
+      if (data === undefined) {
         this.selectMastermind();
       } else {
-        this.board.mastermind = mastermind;
+        this.board.mastermind = this.box.mastermindBox.pick(data.index)[0];
         this.selectScheme();
       }
     });
   }
 
   selectScheme() {
-    const dialogRef = this.dialog.open(SelectSchemeDialog);
-    dialogRef.afterClosed().subscribe((scheme: Scheme) => {
-      if (scheme === undefined) {
+    const dialogRef = this.dialog.open(SelectWithRandomDialog, {data: {
+      array: this.box.schemeBox.cards,
+      header: 'Select Scheme'
+    }});
+    dialogRef.afterClosed().subscribe(data => {
+      if (data === undefined) {
         this.selectScheme();
       } else {
-        this.board.scheme = scheme;
+        this.board.scheme = this.box.schemeBox.pick(data.index)[0];
         this.selectVillains();
       }
     });
   }
 
   selectVillains() {
-    const dialogRef = this.dialog.open(SelectVillainsDialog);
-    dialogRef.afterClosed().subscribe((villains: Array<Villain>) => {
-      if (villains === undefined) {
+    const dialogRef = this.dialog.open(SelectGroupWithRandomDialog, {data: {
+      array: this.box.villainsBox.cards,
+      header: 'Select Villain Group'
+    }});
+    dialogRef.afterClosed().subscribe(data => {
+      if (data === undefined) {
         this.selectVillains();
       } else {
+        const villains = this.box.villainsBox.pick(data.index)[0];
         villains.forEach(villain => { this.board.villianDeck.create(2, villain); });
         this.villainGroup--;
         if (this.villainGroup > 0) {
@@ -97,13 +107,16 @@ export class BoardComponent implements OnInit {
   }
 
   selectHenchman() {
-    const dialogRef = this.dialog.open(SelectHenchmenDialog);
-    dialogRef.afterClosed().subscribe((villain: Villain) => {
-      if (villain === undefined) {
+    const dialogRef = this.dialog.open(SelectWithRandomDialog, {data: {
+      array: this.box.henchmenBox.cards,
+      header: 'Select Henchman Group'
+    }});
+    dialogRef.afterClosed().subscribe(data => {
+      if (data === undefined) {
         this.selectHenchman();
       } else {
         // add henchman
-        this.board.villianDeck.create(this.henchmanCards, villain);
+        this.board.villianDeck.create(this.henchmanCards, this.box.henchmenBox.pick(data.index)[0]);
         // add bystanders
         for (let i = 0; i < this.bystanders; i++) {
           this.board.villianDeck.put(this.board.bystandersDeck.draw());
@@ -120,15 +133,19 @@ export class BoardComponent implements OnInit {
   }
 
   selectHero() {
-    const dialogRef = this.dialog.open(SelectHeroDialog);
-    dialogRef.afterClosed().subscribe((heroes: Array<Hero>) => {
-      if (heroes === undefined) {
+    const dialogRef = this.dialog.open(SelectGroupWithRandomDialog, { data: {
+      array: this.box.heroBox.cards,
+      header: 'Select Heroses'
+    }});
+    dialogRef.afterClosed().subscribe(data => {
+      if (data === undefined) {
         this.selectHero();
       } else {
-        this.board.heroDeck.create(1, heroes[0]);
-        this.board.heroDeck.create(3, heroes[1]);
-        this.board.heroDeck.create(5, heroes[2]);
-        this.board.heroDeck.create(5, heroes[3]);
+        const choosenGroup = this.box.heroBox.pick(data.index)[0];
+        this.board.heroDeck.create(1, choosenGroup[0]);
+        this.board.heroDeck.create(3, choosenGroup[1]);
+        this.board.heroDeck.create(5, choosenGroup[2]);
+        this.board.heroDeck.create(5, choosenGroup[3]);
         this.heroGroup--;
         if (this.heroGroup > 0) {
           this.selectHero();
@@ -142,7 +159,7 @@ export class BoardComponent implements OnInit {
 
   playerHand() { this.dialog.open(PlayCardsDialog); }
   viewCards(header: string, cards: Array<Card>) {
-    this.dialog.open(CardsListDialog, { data: { header: header, cards: cards } });
+    this.dialog.open(CardsListDialog, { data: { header: header, array: cards } });
   }
 
   recruitShieldOfficer() {

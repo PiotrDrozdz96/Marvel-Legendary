@@ -1,7 +1,7 @@
 import { Hero } from '../../models/card';
-import { BoardService } from '../../board.service';
+import { BoardService } from '../../services/board.service';
 import { MatDialog } from '@angular/material';
-import { HQDialog } from '../../cards-dialog/hq-dialog/hq.dialog';
+import { SelectDialog } from '../../dialogs/cards-list-dialog/select.dialog';
 
 // tslint:disable:class-name
 
@@ -37,24 +37,21 @@ export class common_1 implements Hero {
     recrutingPoints = 3;
     cost = 2;
     func(board: BoardService, dialog: MatDialog) {
-        const DiscardDialog = dialog.open(HQDialog, {
+        dialog.open(SelectDialog, {
             data: {
-                cards: board.playerHand,
+                array: board.playerHand,
                 preview: this.image,
                 header: 'Discard one card'
             }
-        }).afterClosed().subscribe(card => {
-            if (card === undefined) {
-                const index = board.playerCards.findIndex(hero => hero === this);
-                board.playerHand.put(board.playerCards.pick(index));
+        }).afterClosed().subscribe(choosen => {
+            if (choosen.card === undefined) {
+                board.playerHand.put(board.playerCards.pick(choosen.index));
                 board.playerAttack -= this.attack;
             } else {
-                if (card.image !== (new uncommon).image) {
-                    const index = board.playerHand.findIndex( hero => hero === card );
-                    board.discardPile.put(board.playerHand.pick(index));
+                if (choosen.card.image !== (new uncommon).image) {
+                    board.discardPile.put(board.playerHand.pick(choosen.index));
                 }
             }
-            DiscardDialog.unsubscribe();
         });
     }
 }
@@ -68,24 +65,21 @@ export class common_2 implements Hero {
     recrutingPoints = 0;
     cost = 3;
     func(board: BoardService, dialog: MatDialog) {
-        const DiscardDialog = dialog.open(HQDialog, {
+        dialog.open(SelectDialog, {
             data: {
-                cards: board.playerHand,
+                array: board.playerHand,
                 preview: this.image,
                 header: 'Discard one card'
             }
-        }).afterClosed().subscribe(card => {
-            if (card === undefined) {
-                const index = board.playerCards.findIndex(hero => hero === this);
-                board.playerHand.put(board.playerCards.pick(index));
+        }).afterClosed().subscribe(choosen => {
+            if (choosen.card === undefined) {
+                board.playerHand.put(board.playerCards.pick(choosen.index));
                 board.playerAttack -= this.attack;
             } else {
-                if (card.image !== (new uncommon).image) {
-                    const index = board.playerHand.findIndex( hero => hero === card );
-                    board.discardPile.put(board.playerHand.pick(index));
+                if (choosen.card.image !== (new uncommon).image) {
+                    board.discardPile.put(board.playerHand.pick(choosen.index));
                 }
             }
-            DiscardDialog.unsubscribe();
         });
     }
 }

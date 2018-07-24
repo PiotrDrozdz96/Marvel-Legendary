@@ -1,7 +1,7 @@
 import { Hero } from '../../models/card';
-import { BoardService } from '../../board.service';
+import { BoardService } from '../../services/board.service';
 import { MatDialog } from '@angular/material';
-import { HQDialog } from '../../cards-dialog/hq-dialog/hq.dialog';
+import { SelectDialog } from '../../dialogs/cards-list-dialog/select.dialog';
 
 // tslint:disable:class-name
 
@@ -23,22 +23,20 @@ export class rare implements Hero {
             open();
         }
         function open() {
-            const VillainDialog = dialog.open(HQDialog, {
+            dialog.open(SelectDialog, {
                 data: {
-                    cards: cards,
-                    preview: '',
+                    array: cards,
                     header: 'Defeat Villain'
                 }
-            }).afterClosed().subscribe(villain => {
-                if (villain === undefined) {
+            }).afterClosed().subscribe(choosen => {
+                if (choosen === undefined) {
                     open();
-                } else if (villain.type === 'mastermind') {
+                } else if (choosen.card.type === 'mastermind') {
                     attackMastermind();
                 } else {
-                    const index = board.fields.findIndex(field => field.card === villain);
+                    const index = board.fields.findIndex(field => field.card === choosen.card);
                     attackVillain(index);
                 }
-                VillainDialog.unsubscribe();
             });
         }
         function attackMastermind() {
@@ -91,24 +89,22 @@ export class common_1 implements Hero {
     cost = 3;
     func(board: BoardService, dialog: MatDialog) {
         if (board.checkPlayedCards('color', 'red')) {
-            const KODialog = dialog.open(HQDialog, {
+            dialog.open(SelectDialog, {
                 data: {
-                    cards: board.playerHand.concat(board.discardPile),
-                    preview: '',
+                    array: board.playerHand.concat(board.discardPile),
                     header: 'KOs Card or nothing'
                 }
-            }).afterClosed().subscribe(hero => {
-                if (hero !== undefined) {
-                    let index = board.discardPile.findIndex(card => card.image === hero.image);
+            }).afterClosed().subscribe(choosen => {
+                if (choosen !== undefined) {
+                    let index = board.discardPile.findIndex(card => card.image === choosen.card.image);
                     if (index !== -1) {
                         board.KO.put(board.discardPile.pick(index));
                     } else {
-                        index = board.playerHand.findIndex(card => card.image === hero.image);
+                        index = board.playerHand.findIndex(card => card.image === choosen.card.image);
                         board.KO.put(board.playerHand.pick(index));
                     }
                     board.victoryPile.put(board.bystandersDeck.draw());
                 }
-                KODialog.unsubscribe();
             });
         }
     }

@@ -1,7 +1,7 @@
 import { Hero } from '../../models/card';
-import { BoardService } from '../../board.service';
+import { BoardService } from '../../services/board.service';
 import { MatDialog } from '@angular/material';
-import { HQDialog } from '../../cards-dialog/hq-dialog/hq.dialog';
+import { SelectDialog } from '../../dialogs/cards-list-dialog/select.dialog';
 
 // tslint:disable:class-name
 
@@ -14,18 +14,17 @@ export class rare implements Hero {
     recrutingPoints = 5;
     cost = 8;
     func(board: BoardService, dialog: MatDialog) {
-        const ChooseDialog = dialog.open(HQDialog, {
+        dialog.open(SelectDialog, {
             data: {
-                cards: [this],
+                array: [this],
                 preview: this.image,
                 header: 'Replace recruiting points on attack or no'
             }
-        }).afterClosed().subscribe(hero => {
-            if (hero !== undefined) {
+        }).afterClosed().subscribe(choosen => {
+            if (choosen !== undefined) {
                 board.playerRecrutingPoints -= 5;
                 board.playerAttack += 5;
             }
-            ChooseDialog.unsubscribe();
         });
     }
 }

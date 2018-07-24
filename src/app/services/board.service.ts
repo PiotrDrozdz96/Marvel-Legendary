@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 
-import { Deck } from './models/deck';
-import { Card, Hero, Scheme, Mastermind, Bystander, Villain } from './models/card';
+import { Deck } from '../models/deck';
+import { Card, Hero, Scheme, Mastermind, Bystander, Villain } from '../models/card';
 
-import { hero_shield_agent, hero_shield_trooper, hero_shield_officer } from './cards/hero/shield';
-import { scheme_legacy_virus } from './cards/scheme';
-import { mastermind_magneto } from './cards/mastermind';
-import { wound } from './cards/wounds';
-import { bystander } from './cards/bystanders';
+import { hero_shield_agent, hero_shield_trooper, hero_shield_officer } from '../cards/hero/shield';
+import { wound } from '../cards/wounds';
+import { bystander } from '../cards/bystanders';
 
 @Injectable({
   providedIn: 'root'
@@ -120,7 +118,7 @@ export class BoardService {
   }
 
   checkPlayedCards(param: string, arg: string): boolean {
-    return this.playerCards.find(card => card[param] === arg) !== undefined;
+    return this.playerCards.some(card => card[param] === arg);
   }
 
 }
