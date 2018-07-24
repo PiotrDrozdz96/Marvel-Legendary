@@ -16,7 +16,8 @@ export class HqComponent implements OnInit {
           this.board.hq.push(...this.board.heroDeck.draw());
         }
         observator.unsubscribe();
-        this.board.nextTurnObs.next(true);
+        delete this.board.startObs;
+        this.board.drawVillainObs.next(true);
       }
     });
   }

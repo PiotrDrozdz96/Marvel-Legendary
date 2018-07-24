@@ -59,7 +59,7 @@ export class theleader implements Villain {
     attack = 4;
     points = 2;
     ambush(board: BoardService, dialog: MatDialog) {
-        board.nextTurnObs.next(true);
+        board.drawVillainObs.next(true);
     }
 }
 

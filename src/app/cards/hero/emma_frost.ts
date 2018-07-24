@@ -63,7 +63,7 @@ export class common_2 implements Hero {
                 }
             }).afterClosed().subscribe(choosen => {
                 if (choosen !== undefined) {
-                    board.nextTurnObs.next(true);
+                    board.drawVillainObs.next(true);
                     board.playerAttack += 2;
                 }
             });

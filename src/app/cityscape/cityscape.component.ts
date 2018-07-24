@@ -12,7 +12,7 @@ import { CardsListDialog } from '../dialogs/cards-list-dialog/cards-list.dialog'
 export class CityscapeComponent implements OnInit {
 
   constructor(public board: BoardService, public dialog: MatDialog) {
-    this.board.nextTurn().subscribe((draw: boolean) => {
+    this.board.drawVillain().subscribe((draw: boolean) => {
       if (draw) {
         this.board.fields.forEach(field => {
           field.attack = 0;
@@ -58,7 +58,7 @@ export class CityscapeComponent implements OnInit {
             this.board.KO.push(new_card);
           }
         }
-        this.board.nextTurnObs.next(false);
+        this.board.drawVillainObs.next(false);
       }
     });
   }

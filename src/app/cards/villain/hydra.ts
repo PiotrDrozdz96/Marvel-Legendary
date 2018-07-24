@@ -11,8 +11,8 @@ export class endless_armies_hydra implements Villain {
     attack = 4;
     points = 3;
     fight(board: BoardService, dialog: MatDialog) {
-        board.nextTurnObs.next(true);
-        board.nextTurnObs.next(true);
+        board.drawVillainObs.next(true);
+        board.drawVillainObs.next(true);
     }
 }
 
