@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { MatDialog } from '@angular/material';
 
 import { Deck } from '../models/deck';
 import { Card, Hero, Scheme, Mastermind, Bystander, Villain } from '../models/card';
+import { Field } from '../models/field';
 
 import { hero_shield_agent, hero_shield_trooper, hero_shield_officer } from '../cards/hero/shield';
 import { wound } from '../cards/wounds';
@@ -32,44 +34,18 @@ export class BoardService {
   woundsDeck = new Deck<Hero>();
   bystandersDeck = new Deck<Bystander>();
   mastermind: Mastermind;
-  mastermindBystanders: Array<Bystander> = [];
   scheme: Scheme;
   villianDeck = new Deck<Card | Villain | Bystander>();
   heroDeck = new Deck<Hero>();
 
-  escapedVillain = new Deck<Villain>();
+  escapedVillain = new Deck<Villain | Bystander>();
 
   fields = [
-    {
-      place: 'sewers',
-      card: null,
-      bystanders: [],
-      attack: 0
-    },
-    {
-      place: 'bank',
-      card: null,
-      bystanders: [],
-      attack: 0
-    },
-    {
-      place: 'rooftops',
-      card: null,
-      bystanders: [],
-      attack: 0
-    },
-    {
-      place: 'streets',
-      card: null,
-      bystanders: [],
-      attack: 0
-    },
-    {
-      place: 'bridge',
-      card: null,
-      bystanders: [],
-      attack: 0
-    }
+    new Field('serwers'),
+    new Field('bank'),
+    new Field('rooftops'),
+    new Field('streets'),
+    new Field('bridge')
   ];
 
   constructor() {
@@ -119,6 +95,29 @@ export class BoardService {
 
   checkPlayedCards(param: string, arg: string): boolean {
     return this.playerCards.some(card => card[param] === arg);
+  }
+
+  moveVillains(card: Villain, dialog: MatDialog) {
+    let freePlaceIndex = this.fields.findIndex(field => field.card === null);
+            if (freePlaceIndex !== 0) {
+              if (freePlaceIndex === -1) {
+                if (this.fields[4].card.escape) {
+                  this.fields[4].card.escape(this, dialog);
+                }
+                this.escapedVillain.put([this.fields[4].card]);
+                this.escapedVillain.put(this.fields[4].bystanders);
+                freePlaceIndex = 4;
+              }
+              for (freePlaceIndex; freePlaceIndex > 0; freePlaceIndex--) {
+                this.fields[freePlaceIndex].card = this.fields[freePlaceIndex - 1].card;
+                this.fields[freePlaceIndex].bystanders = this.fields[freePlaceIndex - 1].bystanders;
+                this.fields[freePlaceIndex - 1].bystanders = [];
+              }
+            }
+            this.fields[0].card = card;
+            if (this.fields[0].card.ambush) {
+              this.fields[0].card.ambush(this, dialog);
+            }
   }
 
 }

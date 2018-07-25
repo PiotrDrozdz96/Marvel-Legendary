@@ -30,8 +30,8 @@ export class rare implements Hero {
             const tacticCard = Object.assign({}, board.mastermind);
             tacticCard.image = tactic[0].image;
             board.victoryPile.push(tacticCard);
-            board.victoryPile.put(board.mastermindBystanders);
-            board.mastermindBystanders = [];
+            board.victoryPile.put(board.mastermind.bystanders);
+            board.mastermind.bystanders = [];
             if (board.mastermind.tactics.length === 0) {
                 this.dialog.open(EndGameDialog, {data: { header: 'win' }}).afterClosed().subscribe(sub => {
                     location.reload();

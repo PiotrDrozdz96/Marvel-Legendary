@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BoardService } from '../services/board.service';
 import { MatDialog } from '@angular/material';
-import { Card, Bystander } from '../models/card';
+import { Card, Bystander, Villain } from '../models/card';
 import { CardsListDialog } from '../dialogs/cards-list-dialog/cards-list.dialog';
 
 @Component({
@@ -23,36 +23,17 @@ export class CityscapeComponent implements OnInit {
           const new_card = new_cards[0];
           this.board.setKOimage(new_card.image);
           if (new_card.type === 'villain') {
-            let freePlaceIndex = this.board.fields.findIndex(field => field.card === null);
-            if (freePlaceIndex !== 0) {
-              if (freePlaceIndex === -1) {
-                if (board.fields[4].card.escape) {
-                  board.fields[4].card.escape(this.board, this.dialog);
-                }
-                board.escapedVillain.put([this.board.fields[4].card]);
-                board.escapedVillain.put(this.board.fields[4].bystanders);
-                freePlaceIndex = 4;
-              }
-              for (freePlaceIndex; freePlaceIndex > 0; freePlaceIndex--) {
-                this.board.fields[freePlaceIndex].card = this.board.fields[freePlaceIndex - 1].card;
-                this.board.fields[freePlaceIndex].bystanders = this.board.fields[freePlaceIndex - 1].bystanders;
-                this.board.fields[freePlaceIndex - 1].bystanders = [];
-              }
-            }
-            this.board.fields[0].card = new_card;
-            if (board.fields[0].card.ambush) {
-              board.fields[0].card.ambush(this.board, this.dialog);
-            }
+            board.moveVillains(new_card as Villain, this.dialog);
           } else if (new_card.type === 'bystander') {
             const villainFieldIndex = this.board.fields.findIndex(field => field.card != null);
             if (villainFieldIndex !== -1) {
-              this.board.fields[villainFieldIndex].bystanders.push(new_card);
+              this.board.fields[villainFieldIndex].bystanders.push(new_card as Bystander);
             } else {
-              this.board.mastermindBystanders.push(new_card as Bystander);
+              this.board.mastermind.bystanders.push(new_card as Bystander);
             }
           } else if (new_card.type === 'schemeTwist') {
             board.scheme.counterTwist++;
-            board.scheme.twist(this.board, this.dialog);
+            board.scheme.twist(this.board, new_card, this.dialog);
           } else if (new_card.type === 'masterStrike') {
             this.board.mastermind.masterStrike(this.board, this.dialog);
             this.board.KO.push(new_card);
@@ -81,8 +62,8 @@ export class CityscapeComponent implements OnInit {
     }
   }
 
-  viewBystanders(fieldName: string, cards: Array<Card>) {
-    this.dialog.open(CardsListDialog, { data: { header: 'Bystanders in ' + fieldName, cards: cards } });
+  viewCards(header: string, fieldName: string, cards: Array<Card>) {
+    this.dialog.open(CardsListDialog, { data: { header: header + fieldName, array: cards } });
   }
 
 }

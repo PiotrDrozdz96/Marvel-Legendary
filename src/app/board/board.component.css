@@ -129,5 +129,10 @@
 
 .captured-bystanders {
     position: absolute;
-    top: -2vh;
+    left: 1.5vh;
+}
+
+.additional-card {
+    position: absolute;
+    top: -1.5vh;
 }

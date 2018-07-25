@@ -16,7 +16,7 @@ export class rare implements Hero {
     defeatedVillain = 0;
     func(board: BoardService, dialog: MatDialog) {
         const cards = board.fields.filter(field => field.bystanders.length > 0).map(field => field.card);
-        if (board.mastermindBystanders.length > 0) {
+        if (board.mastermind.bystanders.length > 0) {
             cards.push(board.mastermind);
         }
         if (cards.length > 0) {
@@ -44,8 +44,8 @@ export class rare implements Hero {
             const tacticCard = Object.assign({}, board.mastermind);
             tacticCard.image = tactic[0].image;
             board.victoryPile.push(tacticCard);
-            board.victoryPile.put(board.mastermindBystanders);
-            board.mastermindBystanders = [];
+            board.victoryPile.put(board.mastermind.bystanders);
+            board.mastermind.bystanders = [];
             if (board.mastermind.tactics.length === 0) {
                 console.log('Win');
             } else {

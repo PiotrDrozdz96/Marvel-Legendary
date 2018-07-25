@@ -2,6 +2,7 @@ import { Villain } from '../../models/card';
 import { BoardService } from '../../services/board.service';
 import { MatDialog } from '@angular/material';
 import { SelectDialog } from '../../dialogs/cards-list-dialog/select.dialog';
+import { scheme_twist } from '../scheme';
 
 // tslint:disable:class-name
 
@@ -80,7 +81,7 @@ export class mystique implements Villain {
     points = 3;
     escape(board: BoardService, dialog: MatDialog) {
         board.scheme.counterTwist++;
-        board.scheme.twist(board);
+        board.scheme.twist(board, new scheme_twist);
     }
 }
 

@@ -2,6 +2,7 @@ import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material';
 import { BoardService } from '../services/board.service';
 import { BoxService } from '../services/box.service';
+import { scheme_twist } from '../cards/scheme';
 
 export interface Card {
     type: string;
@@ -29,6 +30,8 @@ export interface Mastermind extends Card {
     additionalAttack: number;
     points: number;
     alwaysLeads: string;
+    bystanders?: Array<Bystander>;
+    additionalCard?: Array<Card>;
     tactics: Array<Tactic>;
     masterStrike(board: BoardService, dialog: MatDialog);
 }
@@ -46,7 +49,7 @@ export interface Villain extends Card {
 export interface Scheme extends Card {
     // type: 'scheme';
     counterTwist: number;
-    twist(board: BoardService, dialog?: MatDialog);
+    twist(board: BoardService, card: scheme_twist, dialog?: MatDialog);
     setup(board: BoardService, dialog?: MatDialog, box?: BoxService);
 }
 

@@ -67,6 +67,8 @@ export class BoardComponent implements OnInit {
         this.selectMastermind();
       } else {
         this.board.mastermind = this.box.mastermindBox.pick(data.index)[0];
+        this.board.mastermind.bystanders = [];
+        this.board.mastermind.additionalCard = [];
         this.selectScheme();
       }
     });
@@ -132,19 +134,7 @@ export class BoardComponent implements OnInit {
         // add masterStrike
         this.board.villianDeck.create(this.masterStrike, new master_strike);
         // scheme setup
-        const schemeSetupObs = this.board.scheme.setup(this.board, this.dialog, this.box);
-        if (schemeSetupObs) {
-          const schemeSetupSub =  schemeSetupObs.subscribe(done => {
-            if (done) {
-              this.board.villianDeck.shuffle();
-              this.selectHero();
-              schemeSetupSub.unsubscribe();
-            }
-          });
-        } else {
-          this.board.villianDeck.shuffle();
-          this.selectHero();
-        }
+        this.selectHero();
 
       }
     });
@@ -170,8 +160,21 @@ export class BoardComponent implements OnInit {
         if (this.heroGroup > 0) {
           this.selectHero();
         } else {
-          this.board.heroDeck.shuffle();
-          this.board.startObs.next(true);
+          const schemeSetupObs = this.board.scheme.setup(this.board, this.dialog, this.box);
+          if (schemeSetupObs) {
+            const schemeSetupSub = schemeSetupObs.subscribe(done => {
+              if (done) {
+                this.board.villianDeck.shuffle();
+                this.board.heroDeck.shuffle();
+                this.board.startObs.next(true);
+                schemeSetupSub.unsubscribe();
+              }
+            });
+          } else {
+            this.board.villianDeck.shuffle();
+            this.board.heroDeck.shuffle();
+            this.board.startObs.next(true);
+          }
         }
       }
     });
@@ -207,8 +210,8 @@ export class BoardComponent implements OnInit {
       const tacticCard = Object.assign({}, this.board.mastermind);
       tacticCard.image = tactic[0].image;
       this.board.victoryPile.push(tacticCard);
-      this.board.victoryPile.put(this.board.mastermindBystanders);
-      this.board.mastermindBystanders = [];
+      this.board.victoryPile.put(this.board.mastermind.bystanders);
+      this.board.mastermind.bystanders = [];
       if (this.board.mastermind.tactics.length === 0) {
         this.dialog.open(EndGameDialog, { data: { header: 'win' } }).afterClosed().subscribe(sub => {
           location.reload();

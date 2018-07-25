@@ -1,4 +1,4 @@
-import { Villain } from '../../models/card';
+import { Villain, Hero } from '../../models/card';
 import { BoardService } from '../../services/board.service';
 import { MatDialog } from '@angular/material';
 import { SelectDialog } from '../../dialogs/cards-list-dialog/select.dialog';
@@ -44,6 +44,7 @@ export class queen_veranke implements Villain {
         board.hq.push(...board.heroDeck.draw());
         this.attack = hero.cost;
         this.image = hero.image;
+        this.team = 'hero';
         this.copiedHero = hero;
     }
     escape(board: BoardService, dialog: MatDialog) {
@@ -67,6 +68,7 @@ export class shapeshifters implements Villain {
         board.hq.push(...board.heroDeck.draw());
         this.attack = hero.cost;
         this.image = hero.image;
+        this.team = 'hero';
         this.copiedHero = hero;
     }
     escape(board: BoardService, dialog: MatDialog) {

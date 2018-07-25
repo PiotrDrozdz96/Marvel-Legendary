@@ -5,3 +5,8 @@
 .villain {
     position: absolute;
 }
+
+.additional-card {
+    position: absolute;
+    top: -0.1vh;
+}
