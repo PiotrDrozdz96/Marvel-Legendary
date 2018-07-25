@@ -12,6 +12,7 @@ export class blob implements Villain {
     team = 'brotherhood';
     attack = 4;
     points = 2;
+    fightCondition(board: BoardService) { return board.checkPlayedCards('team', 'x-men'); }
 }
 
 export class juggernaut implements Villain {

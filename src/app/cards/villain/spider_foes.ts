@@ -45,6 +45,7 @@ export class venom implements Villain {
     team = 'spiderFoes';
     attack = 5;
     points = 3;
+    fightCondition(board: BoardService) { return board.checkPlayedCards('color', 'red'); }
     escape(board: BoardService, dialog: MatDialog) {
         board.discardPile.put(board.woundsDeck.draw());
     }
