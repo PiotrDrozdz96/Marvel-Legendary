@@ -1,6 +1,7 @@
+import { MatDialog } from '@angular/material';
+import { skip } from 'rxjs/operators';
 import { Hero } from '../../models/card';
 import { BoardService } from '../../services/board.service';
-import { MatDialog } from '@angular/material';
 
 // tslint:disable:class-name
 
@@ -12,7 +13,11 @@ export class rare implements Hero {
     attack = 5;
     recrutingPoints = 0;
     cost = 7;
-    defeatedVillain = 0;
+    sub(board: BoardService, dialog: MatDialog) {
+        return board.defeatedVillain().pipe(skip(1)).subscribe(sub => {
+            board.victoryPile.put(board.bystandersDeck.draw().concat(board.bystandersDeck.draw(), board.bystandersDeck.draw()));
+        });
+    }
 }
 
 export class uncommon implements Hero {

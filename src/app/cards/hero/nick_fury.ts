@@ -19,38 +19,14 @@ export class rare implements Hero {
         const strength = (board.KO as Deck<Hero>).filter(card => card.team === 'shield').length;
         const indexes = [0, 1, 2, 3, 4].filter(index => board.fields[index].card && board.fields[index].card.attack < strength);
         if (board.mastermind.attack < strength) {
-            attackMastermind();
+            if (board.defeatMastermind(dialog)) {
+                dialog.open(EndGameDialog, { data: { header: 'win' } }).afterClosed().subscribe(sub => {
+                    location.reload();
+                });
+            }
         }
         for (let i = 0; i < indexes.length; i++) {
-            attackVillain(indexes[i]);
-        }
-
-        function attackMastermind() {
-            const tactic = board.mastermind.tactics.splice(Math.floor(Math.random() * board.mastermind.tactics.length), 1);
-            const tacticCard = Object.assign({}, board.mastermind);
-            tacticCard.image = tactic[0].image;
-            board.victoryPile.push(tacticCard);
-            board.victoryPile.put(board.mastermind.bystanders);
-            board.mastermind.bystanders = [];
-            if (board.mastermind.tactics.length === 0) {
-                this.dialog.open(EndGameDialog, {data: { header: 'win' }}).afterClosed().subscribe(sub => {
-                    location.reload();
-                  });
-            } else {
-                board.setKOimage(tactic[0].image);
-                tactic[0].func(board, dialog, tactic[0]);
-            }
-        }
-
-        function attackVillain(index: number) {
-            const card = board.fields[index].card;
-            board.victoryPile.push(card);
-            board.victoryPile.put(board.fields[index].bystanders);
-            board.fields[index].card = null;
-            board.fields[index].bystanders = [];
-            if (card.fight) {
-                card.fight(board, dialog);
-            }
+            board.defeatVillain(indexes[i], dialog);
         }
     }
 }

@@ -107,11 +107,7 @@ export class loki implements Mastermind {
                             tactic.func(board, dialog, tactic);
                         } else {
                             const index = board.fields.findIndex(field => field.card === choosen.card);
-                            board.victoryPile.push(board.fields[index].card);
-                            board.victoryPile.put(board.fields[index].bystanders);
-                            board.fields[index].card = null;
-                            board.fields[index].bystanders = [];
-                            /* card fight function?*/
+                            board.defeatVillain(index, dialog);
                         }
                     });
                 }

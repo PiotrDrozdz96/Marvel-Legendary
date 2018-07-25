@@ -50,16 +50,8 @@ export class CityscapeComponent implements OnInit {
   attack(index: number) {
     if ((this.board.playerAttack >= this.board.fields[index].attack + this.board.fields[index].card.attack) &&
       (!this.board.fields[index].card.fightCondition || this.board.fields[index].card.fightCondition(this.board))) {
-      const card = this.board.fields[index].card;
-      this.board.setKOimage('');
       this.board.playerAttack -= this.board.fields[index].attack + this.board.fields[index].card.attack;
-      this.board.victoryPile.push(card);
-      this.board.victoryPile.put(this.board.fields[index].bystanders);
-      this.board.fields[index].card = null;
-      this.board.fields[index].bystanders = [];
-      if (card.fight) {
-        card.fight(this.board, this.dialog);
-      }
+      this.board.defeatVillain(index, this.dialog);
     }
   }
 

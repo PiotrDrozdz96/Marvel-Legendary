@@ -2,6 +2,7 @@ import { Hero } from '../../models/card';
 import { BoardService } from '../../services/board.service';
 import { MatDialog } from '@angular/material';
 import { SelectDialog } from '../../dialogs/cards-list-dialog/select.dialog';
+import { EndGameDialog } from '../../dialogs/end-game-dialog/end-game.dialog';
 
 // tslint:disable:class-name
 
@@ -32,36 +33,16 @@ export class rare implements Hero {
                 if (choosen === undefined) {
                     open();
                 } else if (choosen.card.type === 'mastermind') {
-                    attackMastermind();
+                    if (board.defeatMastermind(dialog)) {
+                        dialog.open(EndGameDialog, { data: { header: 'win' } }).afterClosed().subscribe(sub => {
+                            location.reload();
+                        });
+                    }
                 } else {
                     const index = board.fields.findIndex(field => field.card === choosen.card);
-                    attackVillain(index);
+                    board.defeatVillain(index, dialog);
                 }
             });
-        }
-        function attackMastermind() {
-            const tactic = board.mastermind.tactics.splice(Math.floor(Math.random() * board.mastermind.tactics.length), 1);
-            const tacticCard = Object.assign({}, board.mastermind);
-            tacticCard.image = tactic[0].image;
-            board.victoryPile.push(tacticCard);
-            board.victoryPile.put(board.mastermind.bystanders);
-            board.mastermind.bystanders = [];
-            if (board.mastermind.tactics.length === 0) {
-                console.log('Win');
-            } else {
-                board.setKOimage(tactic[0].image);
-                tactic[0].func(board, dialog, tactic[0]);
-            }
-        }
-        function attackVillain(index: number) {
-            const card = board.fields[index].card;
-            board.victoryPile.push(card);
-            board.victoryPile.put(board.fields[index].bystanders);
-            board.fields[index].card = null;
-            board.fields[index].bystanders = [];
-            if (card.fight) {
-                card.fight(board, dialog);
-            }
         }
     }
 }

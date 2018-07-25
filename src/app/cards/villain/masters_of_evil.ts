@@ -24,6 +24,22 @@ export class melter implements Villain {
     team = 'mastersOfEvil';
     attack = 5;
     points = 3;
+    fight(board: BoardService, dialog: MatDialog) {
+        const cards = board.playerDeck.draw();
+        dialog.open(SelectDialog, {
+            data: {
+                array: cards,
+                preview: this.image,
+                header: 'KO card or nothing'
+            }
+        }).afterClosed().subscribe(choosen => {
+            if (choosen === undefined) {
+                board.playerDeck.unshift(cards[0]);
+            } else {
+                board.KO.put(cards);
+            }
+        });
+    }
 }
 
 export class ultron implements Villain {

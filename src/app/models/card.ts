@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material';
 import { BoardService } from '../services/board.service';
 import { BoxService } from '../services/box.service';
@@ -22,6 +22,7 @@ export interface Hero extends Card {
     recrutingPoints: number;
     cost: number;
     func?(board: BoardService, dialog: MatDialog);
+    sub?(board: BoardService, dialog: MatDialog): Subscription;
 }
 
 export interface Mastermind extends Card {

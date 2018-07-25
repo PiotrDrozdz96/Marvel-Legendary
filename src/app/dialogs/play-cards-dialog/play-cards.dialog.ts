@@ -24,6 +24,9 @@ export class PlayCardsDialog extends BasicDialog {
         if (card.func) {
             card.func(this.board, this.dialog);
         }
+        if (card.sub) {
+            this.board.cardsSubscription.push(card.sub(this.board, this.dialog));
+        }
         this.board.playerCards.push(card);
         this.preview = '';
         this.board.playerAttack += card.attack;

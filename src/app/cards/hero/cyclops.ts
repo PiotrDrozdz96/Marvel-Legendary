@@ -37,22 +37,29 @@ export class common_1 implements Hero {
     recrutingPoints = 3;
     cost = 2;
     func(board: BoardService, dialog: MatDialog) {
-        dialog.open(SelectDialog, {
-            data: {
-                array: board.playerHand,
-                preview: this.image,
-                header: 'Discard one card'
-            }
-        }).afterClosed().subscribe(choosen => {
-            if (choosen.card === undefined) {
-                board.playerHand.put(board.playerCards.pick(choosen.index));
-                board.playerAttack -= this.attack;
-            } else {
-                if (choosen.card.image !== (new uncommon).image) {
-                    board.discardPile.put(board.playerHand.pick(choosen.index));
+        if (board.playerHand.length > 0) {
+            dialog.open(SelectDialog, {
+                data: {
+                    array: board.playerHand,
+                    preview: this.image,
+                    header: 'Discard one card'
                 }
-            }
-        });
+            }).afterClosed().subscribe(choosen => {
+                if (choosen === undefined) {
+                    const index = board.playerCards.findIndex(card => card === this);
+                    board.playerHand.put(board.playerCards.pick(index));
+                    board.playerAttack -= this.attack;
+                } else {
+                    if (choosen.card.image !== (new uncommon).image) {
+                        board.discardPile.put(board.playerHand.pick(choosen.index));
+                    }
+                }
+            });
+        } else {
+            const index = board.playerCards.findIndex(card => card === this);
+            board.playerHand.put(board.playerCards.pick(index));
+            board.playerAttack -= this.attack;
+        }
     }
 }
 
@@ -65,21 +72,28 @@ export class common_2 implements Hero {
     recrutingPoints = 0;
     cost = 3;
     func(board: BoardService, dialog: MatDialog) {
-        dialog.open(SelectDialog, {
-            data: {
-                array: board.playerHand,
-                preview: this.image,
-                header: 'Discard one card'
-            }
-        }).afterClosed().subscribe(choosen => {
-            if (choosen.card === undefined) {
-                board.playerHand.put(board.playerCards.pick(choosen.index));
-                board.playerAttack -= this.attack;
-            } else {
-                if (choosen.card.image !== (new uncommon).image) {
-                    board.discardPile.put(board.playerHand.pick(choosen.index));
+        if (board.playerHand.length > 0) {
+            dialog.open(SelectDialog, {
+                data: {
+                    array: board.playerHand,
+                    preview: this.image,
+                    header: 'Discard one card'
                 }
-            }
-        });
+            }).afterClosed().subscribe(choosen => {
+                if (choosen === undefined) {
+                    const index = board.playerCards.findIndex(card => card === this);
+                    board.playerHand.put(board.playerCards.pick(index));
+                    board.playerAttack -= this.attack;
+                } else {
+                    if (choosen.card.image !== (new uncommon).image) {
+                        board.discardPile.put(board.playerHand.pick(choosen.index));
+                    }
+                }
+            });
+        } else {
+            const index = board.playerCards.findIndex(card => card === this);
+            board.playerHand.put(board.playerCards.pick(index));
+            board.playerAttack -= this.attack;
+        }
     }
 }

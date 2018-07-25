@@ -201,24 +201,17 @@ export class BoardComponent implements OnInit {
     this.board.discardPile.put(this.board.playerHand.take().concat(this.board.playerCards.take()));
     this.board.drawToPlayerHand();
     this.board.drawVillainObs.next(true);
+    this.board.cardsSubscription.forEach(sub => sub.unsubscribe());
+    this.board.cardsSubscription = [];
   }
 
   attackMastermind() {
     if (this.board.playerAttack >= this.board.mastermind.attack + this.board.mastermind.additionalAttack) {
       this.board.playerAttack -= this.board.mastermind.attack + this.board.mastermind.additionalAttack;
-      const tactic = this.board.mastermind.tactics.splice(Math.floor(Math.random() * this.board.mastermind.tactics.length), 1);
-      const tacticCard = Object.assign({}, this.board.mastermind);
-      tacticCard.image = tactic[0].image;
-      this.board.victoryPile.push(tacticCard);
-      this.board.victoryPile.put(this.board.mastermind.bystanders);
-      this.board.mastermind.bystanders = [];
-      if (this.board.mastermind.tactics.length === 0) {
+      if (this.board.defeatMastermind(this.dialog)) {
         this.dialog.open(EndGameDialog, { data: { header: 'win' } }).afterClosed().subscribe(sub => {
           location.reload();
         });
-      } else {
-        this.board.setKOimage(tactic[0].image);
-        tactic[0].func(this.board, this.dialog, tactic[0]);
       }
     }
   }
