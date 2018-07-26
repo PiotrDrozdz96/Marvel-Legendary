@@ -14,10 +14,9 @@ export class rare implements Hero {
     recrutingPoints = 0;
     cost = 7;
     func(board: BoardService, dialog: MatDialog) {
-        const card = board.playerDeck.draw()[0];
+        const card = board.playerDeck.reveal();
         board.setKOimage(card.image);
         board.playerAttack += card.cost;
-        board.playerDeck.unshift(card);
     }
 }
 
@@ -30,7 +29,7 @@ export class uncommon implements Hero {
     recrutingPoints = 0;
     cost = 3;
     func(board: BoardService, dialog: MatDialog) {
-        const cards = board.playerDeck.draw();
+        const cards = [board.playerDeck.reveal()];
         dialog.open(SelectDialog, {
             data: {
                 array: cards,
@@ -38,10 +37,8 @@ export class uncommon implements Hero {
                 header: 'Discard card or nothing'
             }
         }).afterClosed().subscribe(choosen => {
-            if (choosen === undefined) {
-                board.playerDeck.unshift(cards[0]);
-            } else {
-                board.discardPile.put(cards);
+            if (choosen !== undefined) {
+                board.discardPile.put(board.playerDeck.draw());
             }
         });
     }
@@ -56,11 +53,9 @@ export class common_1 implements Hero {
     recrutingPoints = 0;
     cost = 4;
     func(board: BoardService, dialog: MatDialog) {
-        const card = board.playerDeck.draw()[0];
+        const card = board.playerDeck.reveal();
         if (card.team === 'x-men') {
-            board.playerHand.push(card);
-        } else {
-            board.playerDeck.unshift(card);
+            board.playerHand.put(board.playerDeck.draw());
         }
     }
 }

@@ -59,7 +59,15 @@ export class BoardService {
         this.playerDeck.put(this.discardPile.take());
       }
       const newCard = this.playerDeck.shift();
-      return newCard === undefined ? [] : [newCard];
+        this.playerDeck.numberOfDrawing++;
+        return newCard === undefined ? [] : [newCard];
+    };
+    this.playerDeck.reveal = (): Hero => {
+      if (this.playerDeck.length === 0) {
+        this.discardPile.shuffle();
+        this.playerDeck.put(this.discardPile.take());
+      }
+      return this.playerDeck[0];
     };
     /* SET UP */
     /*********/
@@ -142,15 +150,15 @@ export class BoardService {
 
   defeatVillain(index: number, dialog: MatDialog) {
     const card = this.fields[index].card;
-      this.setKOimage('');
-      this.victoryPile.push(card);
-      this.victoryPile.put(this.fields[index].bystanders);
-      this.fields[index].card = null;
-      this.fields[index].bystanders = [];
-      if (card.fight) {
-        card.fight(this, dialog);
-      }
-      this.defeatedVillainObs.next(card);
+    this.setKOimage('');
+    this.victoryPile.push(card);
+    this.victoryPile.put(this.fields[index].bystanders);
+    this.fields[index].card = null;
+    this.fields[index].bystanders = [];
+    if (card.fight) {
+      card.fight(this, dialog);
+    }
+    this.defeatedVillainObs.next(card);
   }
 
 }

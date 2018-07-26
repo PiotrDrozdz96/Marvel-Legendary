@@ -1,6 +1,9 @@
-import { Card } from './card';
+import { BehaviorSubject } from 'rxjs';
 
 export class Deck<T extends Object> extends Array<T> {
+
+    public numberOfDrawing = 0;
+
     constructor(...items: Array<T>) {
         super(...items);
         Object.setPrototypeOf(this, Object.create(Deck.prototype));
@@ -31,8 +34,10 @@ export class Deck<T extends Object> extends Array<T> {
     take(): Array<T> { return this.splice(0, this.length); }
     draw(): Array<T> {
         const newCard = this.shift();
+        this.numberOfDrawing++;
         return newCard === undefined ? [] : [newCard];
     }
+    reveal(): T { return this[0]; }
     pick(index: number): Array<T> {
         return this.splice(index, 1);
     }

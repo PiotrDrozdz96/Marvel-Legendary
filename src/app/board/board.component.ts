@@ -199,6 +199,7 @@ export class BoardComponent implements OnInit {
     this.board.playerAttack = 0;
     this.board.playerRecrutingPoints = 0;
     this.board.discardPile.put(this.board.playerHand.take().concat(this.board.playerCards.take()));
+    this.board.playerDeck.numberOfDrawing = 0;
     this.board.drawToPlayerHand();
     this.board.drawVillainObs.next(true);
     this.board.cardsSubscription.forEach(sub => sub.unsubscribe());

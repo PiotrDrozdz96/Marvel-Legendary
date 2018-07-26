@@ -101,13 +101,13 @@ export class HeroBox extends Box {
       new hero_thor.uncommon,
       new hero_thor.common_1,
       new hero_thor.common_2
-    ]// ,
-    // [
-    //   new hero_wolverine.rare,
-    //   new hero_wolverine.uncommon,
-    //   new hero_wolverine.common_1,
-    //   new hero_wolverine.common_2
-    // ]
+    ],
+    [
+      new hero_wolverine.rare,
+      new hero_wolverine.uncommon,
+      new hero_wolverine.common_1,
+      new hero_wolverine.common_2
+    ]
   ];
 
 }

@@ -13,12 +13,12 @@ export class rare implements Hero {
     recrutingPoints = 0;
     cost = 2;
     func(board: BoardService, dialog: MatDialog) {
-        const cards = [...board.playerDeck.draw(), ...board.playerDeck.draw(), ...board.playerDeck.draw()];
+        const cards = board.playerDeck.slice(0, 3);
         const less = cards.filter(card => card.cost <= 2);
         const rest = cards.filter(card => card.cost > 2);
-        board.playerHand.put(less);
-        for (let i = 0; i < rest.length; i++) {
-            board.playerDeck.unshift(rest[i]);
+        board.playerDeck.unshift(...less, ...rest);
+        for (let i = 0; i < less.length; i++) {
+            board.playerHand.put(board.playerDeck.draw());
         }
     }
 }
@@ -33,11 +33,9 @@ export class uncommon implements Hero {
     cost = 2;
     func(board: BoardService, dialog: MatDialog) {
         board.victoryPile.put(board.bystandersDeck.draw());
-        const card = board.playerDeck.draw()[0];
+        const card = board.playerDeck.reveal();
         if (card.cost <= 2) {
-            board.playerHand.push(card);
-        } else {
-            board.playerDeck.unshift(card);
+            board.playerHand.put(board.playerDeck.draw());
         }
     }
 }
@@ -51,11 +49,9 @@ export class common_1 implements Hero {
     recrutingPoints = 1;
     cost = 2;
     func(board: BoardService, dialog: MatDialog) {
-        const card = board.playerDeck.draw()[0];
+        const card = board.playerDeck.reveal();
         if (card.cost <= 2) {
-            board.playerHand.push(card);
-        } else {
-            board.playerDeck.unshift(card);
+            board.playerHand.put(board.playerDeck.draw());
         }
     }
 }
@@ -69,11 +65,9 @@ export class common_2 implements Hero {
     recrutingPoints = 0;
     cost = 2;
     func(board: BoardService, dialog: MatDialog) {
-        const card = board.playerDeck.draw()[0];
+        const card = board.playerDeck.reveal();
         if (card.cost <= 2) {
-            board.playerHand.push(card);
-        } else {
-            board.playerDeck.unshift(card);
+            board.playerHand.put(board.playerDeck.draw());
         }
     }
 }
