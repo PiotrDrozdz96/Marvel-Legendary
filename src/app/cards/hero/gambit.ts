@@ -1,11 +1,11 @@
 import { Hero } from '../../models/card';
-import { BoardService } from '../../board.service';
+import { BoardService } from '../../services/board.service';
 import { MatDialog } from '@angular/material';
-import { HQDialog } from '../../cards-dialog/hq-dialog/hq.dialog';
+import { SelectDialog } from '../../dialogs/cards-list-dialog/select.dialog';
 
 // tslint:disable:class-name
 
-export class hero_gambit_rare implements Hero {
+export class rare implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/gambit/gambit_rare.png';
     team = 'x-men';
@@ -14,14 +14,13 @@ export class hero_gambit_rare implements Hero {
     recrutingPoints = 0;
     cost = 7;
     func(board: BoardService, dialog: MatDialog) {
-        const card = board.playerDeck.draw()[0];
+        const card = board.playerDeck.reveal();
         board.setKOimage(card.image);
         board.playerAttack += card.cost;
-        board.playerDeck.cards.unshift(card);
     }
 }
 
-export class hero_gambit_uncommon implements Hero {
+export class uncommon implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/gambit/gambit_uncommon.png';
     team = 'x-men';
@@ -30,25 +29,22 @@ export class hero_gambit_uncommon implements Hero {
     recrutingPoints = 0;
     cost = 3;
     func(board: BoardService, dialog: MatDialog) {
-        const cards = board.playerDeck.draw();
-        const DiscardDialog = dialog.open(HQDialog, {
+        const cards = [board.playerDeck.reveal()];
+        dialog.open(SelectDialog, {
             data: {
-                cards: cards,
+                array: cards,
                 preview: this.image,
                 header: 'Discard card or nothing'
             }
-        }).afterClosed().subscribe(card => {
-            if (card === undefined) {
-                board.playerDeck.cards.unshift(cards[0]);
-            } else {
-                board.discardPile.push(cards);
+        }).afterClosed().subscribe(choosen => {
+            if (choosen !== undefined) {
+                board.discardPile.put(board.playerDeck.draw());
             }
-            DiscardDialog.unsubscribe();
         });
     }
 }
 
-export class hero_gambit_common_1 implements Hero {
+export class common_1 implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/gambit/gambit_common_1.png';
     team = 'x-men';
@@ -57,16 +53,14 @@ export class hero_gambit_common_1 implements Hero {
     recrutingPoints = 0;
     cost = 4;
     func(board: BoardService, dialog: MatDialog) {
-        const card = board.playerDeck.draw()[0];
+        const card = board.playerDeck.reveal();
         if (card.team === 'x-men') {
-            board.playerHand.push([card]);
-        } else {
-            board.playerDeck.cards.unshift(card);
+            board.playerHand.put(board.playerDeck.draw());
         }
     }
 }
 
-export class hero_gambit_common_2 implements Hero {
+export class common_2 implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/gambit/gambit_common_2.png';
     team = 'x-men';
@@ -75,23 +69,21 @@ export class hero_gambit_common_2 implements Hero {
     recrutingPoints = 0;
     cost = 2;
     func(board: BoardService, dialog: MatDialog) {
-        board.playerHand.push(board.playerDeck.draw().concat(board.playerDeck.draw()));
+        board.playerHand.put(board.playerDeck.draw().concat(board.playerDeck.draw()));
         open();
         function open() {
-            const GetBackDialog = dialog.open(HQDialog, {
+            dialog.open(SelectDialog, {
                 data: {
-                    cards: board.playerHand.cards,
-                    preview: (new hero_gambit_common_2).image,
+                    array: board.playerHand,
+                    preview: (new common_2).image,
                     header: 'Get back one card'
                 }
-            }).afterClosed().subscribe(card => {
-                if (card === undefined) {
+            }).afterClosed().subscribe(choosen => {
+                if (choosen === undefined) {
                     open();
                 } else {
-                    const index = board.playerHand.cards.findIndex(hero => hero === card);
-                    board.playerDeck.cards.unshift(board.playerHand.pick(index)[0]);
+                    board.playerDeck.unshift(board.playerHand.pick(choosen.index)[0]);
                 }
-                GetBackDialog.unsubscribe();
             });
         }
     }

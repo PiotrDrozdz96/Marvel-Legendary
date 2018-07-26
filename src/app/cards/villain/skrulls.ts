@@ -1,38 +1,35 @@
-import { Villain } from '../../models/card';
-import { BoardService } from '../../board.service';
+import { Villain, Hero } from '../../models/card';
+import { BoardService } from '../../services/board.service';
 import { MatDialog } from '@angular/material';
-import { HQDialog } from '../../cards-dialog/hq-dialog/hq.dialog';
+import { SelectDialog } from '../../dialogs/cards-list-dialog/select.dialog';
 
 // tslint:disable:class-name
 
-export class villain_skrull_power_skrull implements Villain {
+export class power_skrull implements Villain {
     type = 'villain';
     image = 'assets/cards/villain/skrulls/villain_skrull_power_skrull.png';
     team = 'skrulls';
     attack = 8;
     points = 3;
     fight(board: BoardService, dialog: MatDialog) {
-        const heroDialog = dialog.open(HQDialog, {
+        dialog.open(SelectDialog, {
             data: {
-                cards: board.hq,
-                preview: '',
+                array: board.hq,
                 header: 'Recruit one Hero for free'
             }
-        }).afterClosed().subscribe(hero => {
-            if (hero === undefined) {
+        }).afterClosed().subscribe(choosen => {
+            if (choosen === undefined) {
                 this.fight(board, dialog);
             } else {
-                const index = board.hq.findIndex(card => card === hero);
-                board.discardPile.push(board.hq.splice(index, 1));
+                board.discardPile.put(board.hq.pick(choosen.index));
                 const newCard = board.heroDeck.draw();
                 board.hq.push(...board.heroDeck.draw());
-                heroDialog.unsubscribe();
             }
         });
     }
 }
 
-export class villain_skrull_queen_veranke implements Villain {
+export class queen_veranke implements Villain {
     type = 'villain';
     image = 'assets/cards/villain/skrulls/villain_skrull_queen_veranke.png';
     team = 'skrulls';
@@ -47,10 +44,11 @@ export class villain_skrull_queen_veranke implements Villain {
         board.hq.push(...board.heroDeck.draw());
         this.attack = hero.cost;
         this.image = hero.image;
+        this.team = 'hero';
         this.copiedHero = hero;
     }
     escape(board: BoardService, dialog: MatDialog) {
-        this.image = (new villain_skrull_queen_veranke).image;
+        this.image = (new queen_veranke).image;
     }
     fight(board: BoardService, dialog: MatDialog) {
         board.discardPile.push(this.copiedHero);
@@ -58,7 +56,7 @@ export class villain_skrull_queen_veranke implements Villain {
     }
 }
 
-export class villain_skrull_shapeshifters implements Villain {
+export class shapeshifters implements Villain {
     type = 'villain';
     image = 'assets/cards/villain/skrulls/villain_skrull_shapeshifters.png';
     team = 'skrulls';
@@ -70,10 +68,11 @@ export class villain_skrull_shapeshifters implements Villain {
         board.hq.push(...board.heroDeck.draw());
         this.attack = hero.cost;
         this.image = hero.image;
+        this.team = 'hero';
         this.copiedHero = hero;
     }
     escape(board: BoardService, dialog: MatDialog) {
-        this.image = (new villain_skrull_shapeshifters).image;
+        this.image = (new shapeshifters).image;
     }
     fight(board: BoardService, dialog: MatDialog) {
         board.discardPile.push(this.copiedHero);
@@ -81,26 +80,27 @@ export class villain_skrull_shapeshifters implements Villain {
     }
 }
 
-export class villain_skrull_super_skrull implements Villain {
+export class super_skrull implements Villain {
     type = 'villain';
     image = 'assets/cards/villain/skrulls/villain_skrull_super_skrull.png';
     team = 'skrulls';
     attack = 4;
     points = 2;
     fight(board: BoardService, dialog: MatDialog) {
-        const CardDialog = dialog.open(HQDialog, {
-            data: {
-                cards: board.playerCards.cards.filter(card => card.type === 'hero'),
-                preview: '',
-                header: 'KO one Hero'
-            }
-        }).afterClosed().subscribe(hero => {
-            if (hero === undefined) {
-                this.fight(board, dialog);
-            } else {
-                const index = board.playerCards.cards.findIndex(card => card === hero);
-                board.KO.push(board.playerCards.pick(index));
-            }
-        });
+        if (board.playerCards.some(card => card.type === 'hero')) {
+            dialog.open(SelectDialog, {
+                data: {
+                    array: board.playerCards.filter(card => card.type === 'hero'),
+                    header: 'KO one Hero'
+                }
+            }).afterClosed().subscribe(choosen => {
+                if (choosen === undefined) {
+                    this.fight(board, dialog);
+                } else {
+                    const index = board.playerCards.findIndex(card => card === choosen.card);
+                    board.KO.put(board.playerCards.pick(index));
+                }
+            });
+        }
     }
 }

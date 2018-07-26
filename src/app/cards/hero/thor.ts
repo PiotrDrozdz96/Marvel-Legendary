@@ -1,11 +1,11 @@
 import { Hero } from '../../models/card';
-import { BoardService } from '../../board.service';
+import { BoardService } from '../../services/board.service';
 import { MatDialog } from '@angular/material';
-import { HQDialog } from '../../cards-dialog/hq-dialog/hq.dialog';
+import { SelectDialog } from '../../dialogs/cards-list-dialog/select.dialog';
 
 // tslint:disable:class-name
 
-export class hero_thor_rare implements Hero {
+export class rare implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/thor/thor_rare.png';
     team = 'avengers';
@@ -14,23 +14,22 @@ export class hero_thor_rare implements Hero {
     recrutingPoints = 5;
     cost = 8;
     func(board: BoardService, dialog: MatDialog) {
-        const ChooseDialog = dialog.open(HQDialog, {
+        dialog.open(SelectDialog, {
             data: {
-                cards: [this],
+                array: [this],
                 preview: this.image,
                 header: 'Replace recruiting points on attack or no'
             }
-        }).afterClosed().subscribe(hero => {
-            if (hero !== undefined) {
+        }).afterClosed().subscribe(choosen => {
+            if (choosen !== undefined) {
                 board.playerRecrutingPoints -= 5;
                 board.playerAttack += 5;
             }
-            ChooseDialog.unsubscribe();
         });
     }
 }
 
-export class hero_thor_uncommon implements Hero {
+export class uncommon implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/thor/thor_uncommon.png';
     team = 'avengers';
@@ -39,13 +38,13 @@ export class hero_thor_uncommon implements Hero {
     recrutingPoints = 0;
     cost = 6;
     func(board: BoardService, dialog: MatDialog) {
-        if (board.playerCards.cards.find(card => card.color === 'white')) {
+        if (board.checkPlayedCards('color', 'white')) {
             board.playerAttack += 3;
         }
     }
 }
 
-export class hero_thor_common_1 implements Hero {
+export class common_1 implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/thor/thor_common_1.png';
     team = 'avengers';
@@ -60,7 +59,7 @@ export class hero_thor_common_1 implements Hero {
     }
 }
 
-export class hero_thor_common_2 implements Hero {
+export class common_2 implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/thor/thor_common_2.png';
     team = 'avengers';
@@ -69,7 +68,7 @@ export class hero_thor_common_2 implements Hero {
     recrutingPoints = 2;
     cost = 3;
     func(board: BoardService, dialog: MatDialog) {
-        if (board.playerCards.cards.find(card => card.color === 'green')) {
+        if (board.checkPlayedCards('color', 'green')) {
             board.playerRecrutingPoints += 2;
         }
     }

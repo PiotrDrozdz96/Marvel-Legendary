@@ -1,11 +1,11 @@
 import { Hero } from '../../models/card';
-import { BoardService } from '../../board.service';
+import { BoardService } from '../../services/board.service';
 import { MatDialog } from '@angular/material';
-import { HQDialog } from '../../cards-dialog/hq-dialog/hq.dialog';
+import { SelectDialog } from '../../dialogs/cards-list-dialog/select.dialog';
 
 // tslint:disable:class-name
 
-export class hero_deadpool_rare implements Hero {
+export class rare implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/deadpool/deadpool_rare.png';
     color = 'yellow';
@@ -13,25 +13,23 @@ export class hero_deadpool_rare implements Hero {
     recrutingPoints = 0;
     cost = 7;
     func(board: BoardService, dialog: MatDialog) {
-        const WoundDialog = dialog.open(HQDialog, {
+        dialog.open(SelectDialog, {
             data: {
-                cards: board.playerHand.cards,
+                array: board.playerHand,
                 preview: this.image,
                 header: 'Replace hero or nothing'
             }
-        }).afterClosed().subscribe(card => {
-            if (card !== undefined) {
-                board.playerHand.push(board.woundsDeck.draw());
-                const index = board.playerHand.cards.findIndex(hero => hero === card);
-                board.playerHand.pick(index);
-                board.playerHand.push(board.heroDeck.draw());
+        }).afterClosed().subscribe(choosen => {
+            if (choosen !== undefined) {
+                board.playerHand.put(board.woundsDeck.draw());
+                board.playerHand.pick(choosen.index);
+                board.playerHand.put(board.heroDeck.draw());
             }
-            WoundDialog.unsubscribe();
         });
     }
 }
 
-export class hero_deadpool_uncommon implements Hero {
+export class uncommon implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/deadpool/deadpool_uncommon.png';
     color = 'yellow';
@@ -39,28 +37,26 @@ export class hero_deadpool_uncommon implements Hero {
     recrutingPoints = 0;
     cost = 3;
     func(board: BoardService, dialog: MatDialog) {
-        if (board.playerCards.cards.length === 0) {
-            const ChooseDialog = dialog.open(HQDialog, {
+        if (board.playerCards.length === 0) {
+            dialog.open(SelectDialog, {
                 data: {
-                    cards: [new hero_deadpool_uncommon],
+                    array: [this],
                     preview: this.image,
                     header: 'discard or nothing'
                 }
-            }).afterClosed().subscribe(card => {
-                if (card !== undefined) {
-                    board.discardPile.push(board.playerHand.cards);
-                    board.playerHand.cards = [];
+            }).afterClosed().subscribe(choosen => {
+                if (choosen !== undefined) {
+                    board.discardPile.put(board.playerHand.take());
                     for (let i = 0; i < 4; i++) {
-                        board.playerHand.push(board.playerDeck.draw());
+                        board.playerHand.put(board.playerDeck.draw());
                     }
                 }
-                ChooseDialog.unsubscribe();
             });
         }
     }
 }
 
-export class hero_deadpool_common_1 implements Hero {
+export class common_1 implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/deadpool/deadpool_common_1.png';
     color = 'grey';
@@ -72,26 +68,25 @@ export class hero_deadpool_common_1 implements Hero {
             open();
         }
         function open() {
-            const ChooseDialog = dialog.open(HQDialog, {
+            dialog.open(SelectDialog, {
                 data: {
-                    cards: board.fields.filter(field => field.card).map(field => field.card),
-                    preview: (new hero_deadpool_common_1).image,
+                    array: board.fields.filter(field => field.card).map(field => field.card),
+                    preview: (new common_1).image,
                     header: 'Choose Villain which capture bystanders'
                 }
-            }).afterClosed().subscribe(card => {
-                if (card === undefined) {
+            }).afterClosed().subscribe(choosen => {
+                if (choosen === undefined) {
                     open();
                 } else {
-                    const index = board.fields.findIndex(field => field.card === card);
+                    const index = board.fields.findIndex(field => field.card === choosen.card);
                     board.fields[index].bystanders.push(...board.bystandersDeck.draw());
                 }
-                ChooseDialog.unsubscribe();
             });
         }
     }
 }
 
-export class hero_deadpool_common_2 implements Hero {
+export class common_2 implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/deadpool/deadpool_common_2.png';
     color = 'red';
@@ -99,6 +94,6 @@ export class hero_deadpool_common_2 implements Hero {
     recrutingPoints = 0;
     cost = 5;
     func(board: BoardService, dialog: MatDialog) {
-        board.playerAttack += board.playerCards.cards.filter(card => card.cost % 2 !== 0).length;
+        board.playerAttack += board.playerCards.filter(card => card.cost % 2 !== 0).length;
     }
 }

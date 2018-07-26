@@ -1,11 +1,11 @@
 import { Hero } from '../../models/card';
-import { BoardService } from '../../board.service';
+import { BoardService } from '../../services/board.service';
 import { MatDialog } from '@angular/material';
-import { HQDialog } from '../../cards-dialog/hq-dialog/hq.dialog';
+import { SelectDialog } from '../../dialogs/cards-list-dialog/select.dialog';
 
 // tslint:disable:class-name
 
-export class hero_storm_rare implements Hero {
+export class rare implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/storm/storm_rare.png';
     team = 'x-men';
@@ -15,13 +15,13 @@ export class hero_storm_rare implements Hero {
     cost = 7;
     func(board: BoardService, dialog: MatDialog) {
         board.fields[4].attack -= 2;
-        if (board.playerCards.cards.find(card => card.color === 'white')) {
+        if (board.checkPlayedCards('color', 'white')) {
             board.mastermind.additionalAttack -= 2;
         }
     }
 }
 
-export class hero_storm_uncommon implements Hero {
+export class uncommon implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/storm/storm_uncommon.png';
     team = 'x-men';
@@ -31,41 +31,40 @@ export class hero_storm_uncommon implements Hero {
     cost = 6;
     func(board: BoardService, dialog: MatDialog) {
         if (board.fields.find(field => field.card)) {
-            const VillainDialog = dialog.open(HQDialog, {
+            dialog.open(SelectDialog, {
                 data: {
-                    cards: board.fields.filter(field => field.card).map(field => field.card),
+                    array: board.fields.filter(field => field.card).map(field => field.card),
                     preview: this.image,
                     header: 'Move Villain or nothing'
                 }
-            }).afterClosed().subscribe(villain => {
-                if (villain !== undefined) {
-                    const index = board.fields.findIndex(field => field.card === villain);
-                    board.victoryPile.push(board.fields[index].bystanders);
+            }).afterClosed().subscribe(choosen => {
+                if (choosen !== undefined) {
+                    const index = board.fields.findIndex(field => field.card === choosen.card);
+                    board.victoryPile.put(board.fields[index].bystanders);
                     board.fields[index].bystanders = [];
                     if (index === 4) {
-                        board.escapedVillain.push([villain]);
+                        board.escapedVillain.push(choosen.card);
                         board.fields[4].card = null;
-                        if (villain.escape) {
-                            villain.escape(board, dialog);
+                        if (choosen.card.escape) {
+                            choosen.card.escape(board, dialog);
                         }
                     } else if (board.fields[index + 1].card) {
                         const nextVillain = board.fields[index + 1].card;
                         board.fields[index].card = nextVillain;
-                        board.fields[index + 1].card = villain;
+                        board.fields[index + 1].card = choosen.card;
                         board.fields[index].bystanders = board.fields[index + 1].bystanders;
                         board.fields[index + 1].bystanders = [];
                     } else {
-                        board.fields[index + 1].card = villain;
+                        board.fields[index + 1].card = choosen.card;
                         board.fields[index].card = null;
                     }
                 }
-                VillainDialog.unsubscribe();
             });
         }
     }
 }
 
-export class hero_storm_common_1 implements Hero {
+export class common_1 implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/storm/storm_common_1.png';
     team = 'x-men';
@@ -74,13 +73,13 @@ export class hero_storm_common_1 implements Hero {
     recrutingPoints = 2;
     cost = 3;
     func(board: BoardService, dialog: MatDialog) {
-        if (board.playerCards.cards.find(card => card.color === 'white')) {
-            board.playerHand.push(board.playerDeck.draw());
+        if (board.checkPlayedCards('color', 'white')) {
+            board.playerHand.put(board.playerDeck.draw());
         }
     }
 }
 
-export class hero_storm_common_2 implements Hero {
+export class common_2 implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/storm/storm_common_2.png';
     team = 'x-men';

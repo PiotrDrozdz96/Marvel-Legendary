@@ -1,11 +1,12 @@
 import { Hero } from '../../models/card';
-import { BoardService } from '../../board.service';
+import { BoardService } from '../../services/board.service';
 import { MatDialog } from '@angular/material';
-import { HQDialog } from '../../cards-dialog/hq-dialog/hq.dialog';
+import { SelectDialog } from '../../dialogs/cards-list-dialog/select.dialog';
+import { EndGameDialog } from '../../dialogs/end-game-dialog/end-game.dialog';
 
 // tslint:disable:class-name
 
-export class hero_black_widow_rare implements Hero {
+export class rare implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/black_widow/black_widow_rare.png';
     team = 'avengers';
@@ -16,59 +17,37 @@ export class hero_black_widow_rare implements Hero {
     defeatedVillain = 0;
     func(board: BoardService, dialog: MatDialog) {
         const cards = board.fields.filter(field => field.bystanders.length > 0).map(field => field.card);
-        if (board.mastermindBystanders.length > 0) {
+        if (board.mastermind.bystanders.length > 0) {
             cards.push(board.mastermind);
         }
         if (cards.length > 0) {
             open();
         }
         function open() {
-            const VillainDialog = dialog.open(HQDialog, {
+            dialog.open(SelectDialog, {
                 data: {
-                    cards: cards,
-                    preview: '',
+                    array: cards,
                     header: 'Defeat Villain'
                 }
-            }).afterClosed().subscribe(villain => {
-                if (villain === undefined) {
+            }).afterClosed().subscribe(choosen => {
+                if (choosen === undefined) {
                     open();
-                } else if (villain.type === 'mastermind') {
-                    attackMastermind();
+                } else if (choosen.card.type === 'mastermind') {
+                    if (board.defeatMastermind(dialog)) {
+                        dialog.open(EndGameDialog, { data: { header: 'win' } }).afterClosed().subscribe(sub => {
+                            location.reload();
+                        });
+                    }
                 } else {
-                    const index = board.fields.findIndex(field => field.card === villain);
-                    attackVillain(index);
+                    const index = board.fields.findIndex(field => field.card === choosen.card);
+                    board.defeatVillain(index, dialog);
                 }
-                VillainDialog.unsubscribe();
             });
-        }
-        function attackMastermind() {
-            const tactic = board.mastermind.tactics.splice(Math.floor(Math.random() * board.mastermind.tactics.length), 1);
-            const tacticCard = Object.assign({}, board.mastermind);
-            tacticCard.image = tactic[0].image;
-            board.victoryPile.push([tacticCard]);
-            board.victoryPile.push(board.mastermindBystanders);
-            board.mastermindBystanders = [];
-            if (board.mastermind.tactics.length === 0) {
-                console.log('Win');
-            } else {
-                board.setKOimage(tactic[0].image);
-                tactic[0].func(board, dialog, tactic[0]);
-            }
-        }
-        function attackVillain(index: number) {
-            const card = board.fields[index].card;
-            board.victoryPile.push([card]);
-            board.victoryPile.push(board.fields[index].bystanders);
-            board.fields[index].card = null;
-            board.fields[index].bystanders = [];
-            if (card.fight) {
-                card.fight(board, dialog);
-            }
         }
     }
 }
 
-export class hero_black_widow_uncommon implements Hero {
+export class uncommon implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/black_widow/black_widow_uncommon.png';
     team = 'avengers';
@@ -77,11 +56,11 @@ export class hero_black_widow_uncommon implements Hero {
     recrutingPoints = 0;
     cost = 4;
     func(board: BoardService, dialog: MatDialog) {
-        board.playerAttack += board.victoryPile.cards.filter(card => card.type === 'bystander').length;
+        board.playerAttack += board.victoryPile.filter(card => card.type === 'bystander').length;
     }
 }
 
-export class hero_black_widow_common_1 implements Hero {
+export class common_1 implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/black_widow/black_widow_common_1.png';
     team = 'avengers';
@@ -90,31 +69,29 @@ export class hero_black_widow_common_1 implements Hero {
     recrutingPoints = 0;
     cost = 3;
     func(board: BoardService, dialog: MatDialog) {
-        if (board.playerCards.cards.find(card => card.color === 'red')) {
-            const KODialog = dialog.open(HQDialog, {
+        if (board.checkPlayedCards('color', 'red')) {
+            dialog.open(SelectDialog, {
                 data: {
-                    cards: board.playerHand.cards.concat(board.discardPile.cards),
-                    preview: '',
+                    array: board.playerHand.concat(board.discardPile),
                     header: 'KOs Card or nothing'
                 }
-            }).afterClosed().subscribe(hero => {
-                if (hero !== undefined) {
-                    let index = board.discardPile.cards.findIndex(card => card.image === hero.image);
+            }).afterClosed().subscribe(choosen => {
+                if (choosen !== undefined) {
+                    let index = board.discardPile.findIndex(card => card.image === choosen.card.image);
                     if (index !== -1) {
-                        board.KO.push(board.discardPile.pick(index));
+                        board.KO.put(board.discardPile.pick(index));
                     } else {
-                        index = board.playerHand.cards.findIndex(card => card.image === hero.image);
-                        board.KO.push(board.playerHand.pick(index));
+                        index = board.playerHand.findIndex(card => card.image === choosen.card.image);
+                        board.KO.put(board.playerHand.pick(index));
                     }
-                    board.victoryPile.push(board.bystandersDeck.draw());
+                    board.victoryPile.put(board.bystandersDeck.draw());
                 }
-                KODialog.unsubscribe();
             });
         }
     }
 }
 
-export class hero_black_widow_common_2 implements Hero {
+export class common_2 implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/black_widow/black_widow_common_2.png';
     team = 'avengers';
@@ -123,9 +100,9 @@ export class hero_black_widow_common_2 implements Hero {
     recrutingPoints = 0;
     cost = 2;
     func(board: BoardService, dialog: MatDialog) {
-        board.playerHand.push(board.playerDeck.draw());
-        if (board.playerCards.cards.find(card => card.color === 'grey')) {
-            board.victoryPile.push(board.bystandersDeck.draw());
+        board.playerHand.put(board.playerDeck.draw());
+        if (board.checkPlayedCards('color', 'grey')) {
+            board.victoryPile.put(board.bystandersDeck.draw());
         }
     }
 }

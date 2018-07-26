@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BoardService } from '../board.service';
+import { BoardService } from '../services/board.service';
 import { Hero } from '../models/card';
 
 @Component({
@@ -16,7 +16,8 @@ export class HqComponent implements OnInit {
           this.board.hq.push(...this.board.heroDeck.draw());
         }
         observator.unsubscribe();
-        this.board.nextTurnObs.next(true);
+        delete this.board.startObs;
+        this.board.drawVillainObs.next(true);
       }
     });
   }
@@ -27,8 +28,8 @@ export class HqComponent implements OnInit {
   recruit(index: number) {
     if (this.board.playerRecrutingPoints >= this.board.hq[index].cost) {
       this.board.playerRecrutingPoints -= this.board.hq[index].cost;
-      this.board.discardPile.push(this.board.hq.splice(index, 1));
-      this.board.hq.push(...this.board.heroDeck.draw());
+      this.board.discardPile.put(this.board.hq.pick(index));
+      this.board.hq.put(this.board.heroDeck.draw());
     }
   }
 

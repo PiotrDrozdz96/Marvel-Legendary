@@ -1,10 +1,10 @@
 import { Villain } from '../../models/card';
-import { BoardService } from '../../board.service';
+import { BoardService } from '../../services/board.service';
 import { MatDialog } from '@angular/material';
 
 // tslint:disable:class-name
 
-export class villain_spider_foes_doctor_octopus implements Villain {
+export class doctor_octopus implements Villain {
     type = 'villain';
     image = 'assets/cards/villain/spider_foes/villain_spider_foes_doctor_octopus.png';
     team = 'spiderFoes';
@@ -15,7 +15,7 @@ export class villain_spider_foes_doctor_octopus implements Villain {
     }
 }
 
-export class villain_spider_foes_green_goblin implements Villain {
+export class green_goblin implements Villain {
     type = 'villain';
     image = 'assets/cards/villain/spider_foes/villain_spider_foes_green_goblin.png';
     team = 'spiderFoes';
@@ -26,7 +26,7 @@ export class villain_spider_foes_green_goblin implements Villain {
     }
 }
 
-export class villain_spider_foes_the_lizard implements Villain {
+export class the_lizard implements Villain {
     type = 'villain';
     image = 'assets/cards/villain/spider_foes/villain_spider_foes_the_lizard.png';
     team = 'spiderFoes';
@@ -34,18 +34,19 @@ export class villain_spider_foes_the_lizard implements Villain {
     points = 2;
     fight(board: BoardService, dialog: MatDialog) {
         if (board.fields[0].card && board.fields[0].card === this) {
-            board.discardPile.push(board.woundsDeck.draw());
+            board.discardPile.put(board.woundsDeck.draw());
         }
     }
 }
 
-export class villain_spider_foes_venom implements Villain {
+export class venom implements Villain {
     type = 'villain';
     image = 'assets/cards/villain/spider_foes/villain_spider_foes_venom.png';
     team = 'spiderFoes';
     attack = 5;
     points = 3;
+    fightCondition(board: BoardService) { return board.checkPlayedCards('color', 'red'); }
     escape(board: BoardService, dialog: MatDialog) {
-        board.discardPile.push(board.woundsDeck.draw());
+        board.discardPile.put(board.woundsDeck.draw());
     }
 }

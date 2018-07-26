@@ -1,11 +1,11 @@
 import { Hero } from '../../models/card';
-import { BoardService } from '../../board.service';
+import { BoardService } from '../../services/board.service';
 import { MatDialog } from '@angular/material';
-import { HQDialog } from '../../cards-dialog/hq-dialog/hq.dialog';
+import { SelectDialog } from '../../dialogs/cards-list-dialog/select.dialog';
 
 // tslint:disable:class-name
 
-export class hero_rogue_rare implements Hero {
+export class rare implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/rogue/rogue_rare.png';
     team = 'x-men';
@@ -14,11 +14,11 @@ export class hero_rogue_rare implements Hero {
     recrutingPoints = 0;
     cost = 8;
     func(board: BoardService, dialog: MatDialog) {
-        board.playerHand.push(board.playerDeck.draw());
+        board.playerHand.put(board.playerDeck.draw());
     }
 }
 
-export class hero_rogue_uncommon implements Hero {
+export class uncommon implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/rogue/rogue_uncommon.png';
     team = 'x-men';
@@ -29,29 +29,27 @@ export class hero_rogue_uncommon implements Hero {
     func(board: BoardService, dialog: MatDialog) {
         open();
         function open() {
-            const ChooseDialog = dialog.open(HQDialog, {
+            dialog.open(SelectDialog, {
                 data: {
-                    cards: board.playerCards.cards,
-                    preview: '',
+                    array: board.playerCards,
                     header: 'Copy Card'
                 }
-            }).afterClosed().subscribe(hero => {
-                if (hero === undefined) {
+            }).afterClosed().subscribe(choosen => {
+                if (choosen === undefined) {
                     open();
                 } else {
-                    board.playerAttack += hero.attack;
-                    board.playerRecrutingPoints += hero.recrutingPoints;
-                    if (hero.func) {
-                        hero.func(board, dialog);
+                    board.playerAttack += choosen.card.attack;
+                    board.playerRecrutingPoints += choosen.card.recrutingPoints;
+                    if (choosen.card.func) {
+                        choosen.card.func(board, dialog);
                     }
                 }
-                ChooseDialog.unsubscribe();
             });
         }
     }
 }
 
-export class hero_rogue_common_1 implements Hero {
+export class common_1 implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/rogue/rogue_common_1.png';
     team = 'x-men';
@@ -60,13 +58,13 @@ export class hero_rogue_common_1 implements Hero {
     recrutingPoints = 0;
     cost = 4;
     func(board: BoardService, dialog: MatDialog) {
-        if (board.playerCards.cards.find(card => card.color === 'green')) {
+        if (board.checkPlayedCards('color', 'green')) {
             board.playerAttack += 3;
         }
     }
 }
 
-export class hero_rogue_common_2 implements Hero {
+export class common_2 implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/rogue/rogue_common_2.png';
     team = 'x-men';
@@ -75,25 +73,23 @@ export class hero_rogue_common_2 implements Hero {
     recrutingPoints = 0;
     cost = 3;
     func(board: BoardService, dialog: MatDialog) {
-        if (board.playerCards.cards.find(card => card.color === 'red')) {
-            const KODialog = dialog.open(HQDialog, {
+        if (board.checkPlayedCards('color', 'red')) {
+            dialog.open(SelectDialog, {
                 data: {
-                    cards: board.playerHand.cards.concat(board.discardPile.cards),
-                    preview: '',
+                    array: board.playerHand.concat(board.discardPile),
                     header: 'KO one Card or nothing'
                 }
-            }).afterClosed().subscribe(hero => {
-                if (hero !== undefined) {
-                    let index = board.discardPile.cards.findIndex(card => card === hero);
+            }).afterClosed().subscribe(choosen => {
+                if (choosen !== undefined) {
+                    let index = board.discardPile.findIndex(card => card === choosen.card);
                     if (index !== -1) {
-                        board.KO.push(board.discardPile.pick(index));
+                        board.KO.put(board.discardPile.pick(index));
                     } else {
-                        index = board.playerHand.cards.findIndex(card => card === hero);
-                        board.KO.push(board.playerHand.pick(index));
+                        index = board.playerHand.findIndex(card => card === choosen.card);
+                        board.KO.put(board.playerHand.pick(index));
                     }
                     board.playerRecrutingPoints++;
                 }
-                KODialog.unsubscribe();
             });
         }
     }

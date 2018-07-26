@@ -4,9 +4,8 @@ import { NgModule } from '@angular/core';
 
 import { MatDialogModule } from '@angular/material';
 
-import { BoardService } from './board.service';
-import { VillainsService } from './villains.service';
-import { HeroService } from './hero.service';
+import { BoardService } from './services/board.service';
+import { BoxService } from './services/box.service';
 
 import { AppComponent } from './app.component';
 import { BoardComponent } from './board/board.component';
@@ -14,16 +13,14 @@ import { KOComponent } from './ko/ko.component';
 import { CityscapeComponent } from './cityscape/cityscape.component';
 import { HqComponent } from './hq/hq.component';
 import { CardComponent } from './card/card.component';
-import { SelectMastermindDialog } from './select-dialog/select-mastermind.dialog';
-import { SelectSchemeDialog } from './select-dialog/select-scheme.dialog';
-import { SelectVillainsDialog } from './select-dialog/select-villains.dialog';
-import { SelectHenchmenDialog } from './select-dialog/select-henchmen.dialog';
-import { SelectHeroDialog } from './select-dialog/select-hero.dialog';
-import { PlayCardsDialog } from './play-cards-dialog/play-cards.dialog';
-import { CardsListDialog } from './cards-list-dialog/cards-list.dialog';
-import { EndGameDialog } from './end-game-dialog/end-game.dialog';
-import { HQDialog } from './cards-dialog/hq-dialog/hq.dialog';
 
+import { CardsListDialog } from './dialogs/cards-list-dialog/cards-list.dialog';
+import { SelectDialog } from './dialogs/cards-list-dialog/select.dialog';
+import { SelectWithRandomDialog } from './dialogs/cards-list-dialog/select-with-random.dialog';
+import { SelectGroupWithRandomDialog } from './dialogs/cards-list-dialog/select-group-with-random.dialog';
+
+import { PlayCardsDialog } from './dialogs/play-cards-dialog/play-cards.dialog';
+import { EndGameDialog } from './dialogs/end-game-dialog/end-game.dialog';
 
 @NgModule({
   declarations: [
@@ -33,33 +30,27 @@ import { HQDialog } from './cards-dialog/hq-dialog/hq.dialog';
     CityscapeComponent,
     HqComponent,
     CardComponent,
-    SelectMastermindDialog,
-    SelectSchemeDialog,
-    SelectVillainsDialog,
-    SelectHenchmenDialog,
-    SelectHeroDialog,
     PlayCardsDialog,
     CardsListDialog,
-    EndGameDialog,
-    HQDialog
+    SelectDialog,
+    SelectWithRandomDialog,
+    SelectGroupWithRandomDialog,
+    EndGameDialog
   ],
   entryComponents: [
-    SelectMastermindDialog,
-    SelectSchemeDialog,
-    SelectVillainsDialog,
-    SelectHenchmenDialog,
-    SelectHeroDialog,
     PlayCardsDialog,
     CardsListDialog,
-    EndGameDialog,
-    HQDialog
+    SelectDialog,
+    SelectWithRandomDialog,
+    SelectGroupWithRandomDialog,
+    EndGameDialog
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     MatDialogModule,
   ],
-  providers: [BoardService, VillainsService, HeroService],
+  providers: [BoardService, BoxService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

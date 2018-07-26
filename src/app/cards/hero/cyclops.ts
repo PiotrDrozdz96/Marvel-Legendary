@@ -1,11 +1,11 @@
 import { Hero } from '../../models/card';
-import { BoardService } from '../../board.service';
+import { BoardService } from '../../services/board.service';
 import { MatDialog } from '@angular/material';
-import { HQDialog } from '../../cards-dialog/hq-dialog/hq.dialog';
+import { SelectDialog } from '../../dialogs/cards-list-dialog/select.dialog';
 
 // tslint:disable:class-name
 
-export class hero_cyclops_rare implements Hero {
+export class rare implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/cyclops/cyclops_rare.png';
     team = 'x-men';
@@ -14,11 +14,11 @@ export class hero_cyclops_rare implements Hero {
     recrutingPoints = 0;
     cost = 8;
     func(board: BoardService, dialog: MatDialog) {
-        board.playerAttack += board.playerCards.cards.filter(card => card.team === 'x-men').length * 2;
+        board.playerAttack += board.playerCards.filter(card => card.team === 'x-men').length * 2;
     }
 }
 
-export class hero_cyclops_uncommon implements Hero {
+export class uncommon implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/cyclops/cyclops_uncommon.png';
     team = 'x-men';
@@ -28,7 +28,7 @@ export class hero_cyclops_uncommon implements Hero {
     cost = 6;
 }
 
-export class hero_cyclops_common_1 implements Hero {
+export class common_1 implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/cyclops/cyclops_common_1.png';
     team = 'x-men';
@@ -37,29 +37,33 @@ export class hero_cyclops_common_1 implements Hero {
     recrutingPoints = 3;
     cost = 2;
     func(board: BoardService, dialog: MatDialog) {
-        const DiscardDialog = dialog.open(HQDialog, {
-            data: {
-                cards: board.playerHand.cards,
-                preview: this.image,
-                header: 'Discard one card'
-            }
-        }).afterClosed().subscribe(card => {
-            if (card === undefined) {
-                const index = board.playerCards.cards.findIndex(hero => hero === this);
-                board.playerHand.push(board.playerCards.pick(index));
-                board.playerAttack -= this.attack;
-            } else {
-                if (card.image !== (new hero_cyclops_uncommon).image) {
-                    const index = board.playerHand.cards.findIndex( hero => hero === card );
-                    board.discardPile.push(board.playerHand.pick(index));
+        if (board.playerHand.length > 0) {
+            dialog.open(SelectDialog, {
+                data: {
+                    array: board.playerHand,
+                    preview: this.image,
+                    header: 'Discard one card'
                 }
-            }
-            DiscardDialog.unsubscribe();
-        });
+            }).afterClosed().subscribe(choosen => {
+                if (choosen === undefined) {
+                    const index = board.playerCards.findIndex(card => card === this);
+                    board.playerHand.put(board.playerCards.pick(index));
+                    board.playerAttack -= this.attack;
+                } else {
+                    if (choosen.card.image !== (new uncommon).image) {
+                        board.discardPile.put(board.playerHand.pick(choosen.index));
+                    }
+                }
+            });
+        } else {
+            const index = board.playerCards.findIndex(card => card === this);
+            board.playerHand.put(board.playerCards.pick(index));
+            board.playerAttack -= this.attack;
+        }
     }
 }
 
-export class hero_cyclops_common_2 implements Hero {
+export class common_2 implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/cyclops/cyclops_common_2.png';
     team = 'x-men';
@@ -68,24 +72,28 @@ export class hero_cyclops_common_2 implements Hero {
     recrutingPoints = 0;
     cost = 3;
     func(board: BoardService, dialog: MatDialog) {
-        const DiscardDialog = dialog.open(HQDialog, {
-            data: {
-                cards: board.playerHand.cards,
-                preview: this.image,
-                header: 'Discard one card'
-            }
-        }).afterClosed().subscribe(card => {
-            if (card === undefined) {
-                const index = board.playerCards.cards.findIndex(hero => hero === this);
-                board.playerHand.push(board.playerCards.pick(index));
-                board.playerAttack -= this.attack;
-            } else {
-                if (card.image !== (new hero_cyclops_uncommon).image) {
-                    const index = board.playerHand.cards.findIndex( hero => hero === card );
-                    board.discardPile.push(board.playerHand.pick(index));
+        if (board.playerHand.length > 0) {
+            dialog.open(SelectDialog, {
+                data: {
+                    array: board.playerHand,
+                    preview: this.image,
+                    header: 'Discard one card'
                 }
-            }
-            DiscardDialog.unsubscribe();
-        });
+            }).afterClosed().subscribe(choosen => {
+                if (choosen === undefined) {
+                    const index = board.playerCards.findIndex(card => card === this);
+                    board.playerHand.put(board.playerCards.pick(index));
+                    board.playerAttack -= this.attack;
+                } else {
+                    if (choosen.card.image !== (new uncommon).image) {
+                        board.discardPile.put(board.playerHand.pick(choosen.index));
+                    }
+                }
+            });
+        } else {
+            const index = board.playerCards.findIndex(card => card === this);
+            board.playerHand.put(board.playerCards.pick(index));
+            board.playerAttack -= this.attack;
+        }
     }
 }

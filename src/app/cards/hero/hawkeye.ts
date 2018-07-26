@@ -1,10 +1,11 @@
-import { Hero } from '../../models/card';
-import { BoardService } from '../../board.service';
 import { MatDialog } from '@angular/material';
+import { skip } from 'rxjs/operators';
+import { Hero } from '../../models/card';
+import { BoardService } from '../../services/board.service';
 
 // tslint:disable:class-name
 
-export class hero_hawkeye_rare implements Hero {
+export class rare implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/hawkeye/hawkeye_rare.png';
     team = 'avengers';
@@ -12,10 +13,14 @@ export class hero_hawkeye_rare implements Hero {
     attack = 5;
     recrutingPoints = 0;
     cost = 7;
-    defeatedVillain = 0;
+    sub(board: BoardService, dialog: MatDialog) {
+        return board.defeatedVillain().pipe(skip(1)).subscribe(sub => {
+            board.victoryPile.put(board.bystandersDeck.draw().concat(board.bystandersDeck.draw(), board.bystandersDeck.draw()));
+        });
+    }
 }
 
-export class hero_hawkeye_uncommon implements Hero {
+export class uncommon implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/hawkeye/hawkeye_uncommon.png';
     team = 'avengers';
@@ -24,13 +29,13 @@ export class hero_hawkeye_uncommon implements Hero {
     recrutingPoints = 0;
     cost = 5;
     func(board: BoardService, dialog: MatDialog) {
-        if (board.playerCards.cards.find(card => card.color === 'grey')) {
-            board.playerHand.push(board.playerDeck.draw());
+        if (board.checkPlayedCards('color', 'grey')) {
+            board.playerHand.put(board.playerDeck.draw());
         }
     }
 }
 
-export class hero_hawkeye_common_1 implements Hero {
+export class common_1 implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/hawkeye/hawkeye_common_1.png';
     team = 'avengers';
@@ -39,11 +44,11 @@ export class hero_hawkeye_common_1 implements Hero {
     recrutingPoints = 0;
     cost = 3;
     func(board: BoardService, dialog: MatDialog) {
-        board.playerHand.push(board.playerDeck.draw());
+        board.playerHand.put(board.playerDeck.draw());
     }
 }
 
-export class hero_hawkeye_common_2 implements Hero {
+export class common_2 implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/hawkeye/hawkeye_common_2.png';
     team = 'avengers';
@@ -52,7 +57,7 @@ export class hero_hawkeye_common_2 implements Hero {
     recrutingPoints = 0;
     cost = 4;
     func(board: BoardService, dialog: MatDialog) {
-        if (board.playerCards.cards.find(card => card.team === 'avengers')) {
+        if (board.checkPlayedCards('team', 'avengers')) {
             board.playerAttack++;
         }
     }

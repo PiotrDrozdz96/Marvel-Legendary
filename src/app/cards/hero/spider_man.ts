@@ -1,10 +1,10 @@
 import { Hero } from '../../models/card';
-import { BoardService } from '../../board.service';
+import { BoardService } from '../../services/board.service';
 import { MatDialog } from '@angular/material';
 
 // tslint:disable:class-name
 
-export class hero_spider_man_rare implements Hero {
+export class rare implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/spider_man/spider_man_rare.png';
     team = 'spider';
@@ -13,17 +13,17 @@ export class hero_spider_man_rare implements Hero {
     recrutingPoints = 0;
     cost = 2;
     func(board: BoardService, dialog: MatDialog) {
-        const cards = [...board.playerDeck.draw(), ...board.playerDeck.draw(), ...board.playerDeck.draw()];
+        const cards = board.playerDeck.slice(0, 3);
         const less = cards.filter(card => card.cost <= 2);
         const rest = cards.filter(card => card.cost > 2);
-        board.playerHand.push(less);
-        for (let i = 0; i < rest.length; i++) {
-            board.playerDeck.cards.unshift(rest[i]);
+        board.playerDeck.unshift(...less, ...rest);
+        for (let i = 0; i < less.length; i++) {
+            board.playerHand.put(board.playerDeck.draw());
         }
     }
 }
 
-export class hero_spider_man_uncommon implements Hero {
+export class uncommon implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/spider_man/spider_man_uncommon.png';
     team = 'spider';
@@ -32,17 +32,15 @@ export class hero_spider_man_uncommon implements Hero {
     recrutingPoints = 0;
     cost = 2;
     func(board: BoardService, dialog: MatDialog) {
-        board.victoryPile.push(board.bystandersDeck.draw());
-        const card = board.playerDeck.draw()[0];
+        board.victoryPile.put(board.bystandersDeck.draw());
+        const card = board.playerDeck.reveal();
         if (card.cost <= 2) {
-            board.playerHand.push([card]);
-        } else {
-            board.playerDeck.cards.unshift(card);
+            board.playerHand.put(board.playerDeck.draw());
         }
     }
 }
 
-export class hero_spider_man_common_1 implements Hero {
+export class common_1 implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/spider_man/spider_man_common_1.png';
     team = 'spider';
@@ -51,16 +49,14 @@ export class hero_spider_man_common_1 implements Hero {
     recrutingPoints = 1;
     cost = 2;
     func(board: BoardService, dialog: MatDialog) {
-        const card = board.playerDeck.draw()[0];
+        const card = board.playerDeck.reveal();
         if (card.cost <= 2) {
-            board.playerHand.push([card]);
-        } else {
-            board.playerDeck.cards.unshift(card);
+            board.playerHand.put(board.playerDeck.draw());
         }
     }
 }
 
-export class hero_spider_man_common_2 implements Hero {
+export class common_2 implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/spider_man/spider_man_common_2.png';
     team = 'spider';
@@ -69,11 +65,9 @@ export class hero_spider_man_common_2 implements Hero {
     recrutingPoints = 0;
     cost = 2;
     func(board: BoardService, dialog: MatDialog) {
-        const card = board.playerDeck.draw()[0];
+        const card = board.playerDeck.reveal();
         if (card.cost <= 2) {
-            board.playerHand.push([card]);
-        } else {
-            board.playerDeck.cards.unshift(card);
+            board.playerHand.put(board.playerDeck.draw());
         }
     }
 }

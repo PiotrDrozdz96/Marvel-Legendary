@@ -1,35 +1,36 @@
 import { Villain } from '../../models/card';
-import { BoardService } from '../../board.service';
+import { BoardService } from '../../services/board.service';
 import { MatDialog } from '@angular/material';
-import { HQDialog } from '../../cards-dialog/hq-dialog/hq.dialog';
+import { SelectDialog } from '../../dialogs/cards-list-dialog/select.dialog';
 
 // tslint:disable:class-name
 
-export class henchman_sentinel implements Villain {
+export class sentinel implements Villain {
     type = 'villain';
     image = 'assets/cards/villain/henchman/henchman_sentinel.png';
     team = 'henchman';
     attack = 3;
     points = 1;
     fight(board: BoardService, dialog: MatDialog) {
-        const CardDialog = dialog.open(HQDialog, {
-            data: {
-                cards: board.playerCards.cards.filter(card => card.type === 'hero'),
-                preview: '',
-                header: 'KO one Hero'
-            }
-        }).afterClosed().subscribe(hero => {
-            if (hero === undefined) {
-                this.fight(board, dialog);
-            } else {
-                const index = board.playerCards.cards.findIndex(card => card === hero);
-                board.KO.push(board.playerCards.pick(index));
-            }
-        });
+        if (board.playerCards.some(card => card.type === 'hero')) {
+            dialog.open(SelectDialog, {
+                data: {
+                    array: board.playerCards.filter(card => card.type === 'hero'),
+                    header: 'KO one Hero'
+                }
+            }).afterClosed().subscribe(choosen => {
+                if (choosen === undefined) {
+                    this.fight(board, dialog);
+                } else {
+                    const index = board.playerCards.findIndex(card => card === choosen.card);
+                    board.KO.put(board.playerCards.pick(index));
+                }
+            });
+        }
     }
 }
 
-export class henchman_doombot_legion implements Villain {
+export class doombot_legion implements Villain {
     type = 'villain';
     image = 'assets/cards/villain/henchman/henchman_doombot_legion.png';
     team = 'henchman';
@@ -39,26 +40,24 @@ export class henchman_doombot_legion implements Villain {
         const cards = board.playerDeck.draw().concat(board.playerDeck.draw());
         open();
         function open() {
-            const CardDialog = dialog.open(HQDialog, {
+            dialog.open(SelectDialog, {
                 data: {
-                    cards: cards,
-                    preview: '',
+                    array: cards,
                     header: 'KO one Card'
                 }
-            }).afterClosed().subscribe(hero => {
-                if (hero === undefined) {
+            }).afterClosed().subscribe(choosen => {
+                if (choosen === undefined) {
                     open();
                 } else {
-                    const index = cards.findIndex(card => card === hero);
-                    board.KO.push([cards[index]]);
-                    board.playerDeck.cards.unshift(cards[1 - index]);
+                    board.KO.push(cards[choosen.index]);
+                    board.playerDeck.unshift(cards[1 - choosen.index]);
                 }
             });
         }
     }
 }
 
-export class henchman_hand_ninjas implements Villain {
+export class hand_ninjas implements Villain {
     type = 'villain';
     image = 'assets/cards/villain/henchman/henchman_hand_ninjas.png';
     team = 'henchman';
@@ -69,7 +68,7 @@ export class henchman_hand_ninjas implements Villain {
     }
 }
 
-export class henchman_savage_land_mutants implements Villain {
+export class savage_land_mutants implements Villain {
     type = 'villain';
     image = 'assets/cards/villain/henchman/henchman_savage_land_mutants.png';
     team = 'henchman';

@@ -1,5 +1,8 @@
-import { BoardService } from '../board.service';
+import { Observable, Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material';
+import { BoardService } from '../services/board.service';
+import { BoxService } from '../services/box.service';
+import { scheme_twist } from '../cards/scheme';
 
 export interface Card {
     type: string;
@@ -19,6 +22,7 @@ export interface Hero extends Card {
     recrutingPoints: number;
     cost: number;
     func?(board: BoardService, dialog: MatDialog);
+    sub?(board: BoardService, dialog: MatDialog): Subscription;
 }
 
 export interface Mastermind extends Card {
@@ -27,6 +31,8 @@ export interface Mastermind extends Card {
     additionalAttack: number;
     points: number;
     alwaysLeads: string;
+    bystanders?: Array<Bystander>;
+    additionalCard?: Array<Card>;
     tactics: Array<Tactic>;
     masterStrike(board: BoardService, dialog: MatDialog);
 }
@@ -36,6 +42,7 @@ export interface Villain extends Card {
     team: string;
     attack: number;
     points: number;
+    fightCondition?(board: BoardService);
     fight?(board: BoardService, dialog: MatDialog);
     ambush?(board: BoardService, dialog: MatDialog);
     escape?(board: BoardService, dialog: MatDialog);
@@ -44,8 +51,8 @@ export interface Villain extends Card {
 export interface Scheme extends Card {
     // type: 'scheme';
     counterTwist: number;
-    twist(board: BoardService, dialog?: MatDialog);
-    setup(board: BoardService, dialog?: MatDialog);
+    twist(board: BoardService, card: scheme_twist, dialog?: MatDialog);
+    setup(board: BoardService, dialog?: MatDialog, box?: BoxService);
 }
 
 export interface Bystander extends Card {
