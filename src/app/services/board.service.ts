@@ -38,7 +38,7 @@ export class BoardService {
   bystandersDeck = new Deck<Bystander>();
   mastermind: Mastermind;
   scheme: Scheme;
-  villianDeck = new Deck<Card | Villain | Bystander>();
+  villainDeck = new Deck<Card | Villain | Bystander>();
   heroDeck = new Deck<Hero>();
 
   escapedVillain = new Deck<Villain | Bystander>();

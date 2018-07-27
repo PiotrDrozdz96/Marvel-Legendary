@@ -29,7 +29,7 @@ export class legacy_virus implements Scheme {
         board.KO.push(schemeTwist);
     }
     setup(board: BoardService, dialog: MatDialog) {
-        board.villianDeck.create(8, new scheme_twist);
+        board.villainDeck.create(8, new scheme_twist);
         board.woundsDeck.take();
         board.woundsDeck.create(6, new wound);
         board.drawVillain().subscribe(sub => {
@@ -55,10 +55,10 @@ export class midtown_bank_robbery implements Scheme {
         board.drawVillainObs.next(true);
     }
     setup(board: BoardService, dialog: MatDialog) {
-        const length = 12 - board.villianDeck.filter(card => card.type === 'bystander').length;
-        board.villianDeck.create(8, new scheme_twist);
+        const length = 12 - board.villainDeck.filter(card => card.type === 'bystander').length;
+        board.villainDeck.create(8, new scheme_twist);
         for (let i = 0; i < length; i++) {
-            board.villianDeck.put(board.bystandersDeck.draw());
+            board.villainDeck.put(board.bystandersDeck.draw());
         }
         board.drawVillain().subscribe(sub => {
             if (!sub) {
@@ -85,17 +85,17 @@ export class negative_zone_prison_breakout implements Scheme {
         board.drawVillainObs.next(true);
     }
     setup(board: BoardService, dialog: MatDialog, box: BoxService) {
-        board.villianDeck.create(8, new scheme_twist);
+        board.villainDeck.create(8, new scheme_twist);
         const setupObs = new BehaviorSubject<boolean>(false);
-        const beforeHenchmen = board.villianDeck.filter((card) => card['team'] === 'henchman');
+        const beforeHenchmen = board.villainDeck.filter((card) => card['team'] === 'henchman');
         dialog.open(SelectWithRandomDialog, {
             data: {
                 array: box.henchmenBox.cards,
                 header: 'Select additional Henchman group'
             }
         }).afterClosed().subscribe(choosen => {
-            board.villianDeck.create(10, box.henchmenBox.pick(choosen.index)[0]);
-            board.villianDeck.create(10 - beforeHenchmen.length, beforeHenchmen[0]);
+            board.villainDeck.create(10, box.henchmenBox.pick(choosen.index)[0]);
+            board.villainDeck.create(10 - beforeHenchmen.length, beforeHenchmen[0]);
             setupObs.next(true);
         });
         board.drawVillain().subscribe(sub => {
@@ -128,7 +128,7 @@ export class portals_dark_dimension implements Scheme {
         }
     }
     setup(board: BoardService, dialog: MatDialog) {
-        board.villianDeck.create(7, new scheme_twist);
+        board.villainDeck.create(7, new scheme_twist);
         board.drawVillain().subscribe(sub => {
             if (!sub) {
                 if (board.mastermind.additionalCard.some(card => card.type === 'schemeTwist')) {
@@ -155,18 +155,18 @@ export class replace_leaders_killbots implements Scheme {
         board.KO.push(schemeTwist);
     }
     setup(board: BoardService, dialog: MatDialog) {
-        board.villianDeck.create(5, new scheme_twist);
+        board.villainDeck.create(5, new scheme_twist);
         board.scheme.counterTwist = 3;
-        const length = 18 - board.villianDeck.filter(card => card.type === 'bystander').length;
+        const length = 18 - board.villainDeck.filter(card => card.type === 'bystander').length;
         const killbots = Object.assign(new bystander, {
             image: 'assets/cards/scheme/killbot.png',
             type: 'villain',
             team: 'killbots',
             attack: 3
         });
-        board.villianDeck = board.villianDeck.map(card => card.type === 'bystander' ?
+        board.villainDeck = board.villainDeck.map(card => card.type === 'bystander' ?
             Object.assign({}, killbots) : card, undefined, true) as Deck<Card>;
-        board.villianDeck.create(length, killbots);
+        board.villainDeck.create(length, killbots);
         board.drawVillain().subscribe(sub => {
             board.fields.filter(field => field.card && field.card.team === 'killbots').forEach(field => {
                 field.card.attack = board.scheme.counterTwist;
@@ -217,7 +217,7 @@ export class secret_invasion_shapeshifters implements Scheme {
         }
     }
     setup(board: BoardService, dialog: MatDialog, box: BoxService) {
-        board.villianDeck.create(8, new scheme_twist);
+        board.villainDeck.create(8, new scheme_twist);
         const setupObs = new BehaviorSubject<boolean>(false);
         open();
         function open() {
@@ -237,7 +237,7 @@ export class secret_invasion_shapeshifters implements Scheme {
                     board.heroDeck.create(5, choosenGroup[2]);
                     board.heroDeck.create(5, choosenGroup[3]);
                     board.heroDeck.shuffle();
-                    board.villianDeck.put(board.heroDeck.splice(0, 12).map(card => new Skrull(card)));
+                    board.villainDeck.put(board.heroDeck.splice(0, 12).map(card => new Skrull(card)));
                     setupObs.next(true);
                 }
             });
@@ -265,7 +265,7 @@ export class super_hero_civil_war implements Scheme {
         }
     }
     setup(board: BoardService, dialog: MatDialog, box: BoxService) {
-        board.villianDeck.create(8, new scheme_twist);
+        board.villainDeck.create(8, new scheme_twist);
         const setupObs = new BehaviorSubject<boolean>(false);
         open();
         function open() {
@@ -325,5 +325,5 @@ export class unleash_cosmic_cube implements Scheme {
                 });
         }
     }
-    setup(board: BoardService) { board.villianDeck.create(8, new scheme_twist); }
+    setup(board: BoardService) { board.villainDeck.create(8, new scheme_twist); }
 }

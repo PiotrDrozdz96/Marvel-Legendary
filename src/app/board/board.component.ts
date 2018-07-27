@@ -103,7 +103,7 @@ export class BoardComponent implements OnInit {
         this.selectVillains();
       } else {
         const villains = this.box.villainsBox.pick(data.index)[0];
-        villains.forEach(villain => { this.board.villianDeck.create(2, villain); });
+        villains.forEach(villain => { this.board.villainDeck.create(2, villain); });
         this.villainGroup--;
         if (this.villainGroup > 0) {
           this.selectVillains();
@@ -126,13 +126,13 @@ export class BoardComponent implements OnInit {
         this.selectHenchman();
       } else {
         // add henchman
-        this.board.villianDeck.create(this.henchmanCards, this.box.henchmenBox.pick(data.index)[0]);
+        this.board.villainDeck.create(this.henchmanCards, this.box.henchmenBox.pick(data.index)[0]);
         // add bystanders
         for (let i = 0; i < this.bystanders; i++) {
-          this.board.villianDeck.put(this.board.bystandersDeck.draw());
+          this.board.villainDeck.put(this.board.bystandersDeck.draw());
         }
         // add masterStrike
-        this.board.villianDeck.create(this.masterStrike, new master_strike);
+        this.board.villainDeck.create(this.masterStrike, new master_strike);
         // scheme setup
         this.selectHero();
 
@@ -164,14 +164,14 @@ export class BoardComponent implements OnInit {
           if (schemeSetupObs) {
             const schemeSetupSub = schemeSetupObs.subscribe(done => {
               if (done) {
-                this.board.villianDeck.shuffle();
+                this.board.villainDeck.shuffle();
                 this.board.heroDeck.shuffle();
                 this.board.startObs.next(true);
                 schemeSetupSub.unsubscribe();
               }
             });
           } else {
-            this.board.villianDeck.shuffle();
+            this.board.villainDeck.shuffle();
             this.board.heroDeck.shuffle();
             this.board.startObs.next(true);
           }

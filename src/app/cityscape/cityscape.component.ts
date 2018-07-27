@@ -18,7 +18,7 @@ export class CityscapeComponent implements OnInit {
           field.attack = 0;
         });
         this.board.mastermind.additionalAttack = 0;
-        const new_cards = this.board.villianDeck.draw();
+        const new_cards = this.board.villainDeck.draw();
         if (new_cards.length === 1) {
           const new_card = new_cards[0];
           this.board.setKOimage(new_card.image);

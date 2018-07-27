@@ -75,8 +75,18 @@
     top: 17.75vh;
 }
 
+.villain-deck {
+    top: 17.75vh;
+    left: 6vh;
+}
+
 .shield {
     top: 23.5vh; 
+}
+
+.hero {
+    top: 23.5vh;
+    left: 6vh;
 }
 
 .wounds {
@@ -123,7 +133,7 @@
     border-radius: 25%;
 }
 
-.villain {
+.mastermind-card {
     position: absolute;
 }
 

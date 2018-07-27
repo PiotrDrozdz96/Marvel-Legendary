@@ -8,12 +8,21 @@ import { BoardService } from '../services/board.service';
 })
 export class CardComponent implements OnInit {
 
-  @Input()
-  src: string;
+  rotate = 0;
+  top = 0;
+  left = 0;
+
+  @Input() src: string;
+  @Input() transform: boolean;
 
   constructor(private boardService: BoardService) { }
 
   ngOnInit() {
+    if (this.transform) {
+      this.rotate = Math.floor((Math.random() * 30) - 15);
+      this.top = (Math.random() * 1.5) - 0.75;
+      this.left = (Math.random() * 2) - 1;
+    }
   }
 
   mouseEnter() {
