@@ -1,7 +1,7 @@
-import { Box } from './box';
+import { BoxArray } from './box';
 import * as scheme from '../cards/scheme';
 
-export class SchemeBox extends Box {
+export class SchemeBox extends BoxArray {
 
     cards = [
         new scheme.legacy_virus,

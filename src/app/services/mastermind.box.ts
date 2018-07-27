@@ -1,7 +1,7 @@
-import { Box } from './box';
+import { BoxArray } from './box';
 import * as mastermind from '../cards/mastermind';
 
-export class MastermindBox extends Box {
+export class MastermindBox extends BoxArray {
     cards = [
         new mastermind.doctor_doom,
         new mastermind.loki,

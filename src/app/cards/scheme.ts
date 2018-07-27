@@ -90,11 +90,11 @@ export class negative_zone_prison_breakout implements Scheme {
         const beforeHenchmen = board.villainDeck.filter((card) => card['team'] === 'henchman');
         dialog.open(SelectWithRandomDialog, {
             data: {
-                array: box.henchmenBox.cards,
+                array: Object.values(box.henchmenBox.cards),
                 header: 'Select additional Henchman group'
             }
         }).afterClosed().subscribe(choosen => {
-            board.villainDeck.create(10, box.henchmenBox.pick(choosen.index)[0]);
+            board.villainDeck.create(10, box.henchmenBox.pick(choosen.index));
             board.villainDeck.create(10 - beforeHenchmen.length, beforeHenchmen[0]);
             setupObs.next(true);
         });

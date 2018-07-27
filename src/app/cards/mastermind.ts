@@ -13,10 +13,10 @@ export class master_strike implements Card {
 export class doctor_doom implements Mastermind {
     type = 'mastermind';
     image = 'assets/cards/mastermind/doctor_doom/mastermind_doctor_doom.png';
+    alwaysLeads = {group: 'henchmen', name: 'doombot_legion'};
     attack = 9;
     additionalAttack = 0;
     points = 5;
-    alwaysLeads = 'doombotLegion';
     tactics = [
         {
             image: 'assets/cards/mastermind/doctor_doom/doctor_doom_1.png',
@@ -87,10 +87,10 @@ export class doctor_doom implements Mastermind {
 export class loki implements Mastermind {
     type = 'mastermind';
     image = 'assets/cards/mastermind/loki/mastermind_loki.png';
+    alwaysLeads = {group: 'villain', name: 'enemies_of_asgard'};
     attack = 10;
     additionalAttack = 0;
     points = 5;
-    alwaysLeads = 'enemiesOfAsgard';
     tactics = [
         {
             image: 'assets/cards/mastermind/loki/loki_1.png',
@@ -153,10 +153,10 @@ export class loki implements Mastermind {
 export class magneto implements Mastermind {
     type = 'mastermind';
     image = 'assets/cards/mastermind/magneto/mastermind_magneto.png';
+    alwaysLeads = {group: 'villain', name: 'brootherhood'};
     attack = 8;
     additionalAttack = 0;
     points = 5;
-    alwaysLeads = 'brotherhood';
     tactics = [
         {
             image: 'assets/cards/mastermind/magneto/magneto_1.png',
@@ -250,10 +250,10 @@ export class magneto implements Mastermind {
 export class red_skull implements Mastermind {
     type = 'mastermind';
     image = 'assets/cards/mastermind/red_skull/mastermind_red_skull.png';
+    alwaysLeads = {group: 'villain', name: 'hydra'};
     attack = 7;
     additionalAttack = 0;
     points = 5;
-    alwaysLeads = 'hydra';
     tactics = [
         {
             image: 'assets/cards/mastermind/red_skull/red_skull_1.png',

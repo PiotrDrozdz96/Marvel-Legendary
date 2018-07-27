@@ -1,4 +1,4 @@
-import { Box } from './box';
+import { BoxArray } from './box';
 import * as hero_black_widow from '../cards/hero/black_widow';
 import * as hero_captain_america from '../cards/hero/captain_america';
 import * as hero_cyclops from '../cards/hero/cyclops';
@@ -15,7 +15,7 @@ import * as hero_storm from '../cards/hero/storm';
 import * as hero_thor from '../cards/hero/thor';
 import * as hero_wolverine from '../cards/hero/wolverine';
 
-export class HeroBox extends Box {
+export class HeroBox extends BoxArray {
 
   cards = [
     [

@@ -41,9 +41,9 @@ export class BoardComponent implements OnInit {
 
   private numberCards(mode: string) {
     const modes = {
-      onePlayer: [3, 1, 3, 1, 1],
-      normal: [5, 2, 10, 2, 5],
-      onBoard: [5, 3, 10, 10, 5]
+      onePlayer: [3, 1, 3, 1, 5],
+      normal: [5, 1, 10, 2, 5],
+      onBoard: [5, 2, 10, 10, 5]
     };
     [
       this.heroGroup,
@@ -69,6 +69,14 @@ export class BoardComponent implements OnInit {
         this.board.mastermind = this.box.mastermindBox.pick(data.index)[0];
         this.board.mastermind.bystanders = [];
         this.board.mastermind.additionalCard = [];
+        const alwaysLeads = this.board.mastermind.alwaysLeads;
+        if ( alwaysLeads.group === 'villain') {
+          const villains = this.box.villainsBox.pickByKey(alwaysLeads.name);
+          villains.forEach(villain => { this.board.villainDeck.create(2, villain); });
+        } else if (alwaysLeads.group === 'henchmen') {
+          const villain = this.box.henchmenBox.pickByKey(alwaysLeads.name);
+          this.board.villainDeck.create(10, villain);
+        }
         this.selectScheme();
       }
     });
@@ -94,7 +102,7 @@ export class BoardComponent implements OnInit {
   selectVillains() {
     const dialogRef = this.dialog.open(SelectGroupWithRandomDialog, {
       data: {
-        array: this.box.villainsBox.cards,
+        array: Object.values(this.box.villainsBox.cards),
         header: 'Select Villain Group'
       }
     });
@@ -102,7 +110,7 @@ export class BoardComponent implements OnInit {
       if (data === undefined) {
         this.selectVillains();
       } else {
-        const villains = this.box.villainsBox.pick(data.index)[0];
+        const villains = this.box.villainsBox.pick(data.index);
         villains.forEach(villain => { this.board.villainDeck.create(2, villain); });
         this.villainGroup--;
         if (this.villainGroup > 0) {
@@ -117,7 +125,7 @@ export class BoardComponent implements OnInit {
   selectHenchman() {
     const dialogRef = this.dialog.open(SelectWithRandomDialog, {
       data: {
-        array: this.box.henchmenBox.cards,
+        array: Object.values(this.box.henchmenBox.cards),
         header: 'Select Henchman Group'
       }
     });
@@ -126,7 +134,7 @@ export class BoardComponent implements OnInit {
         this.selectHenchman();
       } else {
         // add henchman
-        this.board.villainDeck.create(this.henchmanCards, this.box.henchmenBox.pick(data.index)[0]);
+        this.board.villainDeck.create(this.henchmanCards, this.box.henchmenBox.pick(data.index));
         // add bystanders
         for (let i = 0; i < this.bystanders; i++) {
           this.board.villainDeck.put(this.board.bystandersDeck.draw());

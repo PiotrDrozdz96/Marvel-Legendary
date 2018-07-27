@@ -14,6 +14,11 @@ export interface Tactic {
     func(board: BoardService, dialog: MatDialog, tactic: Tactic);
 }
 
+export interface AlwaysLeads {
+    group: string;
+    name: string;
+}
+
 export interface Hero extends Card {
     // type: 'hero' || 'wound;
     team?: string;
@@ -27,10 +32,10 @@ export interface Hero extends Card {
 
 export interface Mastermind extends Card {
     // type: 'mastermind';
+    alwaysLeads: AlwaysLeads;
     attack: number;
     additionalAttack: number;
     points: number;
-    alwaysLeads: string;
     bystanders?: Array<Bystander>;
     additionalCard?: Array<Card>;
     tactics: Array<Tactic>;
