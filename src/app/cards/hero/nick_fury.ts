@@ -21,7 +21,7 @@ export class rare implements Hero {
         if (board.mastermind.attack < strength) {
             if (board.defeatMastermind(dialog)) {
                 dialog.open(EndGameDialog, { data: { header: 'win' } }).afterClosed().subscribe(sub => {
-                    location.reload();
+                    location.pathname = '/';
                 });
             }
         }

@@ -226,7 +226,7 @@ export class BoardComponent implements OnInit {
       this.board.playerAttack -= this.board.mastermind.attack + this.board.mastermind.additionalAttack;
       if (this.board.defeatMastermind(this.dialog)) {
         this.dialog.open(EndGameDialog, { data: { header: 'win' } }).afterClosed().subscribe(sub => {
-          location.reload();
+          location.pathname = '/';
         });
       }
     }

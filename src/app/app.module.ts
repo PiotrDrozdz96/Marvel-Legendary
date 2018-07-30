@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 import { MatDialogModule } from '@angular/material';
 
@@ -21,6 +22,7 @@ import { SelectGroupWithRandomDialog } from './dialogs/cards-list-dialog/select-
 
 import { PlayCardsDialog } from './dialogs/play-cards-dialog/play-cards.dialog';
 import { EndGameDialog } from './dialogs/end-game-dialog/end-game.dialog';
+import { MenuComponent } from './menu/menu.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,8 @@ import { EndGameDialog } from './dialogs/end-game-dialog/end-game.dialog';
     SelectDialog,
     SelectWithRandomDialog,
     SelectGroupWithRandomDialog,
-    EndGameDialog
+    EndGameDialog,
+    MenuComponent
   ],
   entryComponents: [
     PlayCardsDialog,
@@ -49,6 +52,10 @@ import { EndGameDialog } from './dialogs/end-game-dialog/end-game.dialog';
     BrowserModule,
     BrowserAnimationsModule,
     MatDialogModule,
+    RouterModule.forRoot([
+      { path: '', component: MenuComponent },
+      { path: 'game', component: BoardComponent }
+    ])
   ],
   providers: [BoardService, BoxService],
   bootstrap: [AppComponent]

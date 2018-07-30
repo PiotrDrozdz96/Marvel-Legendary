@@ -35,7 +35,7 @@ export class rare implements Hero {
                 } else if (choosen.card.type === 'mastermind') {
                     if (board.defeatMastermind(dialog)) {
                         dialog.open(EndGameDialog, { data: { header: 'win' } }).afterClosed().subscribe(sub => {
-                            location.reload();
+                            location.pathname = '/';
                         });
                     }
                 } else {

@@ -19,7 +19,7 @@ export class CardComponent implements OnInit {
 
   ngOnInit() {
     if (this.transform) {
-      this.rotate = Math.floor((Math.random() * 30) - 15);
+      this.rotate = Math.floor((Math.random() * 28) - 14);
       this.top = (Math.random() * 1.2) - 0.60;
       this.left = (Math.random() * 2) - 1;
     }
