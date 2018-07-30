@@ -12,10 +12,12 @@ export class destroyer implements Villain {
     attack = 7;
     points = 5;
     fight(board: BoardService, dialog: MatDialog) {
-        const shieldCards = board.playerCards.filter(card => card.team === 'shield');
-        const restCards = board.playerCards.filter(card => card.team !== 'shield');
-        board.KO.put(shieldCards);
-        board.playerCards = restCards;
+        setTimeout(() => {
+            const shieldCards = board.playerCards.filter(card => card.team === 'shield');
+            const restCards = board.playerCards.filter(card => card.team !== 'shield');
+            board.KO.put(shieldCards);
+            board.playerCards = restCards;
+        }, 1000);
     }
     escape(board: BoardService, dialog: MatDialog) {
         let KOCounter = 0;
@@ -81,9 +83,9 @@ export class ymir implements Villain {
         }
     }
     fight(board: BoardService, dialog: MatDialog) {
-        const playerHand = board.playerHand.filter( card => card.type !== 'wound');
-        const playerCards = board.playerCards.filter( card => card.type !== 'wound');
-        const discardPile = board.discardPile.filter( card => card.type !== 'wound');
+        const playerHand = board.playerHand.filter(card => card.type !== 'wound');
+        const playerCards = board.playerCards.filter(card => card.type !== 'wound');
+        const discardPile = board.discardPile.filter(card => card.type !== 'wound');
         board.playerHand = playerHand;
         board.playerCards = playerCards;
         board.discardPile = discardPile;

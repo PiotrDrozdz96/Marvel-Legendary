@@ -146,7 +146,7 @@ export class BoardService {
         if (choosen === undefined) {
           KO(board);
         } else {
-          const index = board.fields.findIndex(field => field.card === choosen.card);
+          const index = board.hq.findIndex(hero => hero === choosen.card);
           board.KO.put(board.hq.pick(index));
           board.hq.put(board.heroDeck.draw());
         }
@@ -188,12 +188,14 @@ export class BoardService {
   defeatVillain(index: number, dialog: MatDialog) {
     const card = this.fields[index].card;
     this.setKOimage('');
-    this.victoryPile.push(card);
-    this.victoryPile.put(this.fields[index].bystanders);
-    this.fields[index].card = null;
-    this.fields[index].bystanders = [];
     if (card.fight) {
       card.fight(this, dialog);
+    }
+    this.victoryPile.push(card);
+    if (this.fields[index].card === card) {
+      this.victoryPile.put(this.fields[index].bystanders);
+      this.fields[index].card = null;
+      this.fields[index].bystanders = [];
     }
     this.defeatedVillainObs.next(card);
   }

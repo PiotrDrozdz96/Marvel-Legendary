@@ -11,6 +11,10 @@ export class endless_armies_hydra implements Villain {
     attack = 4;
     points = 3;
     fight(board: BoardService, dialog: MatDialog) {
+        const index = board.fields.findIndex(field => field.card === this);
+        board.victoryPile.put(board.fields[index].bystanders);
+        board.fields[index].card = null;
+        board.fields[index].bystanders = [];
         board.drawVillainObs.next(true);
         board.drawVillainObs.next(true);
     }

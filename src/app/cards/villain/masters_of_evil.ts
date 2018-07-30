@@ -68,8 +68,8 @@ export class whirlwind implements Villain {
     points = 2;
     fight(board: BoardService, dialog: MatDialog) {
         if ((board.playerCards.some(card => card.type === 'hero')) &&
-            ((board.fields[2].card && board.fields[2].card === this) ||
-            (board.fields[4].card && board.fields[4].card === this))) {
+            (board.fields[2].card === this ||
+             board.fields[4].card === this)) {
                 open();
         }
         let KOCounter = 0;
