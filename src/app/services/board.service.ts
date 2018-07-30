@@ -10,6 +10,7 @@ import { hero_shield_agent, hero_shield_trooper, hero_shield_officer } from '../
 import { wound } from '../cards/wounds';
 import { bystander } from '../cards/bystanders';
 import { EndGameDialog } from '../dialogs/end-game-dialog/end-game.dialog';
+import { SelectDialog } from '../dialogs/cards-list-dialog/select.dialog';
 
 @Injectable({
   providedIn: 'root'
@@ -59,8 +60,8 @@ export class BoardService {
         this.playerDeck.put(this.discardPile.take());
       }
       const newCard = this.playerDeck.shift();
-        this.playerDeck.numberOfDrawing++;
-        return newCard === undefined ? [] : [newCard];
+      this.playerDeck.numberOfDrawing++;
+      return newCard === undefined ? [] : [newCard];
     };
     this.playerDeck.reveal = (): Hero => {
       if (this.playerDeck.length === 0) {
@@ -116,8 +117,12 @@ export class BoardService {
         if (this.fields[4].card.escape) {
           this.fields[4].card.escape(this, dialog);
         }
+        KO(this);
         this.escapedVillain.put([this.fields[4].card]);
-        this.escapedVillain.put(this.fields[4].bystanders);
+        if (this.fields[4].bystanders.length > 0) {
+          this.escapedVillain.put(this.fields[4].bystanders);
+          discard(this);
+        }
         freePlaceIndex = 4;
       }
       for (freePlaceIndex; freePlaceIndex > 0; freePlaceIndex--) {
@@ -129,6 +134,38 @@ export class BoardService {
     this.fields[0].card = card;
     if (this.fields[0].card.ambush) {
       this.fields[0].card.ambush(this, dialog);
+    }
+
+    function KO(board: BoardService) {
+      dialog.open(SelectDialog, {
+        data: {
+          array: board.hq.filter(hero => hero.cost <= 6),
+          header: 'KO hero from HQ'
+        }
+      }).afterClosed().subscribe(choosen => {
+        if (choosen === undefined) {
+          KO(board);
+        } else {
+          const index = board.fields.findIndex(field => field.card === choosen.card);
+          board.KO.put(board.hq.pick(index));
+          board.hq.put(board.heroDeck.draw());
+        }
+      });
+    }
+
+    function discard(board: BoardService) {
+      dialog.open(SelectDialog, {
+        data: {
+          array: board.playerHand,
+          header: 'Put card on discard Pile'
+        }
+      }).afterClosed().subscribe(choosen => {
+        if (choosen === undefined) {
+          discard(board);
+        } else {
+          board.discardPile.put(board.playerHand.pick(choosen.index));
+        }
+      });
     }
   }
 

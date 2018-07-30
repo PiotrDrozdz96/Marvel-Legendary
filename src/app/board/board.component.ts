@@ -28,6 +28,7 @@ export class BoardComponent implements OnInit {
   private henchmanCards: number;
   private bystanders: number;
   private masterStrike: number;
+  private run: boolean;
 
 
   constructor(
@@ -37,6 +38,12 @@ export class BoardComponent implements OnInit {
   ) {
     this.numberCards('onePlayer');
     this.selectMastermind();
+    const Sub = board.start().subscribe(sub => {
+      this.run = sub;
+      if (sub) {
+        Sub.unsubscribe();
+      }
+    });
   }
 
   private numberCards(mode: string) {
@@ -70,7 +77,7 @@ export class BoardComponent implements OnInit {
         this.board.mastermind.bystanders = [];
         this.board.mastermind.additionalCard = [];
         const alwaysLeads = this.board.mastermind.alwaysLeads;
-        if ( alwaysLeads.group === 'villain') {
+        if (alwaysLeads.group === 'villain') {
           const villains = this.box.villainsBox.pickByKey(alwaysLeads.name);
           villains.forEach(villain => { this.board.villainDeck.create(2, villain); });
         } else if (alwaysLeads.group === 'henchmen') {

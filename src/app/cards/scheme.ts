@@ -87,7 +87,10 @@ export class negative_zone_prison_breakout implements Scheme {
     setup(board: BoardService, dialog: MatDialog, box: BoxService) {
         board.villainDeck.create(8, new scheme_twist);
         const setupObs = new BehaviorSubject<boolean>(false);
-        const beforeHenchmen = board.villainDeck.filter((card) => card['team'] === 'henchman');
+        let beforeHenchmen = board.villainDeck.filter((card) => card['team'] === 'henchman');
+        const notEnoughHechman = beforeHenchmen.find(henchmen =>
+            beforeHenchmen.filter(card => card.image === henchmen.image).length < 10);
+        beforeHenchmen = beforeHenchmen.filter(card => card.image === notEnoughHechman.image);
         dialog.open(SelectWithRandomDialog, {
             data: {
                 array: Object.values(box.henchmenBox.cards),

@@ -1,3 +1,10 @@
+.disable-block {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    z-index: 10;
+}
+
 .board {
     width: 140vh;
     height: 100vh;
@@ -109,6 +116,10 @@
 
 .left-board .additional-block img {
     margin-top: 5vh;
+}
+
+.right-board .additional-block {
+    left: -0.5vh;
 }
 
 .additional-block img {
