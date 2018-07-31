@@ -21,7 +21,7 @@ export class MenuComponent implements OnInit {
     (document.getElementsByClassName('container')[0] as HTMLElement).className = 'container open';
     setTimeout(() => {
       this.router.navigate(['/game']);
-    }, 4000);
+    }, 2000);
   }
 
 }

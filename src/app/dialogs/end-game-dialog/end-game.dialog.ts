@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { BoardService } from '../../services/board.service';
+import { HttpService } from '../../services/http.service';
 import { Card, Villain, Bystander, Mastermind } from '../../models/card';
 import { Inject } from '@angular/core';
 import { BasicDialog } from '../basic-dialog';
@@ -23,6 +24,7 @@ export class EndGameDialog extends BasicDialog {
     constructor(
         public dialogRef: MatDialogRef<EndGameDialog>,
         public board: BoardService,
+        private http: HttpService,
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {
         super();
@@ -44,6 +46,8 @@ export class EndGameDialog extends BasicDialog {
             - 4 * this.escapedVillains.filter(card => card.type === 'bystander').length
             - 3 * this.board.scheme.counterTwist
             - this.escapedVillains.filter(card => card.type === 'villain').length;
+        board.leaderBoards.score = this.yourScore;
+        this.http.post(this.board.leaderBoards);
     }
 
 }

@@ -72,7 +72,7 @@
 }
 
 .open {
-    animation: open 4s;
+    animation: open 2s;
 }
 
 @keyframes open {

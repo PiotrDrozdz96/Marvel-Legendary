@@ -3,11 +3,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 import { MatDialogModule, MatInputModule } from '@angular/material';
 
 import { BoardService } from './services/board.service';
 import { BoxService } from './services/box.service';
+import { HttpService } from './services/http.service';
 
 import { AppComponent } from './app.component';
 import { BoardComponent } from './board/board.component';
@@ -53,6 +55,7 @@ import { MenuComponent } from './menu/menu.component';
     BrowserModule,
     FormsModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     MatInputModule,
     MatDialogModule,
     RouterModule.forRoot([
@@ -60,7 +63,7 @@ import { MenuComponent } from './menu/menu.component';
       { path: 'game', component: BoardComponent }
     ])
   ],
-  providers: [BoardService, BoxService],
+  providers: [BoardService, BoxService, HttpService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
