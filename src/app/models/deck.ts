@@ -41,7 +41,7 @@ export class Deck<T extends Object> extends Array<T> {
     pick(index: number): Array<T> {
         return this.splice(index, 1);
     }
-    put(arr: Array<T>): void {
+    put(arr: Array<T>, condition?: boolean): void {
         this.push(...arr);
     }
     shuffle(): void {

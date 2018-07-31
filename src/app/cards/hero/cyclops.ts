@@ -2,6 +2,7 @@ import { Hero } from '../../models/card';
 import { BoardService } from '../../services/board.service';
 import { MatDialog } from '@angular/material';
 import { SelectDialog } from '../../dialogs/cards-list-dialog/select.dialog';
+import { skip } from 'rxjs/operators';
 
 // tslint:disable:class-name
 
@@ -26,6 +27,10 @@ export class uncommon implements Hero {
     attack = 4;
     recrutingPoints = 0;
     cost = 6;
+    discard(board: BoardService, card?) {
+        board.playerHand.push(card);
+        return false;
+    }
 }
 
 export class common_1 implements Hero {
@@ -50,9 +55,7 @@ export class common_1 implements Hero {
                     board.playerHand.put(board.playerCards.pick(index));
                     board.playerAttack -= this.attack;
                 } else {
-                    if (choosen.card.image !== (new uncommon).image) {
-                        board.discardPile.put(board.playerHand.pick(choosen.index));
-                    }
+                    board.discardPile.put(board.playerHand.pick(choosen.index));
                 }
             });
         } else {
@@ -85,9 +88,7 @@ export class common_2 implements Hero {
                     board.playerHand.put(board.playerCards.pick(index));
                     board.playerAttack -= this.attack;
                 } else {
-                    if (choosen.card.image !== (new uncommon).image) {
-                        board.discardPile.put(board.playerHand.pick(choosen.index));
-                    }
+                    board.discardPile.put(board.playerHand.pick(choosen.index));
                 }
             });
         } else {

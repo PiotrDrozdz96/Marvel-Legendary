@@ -195,7 +195,9 @@ export class BoardComponent implements OnInit {
     });
   }
 
-  playerHand() { this.dialog.open(PlayCardsDialog); }
+  playerHand() {
+    this.dialog.open(PlayCardsDialog);
+  }
   viewCards(header: string, cards: Array<Card>) {
     this.dialog.open(CardsListDialog, { data: { header: header, array: cards } });
   }

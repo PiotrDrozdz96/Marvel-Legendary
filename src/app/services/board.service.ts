@@ -70,6 +70,15 @@ export class BoardService {
       }
       return this.playerDeck[0];
     };
+    this.discardPile.put = (arr: Array<Hero>, notCardEffect?: boolean): void => {
+      let discard = true;
+      if (!notCardEffect && arr.length === 1 && arr[0].discard) {
+        discard = arr[0].discard(this, arr[0]);
+      }
+      if (discard) {
+        this.discardPile.push(...arr);
+      }
+    };
     /* SET UP */
     /*********/
     /* 1. player deck*/

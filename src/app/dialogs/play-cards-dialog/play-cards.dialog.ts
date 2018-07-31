@@ -15,17 +15,18 @@ export class PlayCardsDialog extends BasicDialog {
 
     constructor(
         public dialogRef: MatDialogRef<PlayCardsDialog>,
-        public board: BoardService, public dialog: MatDialog) {
+        public board: BoardService, public dialog: MatDialog
+    ) {
         super();
-     }
+    }
 
-    pick( index: number) {
+    pick(index: number) {
         const card = this.board.playerHand.pick(index)[0];
         if (card.func) {
             card.func(this.board, this.dialog);
         }
         if (card.sub) {
-            this.board.cardsSubscription.push(card.sub(this.board, this.dialog));
+            this.board.cardsSubscription.push(card.sub(this.board));
         }
         this.board.playerCards.push(card);
         this.preview = '';

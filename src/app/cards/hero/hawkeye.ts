@@ -13,7 +13,7 @@ export class rare implements Hero {
     attack = 5;
     recrutingPoints = 0;
     cost = 7;
-    sub(board: BoardService, dialog: MatDialog) {
+    sub(board: BoardService) {
         return board.defeatedVillain().pipe(skip(1)).subscribe(sub => {
             board.victoryPile.put(board.bystandersDeck.draw().concat(board.bystandersDeck.draw(), board.bystandersDeck.draw()));
         });

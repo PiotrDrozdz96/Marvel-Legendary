@@ -15,7 +15,7 @@ export class rare implements Hero {
     recrutingPoints = 0;
     cost = 7;
     defeatedVillain = 0;
-    sub(board: BoardService, dialog: MatDialog) {
+    sub(board: BoardService) {
         return board.defeatedVillain().pipe(skip(1)).subscribe(sub => {
             board.playerRecrutingPoints += 3;
         });

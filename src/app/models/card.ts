@@ -27,7 +27,8 @@ export interface Hero extends Card {
     recrutingPoints: number;
     cost: number;
     func?(board: BoardService, dialog: MatDialog);
-    sub?(board: BoardService, dialog: MatDialog): Subscription;
+    discard?(board: BoardService, card?): boolean;
+    sub?(board: BoardService): Subscription;
 }
 
 export interface Mastermind extends Card {
