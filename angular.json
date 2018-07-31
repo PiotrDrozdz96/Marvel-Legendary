@@ -24,7 +24,7 @@
             ],
             "styles": [
               "src/styles.css",
-              "src/app/dialogs/basic-dialog.css"
+              "src/app/material.css"
             ],
             "scripts": []
           },

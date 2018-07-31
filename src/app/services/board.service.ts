@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material';
 import { Deck } from '../models/deck';
 import { Card, Hero, Scheme, Mastermind, Bystander, Villain } from '../models/card';
 import { Field } from '../models/field';
+import { LeaderBoards } from '../models/leaderboards';
 
 import { hero_shield_agent, hero_shield_trooper, hero_shield_officer } from '../cards/hero/shield';
 import { wound } from '../cards/wounds';
@@ -22,6 +23,15 @@ export class BoardService {
   public drawVillainObs = new BehaviorSubject<boolean>(false);
   public defeatedVillainObs = new BehaviorSubject<any>(undefined);
   public cardsSubscription: Array<Subscription> = [];
+
+  public leaderBoards: LeaderBoards = {
+    name: 'Anonim',
+    win: false,
+    score: 0,
+    mastermind: '',
+    scheme: '',
+    heroses: []
+  };
 
   playerDeck = new Deck<Hero>();
   playerHand = new Deck<Hero>();

@@ -1,4 +1,4 @@
-import { BoxObject } from './box';
+import { Box } from './box';
 import * as villain_brotherhood from '../cards/villain/brootherhood';
 import * as villain_asgard from '../cards/villain/enemies_of_asgard';
 import * as villain_hydra from '../cards/villain/hydra';
@@ -7,7 +7,7 @@ import * as villain_radiation from '../cards/villain/radiation';
 import * as villain_skrull from '../cards/villain/skrulls';
 import * as villain_spider_foes from '../cards/villain/spider_foes';
 
-export class VillainsBox extends BoxObject {
+export class VillainsBox extends Box {
 
     cards = {
         brootherhood: [

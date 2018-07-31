@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { BoardService } from '../services/board.service';
 
 @Component({
   selector: 'app-menu',
@@ -8,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class MenuComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, public board: BoardService) { }
 
   ngOnInit() {
   }
@@ -16,6 +17,7 @@ export class MenuComponent implements OnInit {
   start() {
     (document.getElementsByClassName('start')[0] as HTMLElement).style.display = 'none';
     (document.getElementsByClassName('guide')[0] as HTMLElement).style.display = 'none';
+    (document.getElementsByClassName('name')[0] as HTMLElement).style.display = 'none';
     (document.getElementsByClassName('container')[0] as HTMLElement).className = 'container open';
     setTimeout(() => {
       this.router.navigate(['/game']);

@@ -1,9 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
-import { MatDialogModule } from '@angular/material';
+import { MatDialogModule, MatInputModule } from '@angular/material';
 
 import { BoardService } from './services/board.service';
 import { BoxService } from './services/box.service';
@@ -50,7 +51,9 @@ import { MenuComponent } from './menu/menu.component';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     BrowserAnimationsModule,
+    MatInputModule,
     MatDialogModule,
     RouterModule.forRoot([
       { path: '', component: MenuComponent },

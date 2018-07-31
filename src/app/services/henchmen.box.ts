@@ -1,7 +1,7 @@
-import { BoxObject } from './box';
+import { Box } from './box';
 import * as henchmen from '../cards/villain/henchmen';
 
-export class HenchmenBox extends BoxObject {
+export class HenchmenBox extends Box {
     cards = {
         doombot_legion: new henchmen.doombot_legion,
         hand_ninjas: new henchmen.hand_ninjas,

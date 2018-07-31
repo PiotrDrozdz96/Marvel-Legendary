@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BoxArray, BoxObject } from './box';
+import { Box } from './box';
 import { HeroBox } from './hero.box';
 import { MastermindBox } from './mastermind.box';
 import { SchemeBox } from './scheme.box';
@@ -11,11 +11,11 @@ import { HenchmenBox } from './henchmen.box';
   })
   export class BoxService {
 
-    mastermindBox: BoxArray;
-    schemeBox: BoxArray;
-    villainsBox: BoxObject;
-    henchmenBox: BoxObject;
-    heroBox: BoxArray;
+    mastermindBox: Box;
+    schemeBox: Box;
+    villainsBox: Box;
+    henchmenBox: Box;
+    heroBox: Box;
 
       constructor() {
           this.mastermindBox = new MastermindBox;

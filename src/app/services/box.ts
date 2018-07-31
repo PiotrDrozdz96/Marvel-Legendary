@@ -1,14 +1,8 @@
-export abstract class BoxArray {
-    cards: Array<any>;
-
-    pick(index: number) { return this.cards.splice(index, 1); }
-}
-
-export abstract class BoxObject {
+export abstract class Box {
     cards: Object;
 
     pick(index: number) {
-        const key = Object.keys(this.cards)[index];
+        const key = this.key(index);
         return this.pickByKey(key);
     }
 
@@ -16,5 +10,9 @@ export abstract class BoxObject {
         const result = this.cards[key];
         delete this.cards[key];
         return result;
+    }
+
+    key(index: number) {
+        return Object.keys(this.cards)[index];
     }
 }
