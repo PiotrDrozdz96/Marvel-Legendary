@@ -5,7 +5,13 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
-import { MatDialogModule, MatInputModule } from '@angular/material';
+import {
+  MatDialogModule,
+  MatInputModule,
+  MatTableModule,
+  MatButtonModule,
+  MatCheckboxModule
+} from '@angular/material';
 
 import { BoardService } from './services/board.service';
 import { BoxService } from './services/box.service';
@@ -17,6 +23,8 @@ import { KOComponent } from './ko/ko.component';
 import { CityscapeComponent } from './cityscape/cityscape.component';
 import { HqComponent } from './hq/hq.component';
 import { CardComponent } from './card/card.component';
+import { MenuComponent } from './menu/menu.component';
+import { LeaderboardsComponent } from './leaderboards/leaderboards.component';
 
 import { CardsListDialog } from './dialogs/cards-list-dialog/cards-list.dialog';
 import { SelectDialog } from './dialogs/cards-list-dialog/select.dialog';
@@ -25,7 +33,6 @@ import { SelectGroupWithRandomDialog } from './dialogs/cards-list-dialog/select-
 
 import { PlayCardsDialog } from './dialogs/play-cards-dialog/play-cards.dialog';
 import { EndGameDialog } from './dialogs/end-game-dialog/end-game.dialog';
-import { MenuComponent } from './menu/menu.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +48,8 @@ import { MenuComponent } from './menu/menu.component';
     SelectWithRandomDialog,
     SelectGroupWithRandomDialog,
     EndGameDialog,
-    MenuComponent
+    MenuComponent,
+    LeaderboardsComponent
   ],
   entryComponents: [
     PlayCardsDialog,
@@ -57,10 +65,14 @@ import { MenuComponent } from './menu/menu.component';
     BrowserAnimationsModule,
     HttpClientModule,
     MatInputModule,
+    MatTableModule,
+    MatButtonModule,
+    MatCheckboxModule,
     MatDialogModule,
     RouterModule.forRoot([
       { path: '', component: MenuComponent },
-      { path: 'game', component: BoardComponent }
+      { path: 'game', component: BoardComponent },
+      { path: 'leaderboards', component: LeaderboardsComponent }
     ])
   ],
   providers: [BoardService, BoxService, HttpService],

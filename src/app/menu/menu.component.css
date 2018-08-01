@@ -26,7 +26,7 @@
     height: 100%;
 }
 
-.start {
+#start {
     position: relative;
     cursor: pointer;
     top: 50vh;
@@ -38,13 +38,13 @@
     text-shadow: 0 0 20px black;
 }
 
-.name {
+#name {
     position: relative;
     top: 72vh;
     left: -17vh;
 }
 
-.guide {
+#guide {
     position: relative;
     text-decoration: none;
     width: 50vw;

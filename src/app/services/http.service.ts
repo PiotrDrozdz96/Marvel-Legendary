@@ -20,6 +20,8 @@ export class HttpService {
     });
   }
 
+  get() { return this.http.get(this.URL_DB, { params: this.param }); }
+
   reload() {
     this.postComplete.subscribe(complete => {
       if (complete) {

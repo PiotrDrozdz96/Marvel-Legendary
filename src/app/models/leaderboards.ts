@@ -1,5 +1,6 @@
 export interface LeaderBoards {
     name: string;
+    position?: number;
     win: boolean;
     score: number;
     mastermind: string;

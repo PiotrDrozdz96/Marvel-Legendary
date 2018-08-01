@@ -15,9 +15,9 @@ export class MenuComponent implements OnInit {
   }
 
   start() {
-    (document.getElementsByClassName('start')[0] as HTMLElement).style.display = 'none';
-    (document.getElementsByClassName('guide')[0] as HTMLElement).style.display = 'none';
-    (document.getElementsByClassName('name')[0] as HTMLElement).style.display = 'none';
+    (document.getElementById('start') as HTMLElement).style.display = 'none';
+    (document.getElementById('guide') as HTMLElement).style.display = 'none';
+    (document.getElementById('name') as HTMLElement).style.display = 'none';
     (document.getElementsByClassName('container')[0] as HTMLElement).className = 'container open';
     setTimeout(() => {
       this.router.navigate(['/game']);
