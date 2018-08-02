@@ -29,7 +29,6 @@ import { LeaderboardsComponent } from './leaderboards/leaderboards.component';
 import { CardsListDialog } from './dialogs/cards-list-dialog/cards-list.dialog';
 import { SelectDialog } from './dialogs/cards-list-dialog/select.dialog';
 import { SelectWithRandomDialog } from './dialogs/cards-list-dialog/select-with-random.dialog';
-import { SelectGroupWithRandomDialog } from './dialogs/cards-list-dialog/select-group-with-random.dialog';
 
 import { PlayCardsDialog } from './dialogs/play-cards-dialog/play-cards.dialog';
 import { EndGameDialog } from './dialogs/end-game-dialog/end-game.dialog';
@@ -46,7 +45,6 @@ import { EndGameDialog } from './dialogs/end-game-dialog/end-game.dialog';
     CardsListDialog,
     SelectDialog,
     SelectWithRandomDialog,
-    SelectGroupWithRandomDialog,
     EndGameDialog,
     MenuComponent,
     LeaderboardsComponent
@@ -56,7 +54,6 @@ import { EndGameDialog } from './dialogs/end-game-dialog/end-game.dialog';
     CardsListDialog,
     SelectDialog,
     SelectWithRandomDialog,
-    SelectGroupWithRandomDialog,
     EndGameDialog
   ],
   imports: [

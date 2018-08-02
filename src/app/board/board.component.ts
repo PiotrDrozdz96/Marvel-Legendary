@@ -12,7 +12,6 @@ import { BoxService } from '../services/box.service';
 import { PlayCardsDialog } from '../dialogs/play-cards-dialog/play-cards.dialog';
 import { CardsListDialog } from '../dialogs/cards-list-dialog/cards-list.dialog';
 import { SelectWithRandomDialog } from '../dialogs/cards-list-dialog/select-with-random.dialog';
-import { SelectGroupWithRandomDialog } from '../dialogs/cards-list-dialog/select-group-with-random.dialog';
 import { EndGameDialog } from '../dialogs/end-game-dialog/end-game.dialog';
 
 @Component({
@@ -109,7 +108,7 @@ export class BoardComponent implements OnInit {
   }
 
   selectVillains() {
-    const dialogRef = this.dialog.open(SelectGroupWithRandomDialog, {
+    const dialogRef = this.dialog.open(SelectWithRandomDialog, {
       data: {
         array: Object.values(this.box.villainsBox.cards),
         header: 'Select Villain Group'
