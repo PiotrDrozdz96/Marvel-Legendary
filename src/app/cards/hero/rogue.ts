@@ -27,25 +27,20 @@ export class uncommon implements Hero {
     recrutingPoints = 0;
     cost = 5;
     func(board: BoardService, dialog: MatDialog) {
-        open();
-        function open() {
-            dialog.open(SelectDialog, {
-                data: {
-                    array: board.playerCards,
-                    header: 'Copy Card'
+        dialog.open(SelectDialog, {
+            data: {
+                array: board.playerCards,
+                header: 'Copy Card'
+            }
+        }).afterClosed().subscribe(choosen => {
+            if (choosen !== undefined) {
+                board.playerAttack += choosen.card.attack;
+                board.playerRecrutingPoints += choosen.card.recrutingPoints;
+                if (choosen.card.func) {
+                    choosen.card.func(board, dialog);
                 }
-            }).afterClosed().subscribe(choosen => {
-                if (choosen === undefined) {
-                    open();
-                } else {
-                    board.playerAttack += choosen.card.attack;
-                    board.playerRecrutingPoints += choosen.card.recrutingPoints;
-                    if (choosen.card.func) {
-                        choosen.card.func(board, dialog);
-                    }
-                }
-            });
-        }
+            }
+        });
     }
 }
 

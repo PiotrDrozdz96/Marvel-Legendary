@@ -10,14 +10,18 @@ export class HttpService {
 
   readonly URL_DB = 'https://api.mlab.com/api/1/databases/marvel-legendary/collections/leaderboards';
   readonly param = new HttpParams().set('apiKey', 'aWB04CMreTxIgNrhXTjunUFKThYS4LgK');
+  private postStart = false;
   private postComplete = new BehaviorSubject<boolean>(false);
 
   constructor(private http: HttpClient) { }
 
   post(data: LeaderBoards) {
-    this.http.post(this.URL_DB, data, { params: this.param }).subscribe(sub => {
-      this.postComplete.next(true);
-    });
+    if (!this.postStart) {
+      this.postStart = true;
+      this.http.post(this.URL_DB, data, { params: this.param }).subscribe(sub => {
+        this.postComplete.next(true);
+      });
+    }
   }
 
   get() { return this.http.get(this.URL_DB, { params: this.param }); }
