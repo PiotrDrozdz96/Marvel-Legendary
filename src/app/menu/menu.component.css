@@ -8,14 +8,26 @@
     background-image: url('/assets/legendary_board.jpg');
     background-size: 140vh 100vh;
     background-repeat: no-repeat;
+    /* animation: disable 2s; */
 }
 
 .container {
     width: 140vh;
     height: 100vh;
     background-image: url('/assets/menu.jpg');
-    background-size: 140vh 100vh;
+    background-size: 100% 100%;
     margin: auto;
+    /* animation: disable 2s; */
+}
+
+.cover {
+    position: absolute;
+    width: 0;
+    height: 100vh;
+    background-image: url('/assets/menu.jpg');
+    background-size: 100% 100%;
+    margin: auto;
+    animation: open 2s;
 }
 
 .text {
@@ -29,7 +41,7 @@
 #start {
     position: relative;
     cursor: pointer;
-    top: 50vh;
+    top: 37vh;
     height: 58px;
     color: goldenrod;
     animation: start 4s infinite;
@@ -40,20 +52,28 @@
 
 #name {
     position: relative;
-    top: 72vh;
-    left: -17vh;
+    top: 60vh;
+    left: -10vw;
+}
+
+.shadow-text {
+    cursor: pointer;
+    text-decoration: none;
+    color: firebrick;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    font-size: 40px;
 }
 
 #guide {
     position: relative;
-    text-decoration: none;
-    width: 50vw;
     margin-left: 95vh;
-    cursor: pointer;
-    top: 20vh;
-    color: firebrick;
-    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-    font-size: 40px;
+    top: 9vh;
+}
+
+#leaderboards {
+    position: relative;
+    top: 17vh;
+    left: -20vw;
 }
 
 @keyframes start {
@@ -71,15 +91,52 @@
     }
 }
 
-.open {
-    animation: open 2s;
-}
-
-@keyframes open {
+@keyframes game {
     0% {
         width: 140vh;
     }
     100% {
         width: 0;
+    }
+}
+
+@keyframes open {
+    0% {
+        width: 100vw;
+        position: initial;
+    }
+    100% {
+        width: 140vh;
+        position: initial;
+    }
+}
+
+.exit {
+    animation: exit 2s;
+}
+
+@keyframes exit {
+    0% {
+        width: 140vh;
+        position: initial;
+    }
+    100% {
+        width: 100vw;
+        position: initial;
+    }
+}
+
+.disable {
+    animation: disable 2s;
+}
+
+@keyframes disable {
+    0% {
+        width: 0;
+        height: 0;
+    }
+    100% {
+        width: 0;
+        height: 0;
     }
 }

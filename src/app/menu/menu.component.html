@@ -1,7 +1,9 @@
-<div class="menu">
-  <div class="container">
+<div class="cover"></div>
+<div class="menu disable">
+  <div class="container disable">
     <div class="text">
-      <a id="guide" target="_blank" rel="noopener noreferrer" href="http://www.upperdeck.com/OP/RuleBooks/Legendary_Rules-Core_Set.pdf">Rule Book</a>
+      <p id="leaderboards" class="shadow-text" (click)="leaderboards()">LeaderBoards</p>
+      <a id="guide" class="shadow-text" target="_blank" rel="noopener noreferrer" href="http://www.upperdeck.com/OP/RuleBooks/Legendary_Rules-Core_Set.pdf">Rule Book</a>
       <p id="start" (click)="start()">Start</p>
       <mat-form-field id="name">
         <input matInput placeholder="Player Name" [(ngModel)]="board.leaderBoards.name">

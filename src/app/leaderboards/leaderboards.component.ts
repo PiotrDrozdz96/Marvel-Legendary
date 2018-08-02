@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { HttpService } from '../services/http.service';
 import { LeaderBoards } from '../models/leaderboards';
 import { BoxService } from '../services/box.service';
@@ -23,7 +24,7 @@ export class LeaderboardsComponent implements OnInit {
     scheme: null
   };
 
-  constructor(private http: HttpService, public box: BoxService) {
+  constructor(private http: HttpService, public box: BoxService, public router: Router) {
     http.get().subscribe(leaderboards => {
       console.log(leaderboards);
       const tempObject = {};
@@ -80,6 +81,13 @@ export class LeaderboardsComponent implements OnInit {
         (this.filter.mastermind === null ? true : this.filter.mastermind === element.mastermind) &&
         (this.filter.scheme === null ? true : this.filter.scheme === element.scheme)
     );
+  }
+
+  exit() {
+    (document.getElementsByClassName('menu')[0] as HTMLElement).className = 'menu exit';
+    setTimeout(() => {
+      this.router.navigate(['/']);
+    }, 2000);
   }
 
 }
