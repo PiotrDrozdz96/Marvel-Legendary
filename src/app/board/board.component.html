@@ -35,7 +35,7 @@
                 (click)="viewCards('Escaped Villains',board.escapedVillain)">
             </app-card>
         </div>
-        <app-ko></app-ko>
+        <app-ko class="ko"></app-ko>
         <div class="deck wounds">
             <app-card *ngFor="let card of board.woundsDeck.reverse()" [src]="card.image" [transform]=true></app-card>
         </div>

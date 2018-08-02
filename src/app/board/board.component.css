@@ -98,8 +98,8 @@
 
 .wounds {
     float: left; 
-    top: -20vh; 
-    left: 15.3vh;
+    top: -19vh; 
+    left: 56vh;
 }
 
 .bystanders {
@@ -156,4 +156,10 @@
 .additional-card {
     position: absolute;
     top: -1.5vh;
+}
+
+.ko {
+    position: absolute;
+    top: 11.3vh;
+    left: calc(50vw - 20.5vh);
 }

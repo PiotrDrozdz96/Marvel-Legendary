@@ -35,7 +35,7 @@ export class legacy_virus implements Scheme {
         board.drawVillain().subscribe(sub => {
             if (board.woundsDeck.length === 0) {
                 dialog.open(EndGameDialog, { data: { header: 'lose' } }).afterClosed().subscribe(subs => {
-                    location.pathname = '/';
+                    board.reload();
                 });
             }
         });
@@ -67,7 +67,7 @@ export class midtown_bank_robbery implements Scheme {
                 });
                 if (board.escapedVillain.filter(card => card.type === 'bystander').length >= 8) {
                     dialog.open(EndGameDialog, { data: { header: 'lose' } }).afterClosed().subscribe(subs => {
-                        location.pathname = '/';
+                        board.reload();
                     });
                 }
             }
@@ -104,7 +104,7 @@ export class negative_zone_prison_breakout implements Scheme {
         board.drawVillain().subscribe(sub => {
             if (board.escapedVillain.filter(card => card.type === 'villain').length >= 12) {
                 dialog.open(EndGameDialog, { data: { header: 'lose' } }).afterClosed().subscribe(subs => {
-                    location.pathname = '/';
+                    board.reload();
                 });
             }
         });
@@ -126,7 +126,7 @@ export class portals_dark_dimension implements Scheme {
             board.fields[4 - index].additionalCard.push(schemeTwist);
         } else {
             dialog.open(EndGameDialog, { data: { header: 'lose' } }).afterClosed().subscribe(sub => {
-                location.pathname = '/';
+                board.reload();
             });
         }
     }
@@ -176,7 +176,7 @@ export class replace_leaders_killbots implements Scheme {
             });
             if (board.escapedVillain.filter(card => card['team'] === 'killbots').length >= 5) {
                 dialog.open(EndGameDialog, { data: { header: 'lose' } }).afterClosed().subscribe(subs => {
-                    location.pathname = '/';
+                    board.reload();
                 });
             }
         });
@@ -226,7 +226,7 @@ export class secret_invasion_shapeshifters implements Scheme {
         function open() {
             const dialogRef = dialog.open(SelectGroupWithRandomDialog, {
                 data: {
-                    array: box.heroBox.cards,
+                    array: Object.values(box.heroBox.cards),
                     header: 'Select Heroses'
                 }
             });
@@ -234,7 +234,7 @@ export class secret_invasion_shapeshifters implements Scheme {
                 if (choosen === undefined) {
                     open();
                 } else {
-                    const choosenGroup = box.heroBox.pick(choosen.index)[0];
+                    const choosenGroup = box.heroBox.pick(choosen.index);
                     board.heroDeck.create(1, choosenGroup[0]);
                     board.heroDeck.create(3, choosenGroup[1]);
                     board.heroDeck.create(5, choosenGroup[2]);
@@ -248,7 +248,7 @@ export class secret_invasion_shapeshifters implements Scheme {
         board.drawVillain().subscribe(sub => {
             if (board.escapedVillain.filter(card => card['team'] === 'hero').length >= 6) {
                 dialog.open(EndGameDialog, { data: { header: 'lose' } }).afterClosed().subscribe(subs => {
-                    location.pathname = '/';
+                    board.reload();
                 });
             }
         });
@@ -274,7 +274,7 @@ export class super_hero_civil_war implements Scheme {
         function open() {
             const dialogRef = dialog.open(SelectGroupWithRandomDialog, {
                 data: {
-                    array: box.heroBox.cards,
+                    array: Object.values(box.heroBox.cards),
                     header: 'Select Heroses'
                 }
             });
@@ -282,7 +282,7 @@ export class super_hero_civil_war implements Scheme {
                 if (choosen === undefined) {
                     open();
                 } else {
-                    const choosenGroup = box.heroBox.pick(choosen.index)[0];
+                    const choosenGroup = box.heroBox.pick(choosen.index);
                     board.heroDeck.create(1, choosenGroup[0]);
                     board.heroDeck.create(3, choosenGroup[1]);
                     board.heroDeck.create(5, choosenGroup[2]);
@@ -294,7 +294,7 @@ export class super_hero_civil_war implements Scheme {
         board.drawVillain().subscribe(sub => {
             if (board.heroDeck.length === 0) {
                 dialog.open(EndGameDialog, { data: { header: 'lose' } }).afterClosed().subscribe(subs => {
-                    location.pathname = '/';
+                    board.reload();
                 });
             }
         });
@@ -324,7 +324,7 @@ export class unleash_cosmic_cube implements Scheme {
                 break;
             case 8:
                 dialog.open(EndGameDialog, { data: { header: 'lose' } }).afterClosed().subscribe(sub => {
-                    location.pathname = '/';
+                    board.reload();
                 });
         }
     }

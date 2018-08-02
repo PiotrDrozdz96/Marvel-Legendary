@@ -65,7 +65,7 @@ export class BoardComponent implements OnInit {
   selectMastermind() {
     const dialogRef = this.dialog.open(SelectWithRandomDialog, {
       data: {
-        array: this.box.mastermindBox.cards,
+        array: Object.values(this.box.mastermindBox.cards),
         header: 'Select Mastermind'
       }
     });
@@ -73,7 +73,8 @@ export class BoardComponent implements OnInit {
       if (data === undefined) {
         this.selectMastermind();
       } else {
-        this.board.mastermind = this.box.mastermindBox.pick(data.index)[0];
+        this.board.leaderBoards.mastermind = this.box.mastermindBox.key(data.index);
+        this.board.mastermind = this.box.mastermindBox.pick(data.index);
         this.board.mastermind.bystanders = [];
         this.board.mastermind.additionalCard = [];
         const alwaysLeads = this.board.mastermind.alwaysLeads;
@@ -92,7 +93,7 @@ export class BoardComponent implements OnInit {
   selectScheme() {
     const dialogRef = this.dialog.open(SelectWithRandomDialog, {
       data: {
-        array: this.box.schemeBox.cards,
+        array: Object.values(this.box.schemeBox.cards),
         header: 'Select Scheme'
       }
     });
@@ -100,7 +101,8 @@ export class BoardComponent implements OnInit {
       if (data === undefined) {
         this.selectScheme();
       } else {
-        this.board.scheme = this.box.schemeBox.pick(data.index)[0];
+        this.board.leaderBoards.scheme = this.box.schemeBox.key(data.index);
+        this.board.scheme = this.box.schemeBox.pick(data.index);
         this.selectVillains();
       }
     });
@@ -158,7 +160,7 @@ export class BoardComponent implements OnInit {
   selectHero() {
     const dialogRef = this.dialog.open(SelectGroupWithRandomDialog, {
       data: {
-        array: this.box.heroBox.cards,
+        array: Object.values(this.box.heroBox.cards),
         header: 'Select Heroses'
       }
     });
@@ -166,7 +168,8 @@ export class BoardComponent implements OnInit {
       if (data === undefined) {
         this.selectHero();
       } else {
-        const choosenGroup = this.box.heroBox.pick(data.index)[0];
+        this.board.leaderBoards.heroses.push(this.box.heroBox.key(data.index));
+        const choosenGroup = this.box.heroBox.pick(data.index);
         this.board.heroDeck.create(1, choosenGroup[0]);
         this.board.heroDeck.create(3, choosenGroup[1]);
         this.board.heroDeck.create(5, choosenGroup[2]);
@@ -186,6 +189,7 @@ export class BoardComponent implements OnInit {
               }
             });
           } else {
+            this.board.leaderBoards.heroses.sort();
             this.board.villainDeck.shuffle();
             this.board.heroDeck.shuffle();
             this.board.startObs.next(true);
@@ -228,7 +232,7 @@ export class BoardComponent implements OnInit {
       this.board.playerAttack -= this.board.mastermind.attack + this.board.mastermind.additionalAttack;
       if (this.board.defeatMastermind(this.dialog)) {
         this.dialog.open(EndGameDialog, { data: { header: 'win' } }).afterClosed().subscribe(sub => {
-          location.pathname = '/';
+          this.board.reload();
         });
       }
     }
