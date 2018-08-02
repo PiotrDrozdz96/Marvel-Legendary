@@ -158,7 +158,7 @@ export class BoardComponent implements OnInit {
   }
 
   selectHero() {
-    const dialogRef = this.dialog.open(SelectGroupWithRandomDialog, {
+    const dialogRef = this.dialog.open(SelectWithRandomDialog, {
       data: {
         array: Object.values(this.box.heroBox.cards),
         header: 'Select Heroses'
