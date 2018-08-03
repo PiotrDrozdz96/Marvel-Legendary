@@ -1,4 +1,0 @@
-<div class="preview"><img *ngIf="preview!=''" [src]="preview"></div>
-<h2>{{header}}</h2>
-<img [src]="randomImage" (click)="random()">
-<img *ngFor="let card of array; let index = index" [src]="card[0].image" (mouseenter)="mouseEnter(card[0].image)" (mouseleave)="mouseLeave()" (click)="click(card,index)">

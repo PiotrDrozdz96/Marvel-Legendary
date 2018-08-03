@@ -9,7 +9,6 @@ import { wound } from './wounds';
 import { bystander } from './bystanders';
 import * as henchman from './villain/henchmen';
 import { BehaviorSubject } from 'rxjs';
-import { SelectGroupWithRandomDialog } from '../dialogs/cards-list-dialog/select-group-with-random.dialog';
 
 // tslint:disable:class-name
 
@@ -224,7 +223,7 @@ export class secret_invasion_shapeshifters implements Scheme {
         const setupObs = new BehaviorSubject<boolean>(false);
         open();
         function open() {
-            const dialogRef = dialog.open(SelectGroupWithRandomDialog, {
+            const dialogRef = dialog.open(SelectWithRandomDialog, {
                 data: {
                     array: Object.values(box.heroBox.cards),
                     header: 'Select Heroses'
@@ -272,7 +271,7 @@ export class super_hero_civil_war implements Scheme {
         const setupObs = new BehaviorSubject<boolean>(false);
         open();
         function open() {
-            const dialogRef = dialog.open(SelectGroupWithRandomDialog, {
+            const dialogRef = dialog.open(SelectWithRandomDialog, {
                 data: {
                     array: Object.values(box.heroBox.cards),
                     header: 'Select Heroses'

@@ -26,7 +26,6 @@ export class LeaderboardsComponent implements OnInit {
 
   constructor(private http: HttpService, public box: BoxService, public router: Router) {
     http.get().subscribe(leaderboards => {
-      console.log(leaderboards);
       const tempObject = {};
       this.leaderboards = (leaderboards as Array<LeaderBoards>).sort(
         (a, b) => b.win > a.win ? 1 : b.win < a.win ? 0 :

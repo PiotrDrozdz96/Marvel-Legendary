@@ -63,7 +63,7 @@
       <ng-container matColumnDef="heroses">
         <th mat-header-cell *matHeaderCellDef> Heroses </th>
         <td mat-cell *matCellDef="let element">
-          <app-card class="heroses card" *ngFor="let hero of element.heroses" [src]="box.heroBox.cards[hero][0].image"></app-card>
+          <app-card class="heroses card" *ngFor="let hero of element.heroses" [src]="box.heroBox.cards[hero].image"></app-card>
         </td>
       </ng-container>
 
