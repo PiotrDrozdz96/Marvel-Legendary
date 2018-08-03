@@ -32,6 +32,7 @@ import { SelectWithRandomDialog } from './dialogs/cards-list-dialog/select-with-
 
 import { PlayCardsDialog } from './dialogs/play-cards-dialog/play-cards.dialog';
 import { EndGameDialog } from './dialogs/end-game-dialog/end-game.dialog';
+import { MenuSliderComponent } from './menu-slider/menu-slider.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { EndGameDialog } from './dialogs/end-game-dialog/end-game.dialog';
     SelectWithRandomDialog,
     EndGameDialog,
     MenuComponent,
-    LeaderboardsComponent
+    LeaderboardsComponent,
+    MenuSliderComponent
   ],
   entryComponents: [
     PlayCardsDialog,

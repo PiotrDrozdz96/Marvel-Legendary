@@ -76,35 +76,3 @@ button {
 .mastermind {
     width: 100px;
 }
-
-.menu {
-    position: absolute;
-    width: 0;
-    height: 100vh;
-    background-image: url('/assets/menu.jpg');
-    background-size: 100vw 100vh;
-    z-index: 999;
-    animation: open 2s;
-}
-
-.exit {
-    animation: exit 2s;
-}
-
-@keyframes open {
-    0% {
-        width: 100vw;
-    }
-    100% {
-        width: 0;
-    }
-}
-
-@keyframes exit {
-    0% {
-        width: 0;
-    }
-    100% {
-        width: 100vw;
-    }
-}

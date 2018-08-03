@@ -8,26 +8,14 @@
     background-image: url('/assets/legendary_board.jpg');
     background-size: 140vh 100vh;
     background-repeat: no-repeat;
-    /* animation: disable 2s; */
 }
 
 .container {
     width: 140vh;
     height: 100vh;
     background-image: url('/assets/menu.jpg');
-    background-size: 100% 100%;
+    background-size: 140vh 100vh;
     margin: auto;
-    /* animation: disable 2s; */
-}
-
-.cover {
-    position: absolute;
-    width: 0;
-    height: 100vh;
-    background-image: url('/assets/menu.jpg');
-    background-size: 100% 100%;
-    margin: auto;
-    animation: open 2s;
 }
 
 .text {
@@ -52,7 +40,7 @@
 
 #name {
     position: relative;
-    top: 60vh;
+    top: 55vh;
     left: -10vw;
 }
 
@@ -88,55 +76,5 @@
     100% {
         text-shadow: 0 0 20px black;
         font-size: 40px;
-    }
-}
-
-@keyframes game {
-    0% {
-        width: 140vh;
-    }
-    100% {
-        width: 0;
-    }
-}
-
-@keyframes open {
-    0% {
-        width: 100vw;
-        position: initial;
-    }
-    100% {
-        width: 140vh;
-        position: initial;
-    }
-}
-
-.exit {
-    animation: exit 2s;
-}
-
-@keyframes exit {
-    0% {
-        width: 140vh;
-        position: initial;
-    }
-    100% {
-        width: 100vw;
-        position: initial;
-    }
-}
-
-.disable {
-    animation: disable 2s;
-}
-
-@keyframes disable {
-    0% {
-        width: 0;
-        height: 0;
-    }
-    100% {
-        width: 0;
-        height: 0;
     }
 }

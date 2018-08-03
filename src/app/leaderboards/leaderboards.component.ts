@@ -83,10 +83,10 @@ export class LeaderboardsComponent implements OnInit {
   }
 
   exit() {
-    (document.getElementsByClassName('menu')[0] as HTMLElement).className = 'menu exit';
+    document.getElementById('slider').style.animation = 'none-to-full-to-half 4s';
     setTimeout(() => {
       this.router.navigate(['/']);
-    }, 2000);
+    }, 2680);
   }
 
 }

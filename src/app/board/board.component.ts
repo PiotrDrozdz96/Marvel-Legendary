@@ -36,7 +36,9 @@ export class BoardComponent implements OnInit {
     public box: BoxService
   ) {
     this.numberCards('onePlayer');
-    this.selectMastermind();
+    setTimeout(() => {
+      this.selectMastermind();
+    }, 2000);
     const Sub = board.start().subscribe(sub => {
       this.run = sub;
       if (sub) {
