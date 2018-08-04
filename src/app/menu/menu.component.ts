@@ -9,7 +9,7 @@ import { BoardService } from '../services/board.service';
 })
 export class MenuComponent implements OnInit {
 
-  constructor(private router: Router, public board: BoardService) { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }

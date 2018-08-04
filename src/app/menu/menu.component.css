@@ -38,12 +38,6 @@
     text-shadow: 0 0 20px black;
 }
 
-#name {
-    position: relative;
-    top: 55vh;
-    left: -10vw;
-}
-
 .shadow-text {
     cursor: pointer;
     text-decoration: none;

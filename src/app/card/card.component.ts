@@ -14,6 +14,7 @@ export class CardComponent implements OnInit {
 
   @Input() src: string;
   @Input() transform: boolean;
+  @Input() reveal = true;
 
   constructor(private boardService: BoardService) { }
 
@@ -26,11 +27,15 @@ export class CardComponent implements OnInit {
   }
 
   mouseEnter() {
-    this.boardService.setKOimage(this.src);
+    if (this.reveal) {
+      this.boardService.setKOimage(this.src);
+    }
   }
 
   mouseLeave() {
-    this.boardService.setKOimage('');
+    if (this.reveal) {
+      this.boardService.setKOimage('');
+    }
   }
 
 }

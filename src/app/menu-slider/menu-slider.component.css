@@ -4,7 +4,6 @@
     background-image: url('/assets/menu.jpg');
     background-size: 100% 100%;
     z-index: 999;
-    animation: full-to-half 2s;
 }
 
 @keyframes full-to-half {

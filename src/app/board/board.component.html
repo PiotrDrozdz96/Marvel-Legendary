@@ -2,12 +2,14 @@
 <div class="board">
     <div class="left-board">
         <div class="additional-block">
-            <img src="assets/ko.jpg" (click)="viewCards('KO',board.KO)">
-            <img src="assets/victory_pile.jpg" (click)="viewCards('Victory Pile',board.victoryPile)">
+            <img class="pointer" src="assets/tombstone.png" (click)="viewCards('KO',board.KO)">
+            <img class="pointer" src="assets/cup.png" (click)="viewCards('Victory Pile',board.victoryPile)">
         </div>
         <div class="deck scheme">
             <app-card *ngIf="board.scheme" [src]="board.scheme.image"></app-card>
-            <div class="text-in-deck" *ngIf="board.scheme">{{board.scheme.counterTwist}}</div>
+            <div class="icon-in-deck icon-scheme" *ngIf="board.scheme">
+                <img *ngFor="let twist of ngForArray(board.scheme.counterTwist)" src="assets/lighting.png">
+            </div>
         </div>
         <div class="deck mastermind">
             <div class="additional-card">
@@ -21,7 +23,9 @@
             <div class="mastermind-card">
                 <app-card *ngIf="board.mastermind" [src]="board.mastermind.image" (click)="attackMastermind()"></app-card>
             </div>
-            <div class="text-in-deck" *ngIf="board.mastermind">{{board.mastermind.tactics.length}}</div>
+            <div class="icon-in-deck icon-mastermind" *ngIf="board.mastermind">
+                <img *ngFor="let hearth of board.mastermind.tactics" src="assets/hearth.png">
+            </div>
         </div>
         <div class="deck shield">
             <app-card *ngFor="let card of board.shieldDeck.reverse()" [src]="card.image" [transform]=true (click)="recruitShieldOfficer()"></app-card>
@@ -41,22 +45,30 @@
         </div>
     </div>
     <div class="right-board">
-        <div class="additional-block">
-            <ul class="playerStats">
-                <li>Attack: {{board.playerAttack}}</li>
-                <li>Recruting Points: {{board.playerRecrutingPoints}}</li>
-            </ul>
-            <img src="assets/player_hand.jpg" (click)="playerHand()">
-            <img src="assets/next_turn.jpg" (click)="nextTurn()">
+        <div class="additional-block player">
+            <mat-form-field>
+                <input matInput placeholder="Player Name" [(ngModel)]="board.leaderBoards.name">
+            </mat-form-field>
+            <div class="icon-container">
+                <img src="assets/attack.png">
+                <div class="icon-text">{{board.playerAttack}}</div>
+            </div>
+            <div class="icon-container">
+                <img src="assets/star.png">
+                <div class="icon-text">{{board.playerRecrutingPoints}}</div>
+            </div>
+            <div class="icon-container pointer" (click)="playerHand()">
+                <img src="assets/hand.png">
+            </div>
         </div>
         <div class="deck bystanders">
             <app-card *ngFor="let card of board.bystandersDeck.reverse()" [src]="card.image" [transform]=true></app-card>
         </div>
-        <div class="deck villain-deck">
-                <app-card *ngFor="let card of board.villainDeck.reverse()" [src]="'assets/back_of_card.png'" [transform]=true></app-card>
-            </div>
-            <div class="deck hero">
-                <app-card *ngFor="let card of board.heroDeck.reverse()" [src]="'assets/back_of_card.png'" [transform]=true></app-card>
-            </div>
+        <div class="deck villain-deck" (click)="nextTurn()">
+            <app-card *ngFor="let card of board.villainDeck.reverse()" [src]="'assets/next_turn.png'" [transform]=true [reveal]=false></app-card>
+        </div>
+        <div class="deck hero">
+            <app-card *ngFor="let card of board.heroDeck.reverse()" [src]="'assets/back_of_card.png'" [transform]=true [reveal]=false></app-card>
+        </div>
     </div>
 </div>

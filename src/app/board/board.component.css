@@ -55,6 +55,7 @@
     height: 18.32vh;
     width: 13.19vh;
     position: relative;
+    left: -0.3vh;
 }
 
 .cards-list {
@@ -79,7 +80,7 @@
 }
 
 .mastermind {
-    top: 17.75vh;
+    top: 17.9vh;
 }
 
 .villain-deck {
@@ -115,7 +116,7 @@
 }
 
 .left-board .additional-block img {
-    margin-top: 5vh;
+    margin-top: 2.5vh;
 }
 
 .right-board .additional-block {
@@ -124,24 +125,35 @@
 
 .additional-block img {
     width: 8vh;
-    height: 8vh;
-    margin-right: 0.5vh;
+    height: 12vh;
+    margin-right: 1vh;
 }
 
 .additional-block li{
     list-style: none;
 }
 
-.text-in-deck {
+.icon-in-deck {
     position: absolute;
-    color: white;
-    font-size: 4vh;
-    bottom: 7vh;
-    right: -4.5vh;
-    background-color: goldenrod;
-    opacity: 0.8;
-    width: 2.5vh;
-    border-radius: 25%;
+    left: 135px;
+}
+
+.icon-mastermind, .icon-scheme {
+    width: 4.2vh;
+}
+
+.icon-scheme {
+    top: 0;
+}
+
+.icon-mastermind img {
+    width: 4.15vh;
+    height: 4.58vh;
+}
+
+.icon-scheme img {
+    width: 2.1vh;
+    height: 4.58vh;
 }
 
 .mastermind-card {
@@ -162,4 +174,31 @@
     position: absolute;
     top: 11.3vh;
     left: calc(50vw - 20.5vh);
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.icon-container {
+    position: relative;
+    margin: 0 2px;
+    float: left;
+    width: 59px;
+    height: 65px;
+}
+
+.icon-text {
+    position: absolute;
+    color: white;
+    font-size: 45px;
+    text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.icon-container img {
+    width: 100%;
+    height: 100%;
 }

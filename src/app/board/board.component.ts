@@ -63,6 +63,8 @@ export class BoardComponent implements OnInit {
 
   }
 
+  ngForArray(number: number): Array<any> { return new Array(number); }
+
   selectMastermind() {
     const dialogRef = this.dialog.open(SelectWithRandomDialog, {
       data: {
