@@ -59,17 +59,36 @@ export class LeaderboardsComponent implements OnInit {
     }
   }
 
-  top() {
-    const time = 1000 / document.getElementById('leaderboards').scrollTop;
-    decrementScrollTop();
-    function decrementScrollTop() {
-      setTimeout(() => {
-        if (document.getElementById('leaderboards').scrollTop > 0) {
-          document.getElementById('leaderboards').scrollTop--;
-          decrementScrollTop();
-        }
-      }, time);
+  top() { this.scrollTo(document.getElementById('leaderboards'), 0, 1000); }
+
+  scrollTo(element, to, duration) {
+    const start = element.scrollTop;
+    const change = to - start;
+    let currentTime = 0;
+    const increment = 20;
+
+    function animateScroll() {
+      currentTime += increment;
+      const val = easeInOutQuad(currentTime, start, change, duration);
+      element.scrollTop = val;
+      if (currentTime < duration) {
+        setTimeout(animateScroll, increment);
+      }
     }
+
+    // t = current time
+    // b = start value
+    // c = change in value
+    // d = duration
+    function easeInOutQuad(t, b, c, d) {
+      t /= d / 2;
+      if (t < 1) {
+        return c / 2 * t * t + b;
+      }
+      t--;
+      return -c / 2 * (t * (t - 2) - 1) + b;
+    }
+    animateScroll();
   }
 
   change() {
