@@ -21,8 +21,8 @@ export class rare implements Hero {
             }
         }).afterClosed().subscribe(choosen => {
             if (choosen !== undefined) {
-                board.playerHand.put(board.woundsDeck.draw());
                 board.playerHand.pick(choosen.index);
+                board.playerHand.put(board.woundsDeck.draw());
                 board.playerHand.put(board.heroDeck.draw());
             }
         });

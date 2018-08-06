@@ -30,6 +30,7 @@ import { CardsListDialog } from './dialogs/cards-list-dialog/cards-list.dialog';
 import { SelectDialog } from './dialogs/cards-list-dialog/select.dialog';
 import { SelectWithRandomDialog } from './dialogs/cards-list-dialog/select-with-random.dialog';
 
+import { PlayerNameDialog } from './dialogs/player-name-dialog/player-name.dialog';
 import { PlayCardsDialog } from './dialogs/play-cards-dialog/play-cards.dialog';
 import { EndGameDialog } from './dialogs/end-game-dialog/end-game.dialog';
 import { MenuSliderComponent } from './menu-slider/menu-slider.component';
@@ -49,13 +50,15 @@ import { MenuSliderComponent } from './menu-slider/menu-slider.component';
     EndGameDialog,
     MenuComponent,
     LeaderboardsComponent,
-    MenuSliderComponent
+    MenuSliderComponent,
+    PlayerNameDialog
   ],
   entryComponents: [
     PlayCardsDialog,
     CardsListDialog,
     SelectDialog,
     SelectWithRandomDialog,
+    PlayerNameDialog,
     EndGameDialog
   ],
   imports: [

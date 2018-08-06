@@ -10,6 +10,8 @@ import { bystander } from './bystanders';
 import * as henchman from './villain/henchmen';
 import { BehaviorSubject } from 'rxjs';
 
+import { shapeshifters } from './villain/skrulls';
+
 // tslint:disable:class-name
 
 export class scheme_twist implements Card {
@@ -86,10 +88,6 @@ export class negative_zone_prison_breakout implements Scheme {
     setup(board: BoardService, dialog: MatDialog, box: BoxService) {
         board.villainDeck.create(8, new scheme_twist);
         const setupObs = new BehaviorSubject<boolean>(false);
-        let beforeHenchmen = board.villainDeck.filter((card) => card['team'] === 'henchman');
-        const notEnoughHechman = beforeHenchmen.find(henchmen =>
-            beforeHenchmen.filter(card => card.image === henchmen.image).length < 10);
-        beforeHenchmen = beforeHenchmen.filter(card => card.image === notEnoughHechman.image);
         dialog.open(SelectWithRandomDialog, {
             data: {
                 array: Object.values(box.henchmenBox.cards),
@@ -97,7 +95,6 @@ export class negative_zone_prison_breakout implements Scheme {
             }
         }).afterClosed().subscribe(choosen => {
             board.villainDeck.create(10, box.henchmenBox.pick(choosen.index));
-            board.villainDeck.create(10 - beforeHenchmen.length, beforeHenchmen[0]);
             setupObs.next(true);
         });
         board.drawVillain().subscribe(sub => {
@@ -187,7 +184,7 @@ class Skrull implements Villain {
     image: string;
     team = 'hero';
     attack: number;
-    points = 0;
+    points = 2;
     copiedHero = undefined;
 
     constructor(hero: Hero) {
@@ -198,8 +195,7 @@ class Skrull implements Villain {
 
     fight(board: BoardService, dialog: MatDialog) {
         board.discardPile.push(this.copiedHero);
-        const index = board.victoryPile.findIndex(card => card === this);
-        board.victoryPile.pick(index);
+        this.image = (new shapeshifters).image;
     }
 }
 
@@ -207,6 +203,7 @@ export class secret_invasion_shapeshifters implements Scheme {
     type = 'scheme';
     image = 'assets/cards/scheme/scheme_secret_invasion_shapeshifters.png';
     counterTwist = 0;
+    alwaysLeads = {group: 'villain', name: 'skrulls'};
     twist(board: BoardService, schemeTwist: scheme_twist, dialog: MatDialog) {
         board.KO.push(schemeTwist);
         const index = board.hq.reduce((maxIndex, card, i, arr) => {

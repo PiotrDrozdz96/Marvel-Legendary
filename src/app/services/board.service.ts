@@ -37,10 +37,12 @@ export class BoardService {
   playerDeck = new Deck<Hero>();
   playerHand = new Deck<Hero>();
   playerCards = new Deck<Hero>();
+  copiedCards = new Deck<Hero>(); // rogue
   discardPile = new Deck<Hero>();
   playerAttack = 0;
   playerRecrutingPoints = 0;
   numberOfDrawing = 6;
+  healing = true;
 
   victoryPile = new Deck<Villain | Bystander | Mastermind>();
   KO = new Deck<Card>();
@@ -128,7 +130,7 @@ export class BoardService {
   }
 
   checkPlayedCards(param: string, arg: string): boolean {
-    return this.playerCards.some(card => card[param] === arg);
+    return this.playerCards.concat(this.copiedCards).some(card => card[param] === arg);
   }
 
   moveVillains(card: Villain, dialog: MatDialog) {
@@ -191,6 +193,7 @@ export class BoardService {
   }
 
   defeatMastermind(dialog: MatDialog) {
+    this.healing = false;
     const tactic = this.mastermind.tactics.splice(Math.floor(Math.random() * this.mastermind.tactics.length), 1);
     const tacticCard = Object.assign({}, this.mastermind);
     tacticCard.image = tactic[0].image;
@@ -208,6 +211,7 @@ export class BoardService {
   }
 
   defeatVillain(index: number, dialog: MatDialog) {
+    this.healing = false;
     const card = this.fields[index].card;
     this.setKOimage('');
     if (card.fight) {

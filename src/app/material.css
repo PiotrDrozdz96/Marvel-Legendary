@@ -39,12 +39,12 @@
 .mat-form-field-appearance-legacy .mat-form-field-label {
     color: firebrick;
     text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-    font-size: 20px;
+    font-size: 40px;
 }
 
 .mat-form-field {
     color: goldenrod;
-    font-size: 25px;
+    font-size: 50px;
 }
 
 /* button */

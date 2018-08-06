@@ -46,9 +46,7 @@
     </div>
     <div class="right-board">
         <div class="additional-block player">
-            <mat-form-field>
-                <input matInput placeholder="Player Name" [(ngModel)]="board.leaderBoards.name">
-            </mat-form-field>
+            <p class="name">{{board.leaderBoards.name}}</p>
             <div class="icon-container">
                 <img src="assets/attack.png">
                 <div class="icon-text">{{board.playerAttack}}</div>

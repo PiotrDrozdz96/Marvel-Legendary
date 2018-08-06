@@ -57,6 +57,7 @@ export interface Villain extends Card {
 export interface Scheme extends Card {
     // type: 'scheme';
     counterTwist: number;
+    alwaysLeads?: AlwaysLeads;
     twist(board: BoardService, card: scheme_twist, dialog?: MatDialog);
     setup(board: BoardService, dialog?: MatDialog, box?: BoxService);
 }

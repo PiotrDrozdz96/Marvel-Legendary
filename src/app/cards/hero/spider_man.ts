@@ -34,7 +34,7 @@ export class uncommon implements Hero {
     func(board: BoardService, dialog: MatDialog) {
         board.victoryPile.put(board.bystandersDeck.draw());
         const card = board.playerDeck.reveal();
-        if (card.cost <= 2) {
+        if (card && card.cost <= 2) {
             board.playerHand.put(board.playerDeck.draw());
         }
     }
@@ -50,7 +50,7 @@ export class common_1 implements Hero {
     cost = 2;
     func(board: BoardService, dialog: MatDialog) {
         const card = board.playerDeck.reveal();
-        if (card.cost <= 2) {
+        if (card && card.cost <= 2) {
             board.playerHand.put(board.playerDeck.draw());
         }
     }
@@ -66,7 +66,7 @@ export class common_2 implements Hero {
     cost = 2;
     func(board: BoardService, dialog: MatDialog) {
         const card = board.playerDeck.reveal();
-        if (card.cost <= 2) {
+        if (card && card.cost <= 2) {
             board.playerHand.put(board.playerDeck.draw());
         }
     }

@@ -39,11 +39,11 @@
         <th mat-header-cell *matHeaderCellDef>
           <select class="forms mastermind" [(ngModel)]="filter.mastermind" (change)="change()">
             <option [ngValue]=null>Mastermind</option>
-            <option *ngFor="let mastermind of mastermindsList" [ngValue]="mastermind">{{mastermind}}</option>
+            <option *ngFor="let mastermind of mastermindsList" [ngValue]="mastermind">{{name(mastermind)}}</option>
           </select>
         </th>
         <td mat-cell *matCellDef="let element">
-          <app-card class="card" [src]="box.mastermindBox.cards[element.mastermind].image"></app-card>
+          <app-card [src]="box.mastermindBox.cards[element.mastermind].image"></app-card>
         </td>
       </ng-container>
 
@@ -51,18 +51,18 @@
         <th mat-header-cell *matHeaderCellDef>
           <select class="forms scheme" [(ngModel)]="filter.scheme" (change)="change()">
             <option [ngValue]=null>Scheme</option>
-            <option *ngFor="let scheme of schemeList" [ngValue]="scheme">{{scheme}}</option>
+            <option *ngFor="let scheme of schemeList" [ngValue]="scheme">{{name(scheme)}}</option>
           </select>
         </th>
         <td mat-cell *matCellDef="let element">
-          <app-card class="card" [src]="box.schemeBox.cards[element.scheme].image"></app-card>
+          <app-card [src]="box.schemeBox.cards[element.scheme].image"></app-card>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="heroses">
         <th mat-header-cell *matHeaderCellDef> Heroses </th>
         <td mat-cell *matCellDef="let element">
-          <app-card class="heroses card" *ngFor="let hero of element.heroses" [src]="box.heroBox.cards[hero].image"></app-card>
+          <app-card class="heroses" *ngFor="let hero of element.heroses" [src]="box.heroBox.cards[hero].image"></app-card>
         </td>
       </ng-container>
 

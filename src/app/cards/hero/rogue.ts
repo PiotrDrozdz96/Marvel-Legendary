@@ -14,7 +14,17 @@ export class rare implements Hero {
     recrutingPoints = 0;
     cost = 8;
     func(board: BoardService, dialog: MatDialog) {
-        board.playerHand.put(board.playerDeck.draw());
+        const card = board.playerDeck.draw()[0];
+        if (card.func) {
+            card.func(board, dialog);
+        }
+        if (card.sub) {
+            board.cardsSubscription.push(card.sub(board));
+        }
+        board.copiedCards.push(card);
+        board.playerAttack += card.attack;
+        board.playerRecrutingPoints += card.recrutingPoints;
+
     }
 }
 
@@ -34,11 +44,15 @@ export class uncommon implements Hero {
             }
         }).afterClosed().subscribe(choosen => {
             if (choosen !== undefined) {
-                board.playerAttack += choosen.card.attack;
-                board.playerRecrutingPoints += choosen.card.recrutingPoints;
                 if (choosen.card.func) {
                     choosen.card.func(board, dialog);
                 }
+                if (choosen.card.sub) {
+                    board.cardsSubscription.push(choosen.card.sub(board));
+                }
+                board.copiedCards.push(choosen.card);
+                board.playerAttack += choosen.card.attack;
+                board.playerRecrutingPoints += choosen.card.recrutingPoints;
             }
         });
     }
@@ -64,8 +78,8 @@ export class common_2 implements Hero {
     image = 'assets/cards/hero/rogue/rogue_common_2.png';
     team = 'x-men';
     color = 'red';
-    attack = 2;
-    recrutingPoints = 0;
+    attack = 0;
+    recrutingPoints = 2;
     cost = 3;
     func(board: BoardService, dialog: MatDialog) {
         if (board.checkPlayedCards('color', 'red')) {

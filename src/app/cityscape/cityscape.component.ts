@@ -48,9 +48,9 @@ export class CityscapeComponent implements OnInit {
   }
 
   attack(index: number) {
-    if ((this.board.playerAttack >= this.board.fields[index].attack + this.board.fields[index].card.attack) &&
+    if ((this.board.playerAttack >= Math.max(this.board.fields[index].attack + this.board.fields[index].card.attack, 1)) &&
       (!this.board.fields[index].card.fightCondition || this.board.fields[index].card.fightCondition(this.board))) {
-      this.board.playerAttack -= this.board.fields[index].attack + this.board.fields[index].card.attack;
+      this.board.playerAttack -= Math.max(this.board.fields[index].attack + this.board.fields[index].card.attack, 1);
       this.board.defeatVillain(index, this.dialog);
     }
   }

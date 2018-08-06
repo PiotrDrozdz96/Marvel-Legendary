@@ -28,7 +28,7 @@ export class LeaderboardsComponent implements OnInit {
     http.get().subscribe(leaderboards => {
       const tempObject = {};
       this.leaderboards = (leaderboards as Array<LeaderBoards>).sort(
-        (a, b) => b.win > a.win ? 1 : b.win < a.win ? 0 :
+        (a, b) => b.win > a.win ? 1 : b.win < a.win ? -1 :
           b.score - a.score
       );
       this.leaderboards.forEach((value, index) => {
@@ -49,6 +49,10 @@ export class LeaderboardsComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  name(key: string): string {
+    return key.split('_').map(word => word[0].toUpperCase() + word.slice(1)).join(' ');
   }
 
   onScroll() {

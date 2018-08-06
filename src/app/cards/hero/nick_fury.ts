@@ -19,14 +19,18 @@ export class rare implements Hero {
         const strength = (board.KO as Deck<Hero>).filter(card => card.team === 'shield').length;
         const indexes = [0, 1, 2, 3, 4].filter(index => board.fields[index].card && board.fields[index].card.attack < strength);
         if (board.mastermind.attack < strength) {
+            board.healing = false;
             if (board.defeatMastermind(dialog)) {
                 dialog.open(EndGameDialog, { data: { header: 'win' } }).afterClosed().subscribe(sub => {
                     board.reload();
                 });
             }
         }
-        for (let i = 0; i < indexes.length; i++) {
-            board.defeatVillain(indexes[i], dialog);
+        if (board.mastermind.tactics.length > 0 && indexes.length > 0) {
+            board.healing = false;
+            for (let i = 0; i < indexes.length; i++) {
+                board.defeatVillain(indexes[i], dialog);
+            }
         }
     }
 }
