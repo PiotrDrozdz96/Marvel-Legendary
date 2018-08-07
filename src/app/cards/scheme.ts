@@ -94,8 +94,6 @@ export class negative_zone_prison_breakout implements Scheme {
                 header: 'Select additional Henchman group'
             }
         }).afterClosed().subscribe(choosen => {
-            board.leaderboards.henchmen.push(box.henchmenBox.key(choosen.index));
-            board.leaderboards.henchmen.sort();
             board.villainDeck.create(10, box.pick('henchmen', choosen.index, false)[0]);
             setupObs.next(true);
         });

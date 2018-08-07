@@ -201,8 +201,8 @@ export class BoardComponent implements OnInit {
   nextTurn() {
     if (this.board.healing) {
       this.board.KO.put(this.board.playerCards.concat(this.board.playerHand).filter(card => card.type === 'wound'));
-      this.board.playerCards = this.board.playerCards.filter(card => card.type !== 'wound');
-      this.board.playerHand = this.board.playerHand.filter(card => card.type !== 'wound');
+      this.board.playerCards.sift(card => card.type !== 'wound');
+      this.board.playerHand.sift(card => card.type !== 'wound');
     }
     this.board.healing = true;
     this.board.playerAttack = 0;

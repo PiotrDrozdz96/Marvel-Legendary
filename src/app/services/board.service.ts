@@ -60,7 +60,7 @@ export class BoardService {
   ];
 
   constructor(public http: HttpService) {
-    /* change method draw in playerDeck*/
+    /* change method draw in Deck*/
     this.playerDeck.draw = (): Array<Hero> => {
       if (this.playerDeck.length === 0) {
         this.discardPile.shuffle();
@@ -77,7 +77,7 @@ export class BoardService {
       }
       return this.playerDeck[0];
     };
-    this.discardPile.put = (arr: Array<Hero>, notCardEffect?: boolean): void => {
+    this.discardPile.put = (arr: Array<Hero>, notCardEffect = false): void => {
       let discard = true;
       if (!notCardEffect && arr.length === 1 && arr[0].discard) {
         discard = arr[0].discard(this, arr[0]);

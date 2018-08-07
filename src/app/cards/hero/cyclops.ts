@@ -28,6 +28,7 @@ export class uncommon implements Hero {
     recrutingPoints = 0;
     cost = 6;
     discard(board: BoardService, card?) {
+        console.log(card);
         board.playerHand.push(card);
         return false;
     }
@@ -53,7 +54,7 @@ export class common_1 implements Hero {
                 if (choosen === undefined) {
                     const index = board.playerCards.findIndex(card => card === this);
                     board.playerHand.put(board.playerCards.pick(index));
-                    board.playerAttack -= this.attack;
+                    board.playerRecrutingPoints -= this.recrutingPoints;
                 } else {
                     board.discardPile.put(board.playerHand.pick(choosen.index));
                 }
@@ -61,7 +62,7 @@ export class common_1 implements Hero {
         } else {
             const index = board.playerCards.findIndex(card => card === this);
             board.playerHand.put(board.playerCards.pick(index));
-            board.playerAttack -= this.attack;
+            board.playerRecrutingPoints -= this.recrutingPoints;
         }
     }
 }

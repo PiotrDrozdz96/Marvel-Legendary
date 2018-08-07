@@ -4,6 +4,8 @@ import { HttpService } from '../services/http.service';
 import { LeaderBoards } from '../models/leaderboards';
 import { BoxService } from '../services/box.service';
 
+import { Mastermind } from '../models/card';
+
 @Component({
   selector: 'app-leaderboards',
   templateUrl: './leaderboards.component.html',
@@ -23,7 +25,7 @@ export class LeaderboardsComponent implements OnInit {
     scheme: null,
     heroses: true
   };
-  picture = '';
+  biggerCards = [];
 
   constructor(private http: HttpService, public box: BoxService, public router: Router) {
     http.get().subscribe(leaderboards => {
@@ -56,7 +58,10 @@ export class LeaderboardsComponent implements OnInit {
     return key.split('_').map(word => word[0].toUpperCase() + word.slice(1)).join(' ');
   }
 
-  setPicture(picture: string) {this.picture = picture; }
+  setBiggerCards(arr: Array<any>) {this.biggerCards = arr; }
+  biggerMastermind(mastermind: Mastermind) {
+    this.setBiggerCards([mastermind].concat(mastermind.tactics as Array<any>));
+  }
 
   change() {
     this.dataSource = this.leaderboards.filter(

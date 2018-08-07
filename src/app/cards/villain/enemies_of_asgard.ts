@@ -83,11 +83,8 @@ export class ymir implements Villain {
         }
     }
     fight(board: BoardService, dialog: MatDialog) {
-        const playerHand = board.playerHand.filter(card => card.type !== 'wound');
-        const playerCards = board.playerCards.filter(card => card.type !== 'wound');
-        const discardPile = board.discardPile.filter(card => card.type !== 'wound');
-        board.playerHand = playerHand;
-        board.playerCards = playerCards;
-        board.discardPile = discardPile;
+        board.playerHand.sift(card => card.type !== 'wound');
+        board.playerCards.sift(card => card.type !== 'wound');
+        board.discardPile.sift(card => card.type !== 'wound');
     }
 }

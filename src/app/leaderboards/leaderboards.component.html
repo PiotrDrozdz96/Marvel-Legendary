@@ -1,8 +1,8 @@
 <button mat-button id="menu" (click)="exit()">Return to menu</button>
 <button mat-fab id="top" (click)="top()">^</button>
-<div *ngIf="picture" class="shading"></div>
-<div *ngIf="picture" class="picture" (click)="setPicture('')">
-  <img [src]="picture">
+<div *ngIf="biggerCards.length !== 0" class="shading"></div>
+<div *ngIf="biggerCards.length !== 0" class="picture" (click)="setBiggerCards([])">
+  <img *ngFor="let card of biggerCards"[src]="card.image">
 </div>
 <div id="leaderboards" (scroll)="onScroll()">
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
@@ -45,7 +45,7 @@
         </select>
       </th>
       <td mat-cell *matCellDef="let element">
-        <img class="card" [src]="box.mastermindBox.cards[element.mastermind].image" (click)="setPicture(box.mastermindBox.cards[element.mastermind].image)">
+        <img class="card" [src]="box.mastermindBox.cards[element.mastermind].image" (click)="biggerMastermind(box.mastermindBox.cards[element.mastermind])">
       </td>
     </ng-container>
 
@@ -57,7 +57,7 @@
         </select>
       </th>
       <td mat-cell *matCellDef="let element">
-        <img class="card" [src]="box.schemeBox.cards[element.scheme].image" (click)="setPicture(box.schemeBox.cards[element.scheme].image)">
+        <img class="card" [src]="box.schemeBox.cards[element.scheme].image" (click)="setBiggerCards([box.schemeBox.cards[element.scheme]])">
       </td>
     </ng-container>
 
@@ -70,11 +70,11 @@
       </th>
       <td mat-cell *matCellDef="let element">
         <ng-container *ngIf="filter.heroses">
-          <img class="card heroses" *ngFor="let hero of element.heroses" [src]="box.herosesBox.cards[hero].image" (click)="setPicture(box.herosesBox.cards[hero].image)">
+          <img class="card heroses" *ngFor="let hero of element.heroses" [src]="box.herosesBox.cards[hero].image" (click)="setBiggerCards(box.herosesBox.cards[hero])">
         </ng-container>
         <ng-container *ngIf="!filter.heroses">
-          <img class="card heroses" *ngFor="let villain of element.villains" [src]="box.villainsBox.cards[villain].image" (click)="setPicture(box.villainsBox.cards[villain].image)">
-          <img class="card heroses" *ngFor="let henchman of element.henchmen" [src]="box.henchmenBox.cards[henchman].image" (click)="setPicture(box.henchmenBox.cards[henchman].image)">
+          <img class="card heroses" *ngFor="let villain of element.villains" [src]="box.villainsBox.cards[villain].image" (click)="setBiggerCards(box.villainsBox.cards[villain])">
+          <img class="card heroses" *ngFor="let henchman of element.henchmen" [src]="box.henchmenBox.cards[henchman].image" (click)="setBiggerCards(box.henchmenBox.cards[henchman])">
         </ng-container>
       </td>
     </ng-container>

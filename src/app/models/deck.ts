@@ -50,5 +50,10 @@ export class Deck<T extends Object> extends Array<T> {
             [this[i], this[j]] = [this[j], this[i]];
         }
     }
+    sift(callbackfn: (value: T, index: number, array: Deck<T>) => any, thisArg?: any): void {
+        const siftArr = (this as Array<T>).filter(callbackfn, thisArg);
+        this.take();
+        this.put(siftArr);
+    }
 
 }

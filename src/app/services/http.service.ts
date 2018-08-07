@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { HttpParams, HttpClient } from '@angular/common/http';
 import { LeaderBoards } from '../models/leaderboards';
 import { BehaviorSubject } from 'rxjs';
@@ -14,7 +15,7 @@ export class HttpService {
   private postStart = false;
   private postComplete = new BehaviorSubject<boolean>(false);
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, public router: Router) { }
 
   post(data: LeaderBoards) {
     if (!this.postStart) {
@@ -30,7 +31,8 @@ export class HttpService {
   reload() {
     this.postComplete.subscribe(complete => {
       if (complete) {
-        location.pathname = '/';
+        this.router.navigate(['']);
+        location.reload();
       }
     });
   }
