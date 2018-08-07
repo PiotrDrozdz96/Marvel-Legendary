@@ -1,14 +1,11 @@
-.page {
-    height: 100vh;
-    background-image: url('/assets/leaderboards_background.jpg');
-    background-size: 100% 100%;
-}
-
 #leaderboards {
     width: 100vw;
     height: 100vh;
     overflow-y: scroll;
     z-index: 0;
+    min-width: 1105px;
+    background-image: url('/assets/leaderboards_background.jpg');
+    background-size: 100% 100%;
 }
 
 #leaderboards .mat-elevation-z8 {
@@ -18,6 +15,12 @@
 
 #leaderboards .mat-header-cell {
     background-color: #111947;
+}
+
+.card {
+    height: 18.32vh;
+    width: 13.19vh;
+    cursor: pointer;
 }
 
 .heroses {
@@ -40,16 +43,32 @@ button {
     display: none;
     font-size: 50px;
     padding-top: 8px;
-    height: 60px;;
+    height: 60px;
+    ;
     width: 60px;
     left: calc(100vw - 150px);
     top: calc(100vh - 150px);
 }
 
-.ko {
+.shading {
     position: absolute;
-    left: 73.5vw;
-    top: 6.5vh;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    opacity: 0.5;
+}
+
+.picture {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    text-align: center;
+}
+
+.picture img {
+    height: 35.3vh;
+    width: 25.5vh;
+    margin-top: 32.35vh;
 }
 
 .forms {
@@ -64,7 +83,7 @@ button {
     color: white;
 }
 
-.name, .win, .scheme {
+.name, .win, .scheme, .villains {
     width: 80px;
 }
 

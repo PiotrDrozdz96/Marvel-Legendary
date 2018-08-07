@@ -56,10 +56,14 @@ export class BoxService {
     if (alwaysLeads) {
       if (alwaysLeads.group === 'villain') {
         this.villainGroup--;
+        this.board.leaderBoards.villains.push(alwaysLeads.name);
+        this.board.leaderBoards.villains.sort();
         const villains = this.villainsBox.pickByKey(alwaysLeads.name);
         villains.forEach(villain => { this.board.villainDeck.create(2, villain); });
       } else if (alwaysLeads.group === 'henchmen') {
-        const villain = this.henchmenBox.pickByKey(alwaysLeads.name);
+        this.board.leaderBoards.henchmen.push(alwaysLeads.name);
+        this.board.leaderBoards.henchmen.sort();
+        const villain = this.henchmenBox.pickByKey(alwaysLeads.name)[0];
         this.henchmanGroup--;
         this.board.villainDeck.create(10, villain);
       }

@@ -25,8 +25,8 @@ export class uncommon implements Hero {
     image = 'assets/cards/hero/gambit/gambit_uncommon.png';
     team = 'x-men';
     color = 'yellow';
-    attack = 2;
-    recrutingPoints = 0;
+    attack = 0;
+    recrutingPoints = 2;
     cost = 3;
     func(board: BoardService, dialog: MatDialog) {
         const cards = [board.playerDeck.reveal()];

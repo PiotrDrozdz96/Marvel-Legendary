@@ -105,12 +105,14 @@ export class BoardComponent implements OnInit {
       if (data === undefined) {
         this.selectVillains();
       } else {
+        this.board.leaderBoards.villains.push(this.box.villainsBox.key(data.index));
         const villains = this.box.villainsBox.pick(data.index);
         villains.forEach(villain => { this.board.villainDeck.create(2, villain); });
         this.box.villainGroup--;
         if (this.box.villainGroup > 0) {
           this.selectVillains();
         } else {
+          this.board.leaderBoards.villains.sort();
           this.selectHenchman();
         }
       }
@@ -130,12 +132,14 @@ export class BoardComponent implements OnInit {
           this.selectHenchman();
         } else {
           // add henchman
+          this.board.leaderBoards.henchmen.push(this.box.henchmenBox.key(data.index));
           this.box.henchmanGroup--;
-          this.board.villainDeck.create(10, this.box.henchmenBox.pick(data.index));
+          this.board.villainDeck.create(10, this.box.henchmenBox.pick(data.index)[0]);
           this.selectHenchman();
         }
       });
     } else {
+      this.board.leaderBoards.henchmen.sort();
       // add bystanders
       for (let i = 0; i < this.box.bystanders; i++) {
         this.board.villainDeck.put(this.board.bystandersDeck.draw());

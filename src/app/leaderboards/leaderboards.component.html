@@ -1,73 +1,85 @@
-<div class="page">
-  <button mat-button id="menu" (click)="exit()">Return to menu</button>
-  <button mat-fab id="top" (click)="top()">^</button>
-  <app-ko *ngIf="window.screen.width > 1450" class="ko"></app-ko>
-  <div id="leaderboards" (scroll)="onScroll()">
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+<button mat-button id="menu" (click)="exit()">Return to menu</button>
+<button mat-fab id="top" (click)="top()">^</button>
+<div *ngIf="picture" class="shading"></div>
+<div *ngIf="picture" class="picture" (click)="setPicture('')">
+  <img [src]="picture">
+</div>
+<div id="leaderboards" (scroll)="onScroll()">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-      <ng-container matColumnDef="position">
-        <th mat-header-cell *matHeaderCellDef> No. </th>
-        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-      </ng-container>
+    <ng-container matColumnDef="position">
+      <th mat-header-cell *matHeaderCellDef> No. </th>
+      <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+    </ng-container>
 
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> 
-          <input class="forms name" type="text" [(ngModel)]="filter.name" (keyup)="change()">
-        </th>
-        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-      </ng-container>
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>
+        <input class="forms name" type="text" [(ngModel)]="filter.name" (keyup)="change()">
+      </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
 
-      <ng-container matColumnDef="win">
-        <th mat-header-cell *matHeaderCellDef> 
-          <select class="forms win" [(ngModel)]="filter.win" (change)="change()">
-            <option [ngValue]=null>Win/Lose</option>
-            <option [ngValue]=true>Win</option>
-            <option [ngValue]=false>Lose</option>
-          </select>
-        </th>
-        <td mat-cell *matCellDef="let element">
-            <mat-checkbox [(ngModel)]="element.win" [indeterminate]="!element.win" disabled></mat-checkbox>
-          </td>
-      </ng-container>
+    <ng-container matColumnDef="win">
+      <th mat-header-cell *matHeaderCellDef>
+        <select class="forms win" [(ngModel)]="filter.win" (change)="change()">
+          <option [ngValue]=null>Win/Lose</option>
+          <option [ngValue]=true>Win</option>
+          <option [ngValue]=false>Lose</option>
+        </select>
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <mat-checkbox [(ngModel)]="element.win" [indeterminate]="!element.win" disabled></mat-checkbox>
+      </td>
+    </ng-container>
 
-      <ng-container matColumnDef="score">
-        <th mat-header-cell *matHeaderCellDef> Score </th>
-        <td mat-cell *matCellDef="let element"> {{element.score}} </td>
-      </ng-container>
+    <ng-container matColumnDef="score">
+      <th mat-header-cell *matHeaderCellDef> Score </th>
+      <td mat-cell *matCellDef="let element"> {{element.score}} </td>
+    </ng-container>
 
-      <ng-container matColumnDef="mastermind">
-        <th mat-header-cell *matHeaderCellDef>
-          <select class="forms mastermind" [(ngModel)]="filter.mastermind" (change)="change()">
-            <option [ngValue]=null>Mastermind</option>
-            <option *ngFor="let mastermind of mastermindsList" [ngValue]="mastermind">{{name(mastermind)}}</option>
-          </select>
-        </th>
-        <td mat-cell *matCellDef="let element">
-          <app-card [src]="box.mastermindBox.cards[element.mastermind].image"></app-card>
-        </td>
-      </ng-container>
+    <ng-container matColumnDef="mastermind">
+      <th mat-header-cell *matHeaderCellDef>
+        <select class="forms mastermind" [(ngModel)]="filter.mastermind" (change)="change()">
+          <option [ngValue]=null>Mastermind</option>
+          <option *ngFor="let mastermind of mastermindsList" [ngValue]="mastermind">{{name(mastermind)}}</option>
+        </select>
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <img class="card" [src]="box.mastermindBox.cards[element.mastermind].image" (click)="setPicture(box.mastermindBox.cards[element.mastermind].image)">
+      </td>
+    </ng-container>
 
-      <ng-container matColumnDef="scheme">
-        <th mat-header-cell *matHeaderCellDef>
-          <select class="forms scheme" [(ngModel)]="filter.scheme" (change)="change()">
-            <option [ngValue]=null>Scheme</option>
-            <option *ngFor="let scheme of schemeList" [ngValue]="scheme">{{name(scheme)}}</option>
-          </select>
-        </th>
-        <td mat-cell *matCellDef="let element">
-          <app-card [src]="box.schemeBox.cards[element.scheme].image"></app-card>
-        </td>
-      </ng-container>
+    <ng-container matColumnDef="scheme">
+      <th mat-header-cell *matHeaderCellDef>
+        <select class="forms scheme" [(ngModel)]="filter.scheme" (change)="change()">
+          <option [ngValue]=null>Scheme</option>
+          <option *ngFor="let scheme of schemeList" [ngValue]="scheme">{{name(scheme)}}</option>
+        </select>
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <img class="card" [src]="box.schemeBox.cards[element.scheme].image" (click)="setPicture(box.schemeBox.cards[element.scheme].image)">
+      </td>
+    </ng-container>
 
-      <ng-container matColumnDef="heroses">
-        <th mat-header-cell *matHeaderCellDef> Heroses </th>
-        <td mat-cell *matCellDef="let element">
-          <app-card class="heroses" *ngFor="let hero of element.heroses" [src]="box.heroBox.cards[hero].image"></app-card>
-        </td>
-      </ng-container>
+    <ng-container matColumnDef="heroses">
+      <th mat-header-cell *matHeaderCellDef>
+        <select class="forms villains" [(ngModel)]="filter.heroses">
+          <option [ngValue]=true>Heroses</option>
+          <option [ngValue]=false>Villains</option>
+        </select>
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <ng-container *ngIf="filter.heroses">
+          <img class="card heroses" *ngFor="let hero of element.heroses" [src]="box.heroBox.cards[hero].image" (click)="setPicture(box.heroBox.cards[hero].image)">
+        </ng-container>
+        <ng-container *ngIf="!filter.heroses">
+          <img class="card heroses" *ngFor="let villain of element.villains" [src]="box.villainsBox.cards[villain].image" (click)="setPicture(box.villainsBox.cards[villain].image)">
+          <img class="card heroses" *ngFor="let henchman of element.henchmen" [src]="box.henchmenBox.cards[henchman].image" (click)="setPicture(box.henchmenBox.cards[henchman].image)">
+        </ng-container>
+      </td>
+    </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns, sticky: true"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-  </div>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns, sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
 </div>

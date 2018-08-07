@@ -6,4 +6,6 @@ export interface LeaderBoards {
     mastermind: string;
     scheme: string;
     heroses: Array<string>;
+    villains: Array<string>;
+    henchmen: Array<string>;
 }

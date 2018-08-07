@@ -12,7 +12,6 @@ import { BoxService } from '../services/box.service';
 export class LeaderboardsComponent implements OnInit {
 
   displayedColumns: string[] = ['position', 'name', 'win', 'score', 'mastermind', 'scheme', 'heroses'];
-  window = window;
   leaderboards: Array<LeaderBoards>;
   dataSource: Array<LeaderBoards>;
   mastermindsList: Array<string> = [];
@@ -21,8 +20,10 @@ export class LeaderboardsComponent implements OnInit {
     name: 'Name',
     win: null,
     mastermind: null,
-    scheme: null
+    scheme: null,
+    heroses: true
   };
+  picture = '';
 
   constructor(private http: HttpService, public box: BoxService, public router: Router) {
     http.get().subscribe(leaderboards => {
@@ -55,6 +56,25 @@ export class LeaderboardsComponent implements OnInit {
     return key.split('_').map(word => word[0].toUpperCase() + word.slice(1)).join(' ');
   }
 
+  setPicture(picture: string) {this.picture = picture; }
+
+  change() {
+    this.dataSource = this.leaderboards.filter(
+      element => (this.filter.name === 'Name' || this.filter.name === ''
+        || element.name.toLowerCase().includes(this.filter.name.toLowerCase())) &&
+        (this.filter.win === null ? true : this.filter.win === element.win) &&
+        (this.filter.mastermind === null ? true : this.filter.mastermind === element.mastermind) &&
+        (this.filter.scheme === null ? true : this.filter.scheme === element.scheme)
+    );
+  }
+
+  exit() {
+    document.getElementById('slider').style.animation = 'none-to-full-to-half 4s';
+    setTimeout(() => {
+      this.router.navigate(['/']);
+    }, 2680);
+  }
+
   onScroll() {
     if (document.getElementById('leaderboards').scrollTop > 20) {
       document.getElementById('top').style.display = 'block';
@@ -65,6 +85,7 @@ export class LeaderboardsComponent implements OnInit {
 
   top() { this.scrollTo(document.getElementById('leaderboards'), 0, 1000); }
 
+  // https://gist.github.com/andjosh/6764939
   scrollTo(element, to, duration) {
     const start = element.scrollTop;
     const change = to - start;
@@ -93,23 +114,6 @@ export class LeaderboardsComponent implements OnInit {
       return -c / 2 * (t * (t - 2) - 1) + b;
     }
     animateScroll();
-  }
-
-  change() {
-    this.dataSource = this.leaderboards.filter(
-      element => (this.filter.name === 'Name' || this.filter.name === ''
-        || element.name.toLowerCase().includes(this.filter.name.toLowerCase())) &&
-        (this.filter.win === null ? true : this.filter.win === element.win) &&
-        (this.filter.mastermind === null ? true : this.filter.mastermind === element.mastermind) &&
-        (this.filter.scheme === null ? true : this.filter.scheme === element.scheme)
-    );
-  }
-
-  exit() {
-    document.getElementById('slider').style.animation = 'none-to-full-to-half 4s';
-    setTimeout(() => {
-      this.router.navigate(['/']);
-    }, 2680);
   }
 
 }

@@ -31,7 +31,9 @@ export class BoardService {
     score: 0,
     mastermind: '',
     scheme: '',
-    heroses: []
+    heroses: [],
+    villains: [],
+    henchmen: []
   };
 
   playerDeck = new Deck<Hero>();

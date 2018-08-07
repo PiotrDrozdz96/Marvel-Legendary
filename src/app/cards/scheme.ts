@@ -94,7 +94,9 @@ export class negative_zone_prison_breakout implements Scheme {
                 header: 'Select additional Henchman group'
             }
         }).afterClosed().subscribe(choosen => {
-            board.villainDeck.create(10, box.henchmenBox.pick(choosen.index));
+            board.leaderBoards.henchmen.push(box.henchmenBox.key(choosen.index));
+            board.leaderBoards.henchmen.sort();
+            board.villainDeck.create(10, box.henchmenBox.pick(choosen.index)[0]);
             setupObs.next(true);
         });
         board.drawVillain().subscribe(sub => {
@@ -230,6 +232,8 @@ export class secret_invasion_shapeshifters implements Scheme {
                 if (choosen === undefined) {
                     open();
                 } else {
+                    board.leaderBoards.heroses.push(box.heroBox.key(choosen.index));
+                    board.leaderBoards.heroses.sort();
                     const choosenGroup = box.heroBox.pick(choosen.index);
                     board.heroDeck.create(1, choosenGroup[0]);
                     board.heroDeck.create(3, choosenGroup[1]);
@@ -278,6 +282,8 @@ export class super_hero_civil_war implements Scheme {
                 if (choosen === undefined) {
                     open();
                 } else {
+                    board.leaderBoards.heroses.push(box.heroBox.key(choosen.index));
+                    board.leaderBoards.heroses.sort();
                     const choosenGroup = box.heroBox.pick(choosen.index);
                     board.heroDeck.create(1, choosenGroup[0]);
                     board.heroDeck.create(3, choosenGroup[1]);
