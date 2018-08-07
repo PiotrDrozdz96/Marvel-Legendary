@@ -5,6 +5,7 @@ import { HttpService } from '../../services/http.service';
 import { Card, Villain, Bystander, Mastermind } from '../../models/card';
 import { Inject } from '@angular/core';
 import { BasicDialog } from '../basic-dialog';
+import { BoxService } from '../../services/box.service';
 
 @Component({
     selector: 'app-end-game',
@@ -40,14 +41,15 @@ export class EndGameDialog extends BasicDialog {
         };
         this.h1 = headers[data.header].h1;
         this.h2 = headers[data.header].h2;
+        board.leaderboards.win = data.header === 'win';
         this.victoryPile = board.victoryPile;
         this.escapedVillains = board.escapedVillain;
         this.yourScore = this.victoryPile.reduce((sum, card) => sum + card.points, 0)
             - 4 * this.escapedVillains.filter(card => card.type === 'bystander').length
             - 3 * this.board.scheme.counterTwist
             - this.escapedVillains.filter(card => card.type === 'villain').length;
-        board.leaderBoards.score = this.yourScore;
-        this.http.post(this.board.leaderBoards);
+        board.leaderboards.score = this.yourScore;
+        this.http.post(this.board.leaderboards);
     }
 
 }

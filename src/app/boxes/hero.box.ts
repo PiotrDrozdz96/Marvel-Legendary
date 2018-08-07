@@ -1,4 +1,4 @@
-import { Box } from './box';
+import { Box } from '../models/box';
 import { Group } from '../models/group';
 import { Hero } from '../models/card';
 import * as hero_black_widow from '../cards/hero/black_widow';

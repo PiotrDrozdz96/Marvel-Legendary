@@ -13,6 +13,7 @@ import { wound } from '../cards/wounds';
 import { bystander } from '../cards/bystanders';
 import { EndGameDialog } from '../dialogs/end-game-dialog/end-game.dialog';
 import { SelectDialog } from '../dialogs/cards-list-dialog/select.dialog';
+import { BoxService } from './box.service';
 
 @Injectable({
   providedIn: 'root'
@@ -25,16 +26,7 @@ export class BoardService {
   public defeatedVillainObs = new BehaviorSubject<any>(undefined);
   public cardsSubscription: Array<Subscription> = [];
 
-  public leaderBoards: LeaderBoards = {
-    name: 'Anonim',
-    win: false,
-    score: 0,
-    mastermind: '',
-    scheme: '',
-    heroses: [],
-    villains: [],
-    henchmen: []
-  };
+  public leaderboards =  new LeaderBoards();
 
   playerDeck = new Deck<Hero>();
   playerHand = new Deck<Hero>();
@@ -105,17 +97,7 @@ export class BoardService {
     this.shieldDeck.create(30, new hero_shield_officer);
     this.bystandersDeck.create(30, new bystander);
     this.woundsDeck.create(30, new wound);
-    /* 3. select mastermind */
-    /* inside board.component, selectMastermind.dialog */
-    /* 4. select scheme */
-    /* inside board.component, selectScheme.dialog */
-    /* 5. villain deck*/
-    /*  number of schemeTwist described in scheme */
-    /* a. 3 villain group 8*3=24 cards*/
-    /* b. 1 henchmen group 10 cards*/
-    /* c. 10 bystanders */
-    /* d. 5 masterStrike */
-    /* shuffle deck */
+
   }
 
   reload = () => this.http.reload();
@@ -203,7 +185,6 @@ export class BoardService {
     this.victoryPile.put(this.mastermind.bystanders);
     this.mastermind.bystanders = [];
     if (this.mastermind.tactics.length === 0) {
-      this.leaderBoards.win = true;
       return true;
     } else {
       this.setKOimage(tactic[0].image);

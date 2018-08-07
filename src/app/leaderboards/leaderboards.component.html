@@ -70,7 +70,7 @@
       </th>
       <td mat-cell *matCellDef="let element">
         <ng-container *ngIf="filter.heroses">
-          <img class="card heroses" *ngFor="let hero of element.heroses" [src]="box.heroBox.cards[hero].image" (click)="setPicture(box.heroBox.cards[hero].image)">
+          <img class="card heroses" *ngFor="let hero of element.heroses" [src]="box.herosesBox.cards[hero].image" (click)="setPicture(box.heroBox.cards[hero].image)">
         </ng-container>
         <ng-container *ngIf="!filter.heroses">
           <img class="card heroses" *ngFor="let villain of element.villains" [src]="box.villainsBox.cards[villain].image" (click)="setPicture(box.villainsBox.cards[villain].image)">

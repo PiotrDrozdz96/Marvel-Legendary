@@ -47,8 +47,8 @@ export class BoardComponent implements OnInit {
   createPlayer() {
     const dialogRef = this.dialog.open(PlayerNameDialog);
     dialogRef.afterClosed().subscribe(sub => {
-      if (this.board.leaderBoards.name === '') {
-        this.board.leaderBoards.name = 'Anonim';
+      if (this.board.leaderboards.name === '') {
+        this.board.leaderboards.name = 'Anonim';
       }
       this.selectMastermind();
     });
@@ -65,7 +65,7 @@ export class BoardComponent implements OnInit {
       if (data === undefined) {
         this.selectMastermind();
       } else {
-        this.board.leaderBoards.mastermind = this.box.mastermindBox.key(data.index);
+        this.board.leaderboards.mastermind = this.box.mastermindBox.key(data.index);
         this.board.mastermind = this.box.mastermindBox.pick(data.index);
         this.board.mastermind.bystanders = [];
         this.board.mastermind.additionalCard = [];
@@ -86,7 +86,7 @@ export class BoardComponent implements OnInit {
       if (data === undefined) {
         this.selectScheme();
       } else {
-        this.board.leaderBoards.scheme = this.box.schemeBox.key(data.index);
+        this.board.leaderboards.scheme = this.box.schemeBox.key(data.index);
         this.board.scheme = this.box.schemeBox.pick(data.index);
         this.box.alwaysLeads(this.board.scheme.alwaysLeads);
         this.selectVillains();
@@ -105,14 +105,11 @@ export class BoardComponent implements OnInit {
       if (data === undefined) {
         this.selectVillains();
       } else {
-        this.board.leaderBoards.villains.push(this.box.villainsBox.key(data.index));
-        const villains = this.box.villainsBox.pick(data.index);
+        const villains = this.box.pick('villains', data.index);
         villains.forEach(villain => { this.board.villainDeck.create(2, villain); });
-        this.box.villainGroup--;
-        if (this.box.villainGroup > 0) {
+        if (this.box.villainsGroup > 0) {
           this.selectVillains();
         } else {
-          this.board.leaderBoards.villains.sort();
           this.selectHenchman();
         }
       }
@@ -120,7 +117,7 @@ export class BoardComponent implements OnInit {
   }
 
   selectHenchman() {
-    if (this.box.henchmanGroup > 0) {
+    if (this.box.henchmenGroup > 0) {
       const dialogRef = this.dialog.open(SelectWithRandomDialog, {
         data: {
           array: Object.values(this.box.henchmenBox.cards),
@@ -132,14 +129,11 @@ export class BoardComponent implements OnInit {
           this.selectHenchman();
         } else {
           // add henchman
-          this.board.leaderBoards.henchmen.push(this.box.henchmenBox.key(data.index));
-          this.box.henchmanGroup--;
-          this.board.villainDeck.create(10, this.box.henchmenBox.pick(data.index)[0]);
+          this.board.villainDeck.create(10, this.box.pick('henchmen', data.index)[0]);
           this.selectHenchman();
         }
       });
     } else {
-      this.board.leaderBoards.henchmen.sort();
       // add bystanders
       for (let i = 0; i < this.box.bystanders; i++) {
         this.board.villainDeck.put(this.board.bystandersDeck.draw());
@@ -154,7 +148,7 @@ export class BoardComponent implements OnInit {
   selectHero() {
     const dialogRef = this.dialog.open(SelectWithRandomDialog, {
       data: {
-        array: Object.values(this.box.heroBox.cards),
+        array: Object.values(this.box.herosesBox.cards),
         header: 'Select Heroses'
       }
     });
@@ -162,21 +156,18 @@ export class BoardComponent implements OnInit {
       if (data === undefined) {
         this.selectHero();
       } else {
-        this.board.leaderBoards.heroses.push(this.box.heroBox.key(data.index));
-        const choosenGroup = this.box.heroBox.pick(data.index);
+        const choosenGroup = this.box.pick('heroses', data.index);
         this.board.heroDeck.create(1, choosenGroup[0]);
         this.board.heroDeck.create(3, choosenGroup[1]);
         this.board.heroDeck.create(5, choosenGroup[2]);
         this.board.heroDeck.create(5, choosenGroup[3]);
-        this.box.heroGroup--;
-        if (this.box.heroGroup > 0) {
+        if (this.box.herosesGroup > 0) {
           this.selectHero();
         } else {
           const schemeSetupObs = this.board.scheme.setup(this.board, this.dialog, this.box);
           if (schemeSetupObs) {
             const schemeSetupSub = schemeSetupObs.subscribe(done => {
               if (done) {
-                this.board.leaderBoards.heroses.sort();
                 this.board.villainDeck.shuffle();
                 this.board.heroDeck.shuffle();
                 this.board.startObs.next(true);
@@ -184,7 +175,6 @@ export class BoardComponent implements OnInit {
               }
             });
           } else {
-            this.board.leaderBoards.heroses.sort();
             this.board.villainDeck.shuffle();
             this.board.heroDeck.shuffle();
             this.board.startObs.next(true);

@@ -1,4 +1,4 @@
-import { Box } from './box';
+import { Box } from '../models/box';
 import * as scheme from '../cards/scheme';
 
 export class SchemeBox extends Box {

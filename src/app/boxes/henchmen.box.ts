@@ -1,4 +1,4 @@
-import { Box } from './box';
+import { Box } from '../models/box';
 import { Group } from '../models/group';
 import { Villain } from '../models/card';
 import * as henchmen from '../cards/villain/henchmen';
