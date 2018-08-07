@@ -4,7 +4,7 @@ import { SelectDialog } from './select.dialog';
 @Component({
     selector: 'app-select',
     templateUrl: './select-with-random.dialog.html',
-    styleUrls: ['./select-dialog.css']
+    styles: ['img { cursor: pointer; }']
 })
 // tslint:disable-next-line:component-class-suffix
 export class SelectWithRandomDialog extends SelectDialog {

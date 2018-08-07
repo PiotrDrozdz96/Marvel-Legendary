@@ -26,12 +26,15 @@
     height: 100%;
 }
 
-#start {
+#startDiv {
     position: relative;
-    cursor: pointer;
-    top: 37vh;
+    top: 50vh;
     height: 58px;
+}
+
+#start {
     color: goldenrod;
+    cursor: pointer;
     animation: start 4s infinite;
     margin: auto;
     font-size: 40px;
@@ -44,18 +47,65 @@
     color: firebrick;
     text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
     font-size: 40px;
+    margin: 0;
+}
+
+.shadow-text:hover {
+    color: purple;
 }
 
 #guide {
     position: relative;
-    margin-left: 95vh;
-    top: 9vh;
+    top: 20vh;
+    left: 16vw;
 }
 
 #leaderboards {
     position: relative;
-    top: 17vh;
+    top: 20vh;
+    left: -15vw;
+}
+
+#sendMessage {
+    position: relative;
+    top: 70vh;
     left: -20vw;
+}
+
+#message {
+    position: relative;
+    display: none;
+    top: 45vh;
+    left: 25vw;
+    background-color: #424242;
+    color: white;
+    height: 18.32vh;
+    width: 20vh;
+    border: 2px solid black;
+}
+
+.box {
+    border: 2px solid grey;
+    float: left;
+    width: 19.5vh;
+}
+
+.box input {
+    width: 14vh;
+    float: right;
+    background-color: inherit;
+    color: inherit;
+}
+
+#message textarea {
+    background-color: inherit;
+    color: inherit;
+    resize: none;
+}
+
+button.box {
+    float: none;
+    cursor: pointer;
 }
 
 @keyframes start {

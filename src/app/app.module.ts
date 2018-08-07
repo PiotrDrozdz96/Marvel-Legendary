@@ -75,7 +75,7 @@ import { MenuSliderComponent } from './menu-slider/menu-slider.component';
       { path: '', component: MenuComponent },
       { path: 'game', component: BoardComponent },
       { path: 'leaderboards', component: LeaderboardsComponent }
-    ])
+    ], { useHash: true })
   ],
   providers: [BoardService, BoxService, HttpService],
   bootstrap: [AppComponent]

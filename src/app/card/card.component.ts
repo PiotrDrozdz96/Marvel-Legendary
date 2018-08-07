@@ -15,6 +15,7 @@ export class CardComponent implements OnInit {
   @Input() src: string;
   @Input() transform: boolean;
   @Input() reveal = true;
+  @Input() pointer = false;
 
   constructor(private boardService: BoardService) { }
 

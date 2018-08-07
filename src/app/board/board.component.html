@@ -14,21 +14,21 @@
         <div class="deck mastermind">
             <div class="additional-card">
                 <app-card *ngIf="board.mastermind && board.mastermind.additionalCard.length!=0" [src]="board.mastermind.additionalCard[0].image"
-                    (click)="viewCards('Mastermind',board.mastermind.additionalCard)"></app-card>
+                [pointer]=true (click)="viewCards('Mastermind',board.mastermind.additionalCard)"></app-card>
             </div>
             <div class="captured-bystanders">
                 <app-card *ngIf="board.mastermind && board.mastermind.bystanders.length!=0" [src]="board.mastermind.bystanders[0].image"
-                    (click)="viewCards('Bystanders in Mastermind',board.mastermind.bystanders)"></app-card>
+                [pointer]=true (click)="viewCards('Bystanders in Mastermind',board.mastermind.bystanders)"></app-card>
             </div>
             <div class="mastermind-card">
-                <app-card *ngIf="board.mastermind" [src]="board.mastermind.image" (click)="attackMastermind()"></app-card>
+                <app-card *ngIf="board.mastermind" [src]="board.mastermind.image" [pointer]=true (click)="attackMastermind()"></app-card>
             </div>
             <div class="icon-in-deck icon-mastermind" *ngIf="board.mastermind">
                 <img *ngFor="let hearth of board.mastermind.tactics" src="assets/hearth.png">
             </div>
         </div>
         <div class="deck shield">
-            <app-card *ngFor="let card of board.shieldDeck.reverse()" [src]="card.image" [transform]=true (click)="recruitShieldOfficer()"></app-card>
+            <app-card *ngFor="let card of board.shieldDeck.reverse()" [src]="card.image" [pointer]=true [transform]=true (click)="recruitShieldOfficer()"></app-card>
         </div>
     </div>
     <div class="center-board">
@@ -36,7 +36,7 @@
         <app-hq></app-hq>
         <div class="deck escapedVillains">
             <app-card *ngIf="board.escapedVillain[board.escapedVillain.length - 1]" [src]="board.escapedVillain[board.escapedVillain.length - 1].image"
-                (click)="viewCards('Escaped Villains',board.escapedVillain)">
+            [pointer]=true (click)="viewCards('Escaped Villains',board.escapedVillain)">
             </app-card>
         </div>
         <app-ko class="ko"></app-ko>
@@ -63,7 +63,7 @@
             <app-card *ngFor="let card of board.bystandersDeck.reverse()" [src]="card.image" [transform]=true></app-card>
         </div>
         <div class="deck villain-deck" (click)="nextTurn()">
-            <app-card *ngFor="let card of board.villainDeck.reverse()" [src]="'assets/next_turn.png'" [transform]=true [reveal]=false></app-card>
+            <app-card *ngFor="let card of board.villainDeck.reverse()" [src]="'assets/next_turn.png'" [pointer]=true [transform]=true [reveal]=false></app-card>
         </div>
         <div class="deck hero">
             <app-card *ngFor="let card of board.heroDeck.reverse()" [src]="'assets/back_of_card.png'" [transform]=true [reveal]=false></app-card>

@@ -9,6 +9,7 @@ import { BehaviorSubject } from 'rxjs';
 export class HttpService {
 
   readonly URL_DB = 'https://api.mlab.com/api/1/databases/marvel-legendary/collections/leaderboards';
+  readonly URL_MSG = 'https://api.mlab.com/api/1/databases/marvel-legendary/collections/messeges';
   readonly param = new HttpParams().set('apiKey', 'aWB04CMreTxIgNrhXTjunUFKThYS4LgK');
   private postStart = false;
   private postComplete = new BehaviorSubject<boolean>(false);
@@ -32,6 +33,10 @@ export class HttpService {
         location.pathname = '/';
       }
     });
+  }
+
+  sendMessage(message) {
+    return this.http.post(this.URL_MSG, message, { params: this.param });
   }
 
 }

@@ -1,9 +1,16 @@
 <div class="menu">
   <div class="container">
     <div class="text">
-      <p id="leaderboards" class="shadow-text" (click)="leaderboards()">LeaderBoards</p>
+      <a id="leaderboards" class="shadow-text" (click)="leaderboards()">Leaderboards</a>
       <a id="guide" class="shadow-text" target="_blank" rel="noopener noreferrer" href="http://www.upperdeck.com/OP/RuleBooks/Legendary_Rules-Core_Set.pdf">Rule Book</a>
-      <p id="start" (click)="start()">Start</p>
+      <div id="startDiv"><a id="start" (click)="start()">Start</a></div>
+      <a id="sendMessage" class="shadow-text" (click)="openMessage()">Send Message</a>
+      <div id="message" (click)="defaultBorder()">
+        <div class="box">From: <input type="text" maxlength="20" [(ngModel)]="message.from"></div>
+        <div class="box">Title: <input type="text" maxlength="20" [(ngModel)]="message.title"></div>
+        <textarea cols="23" rows="6" maxlength="100" [(ngModel)]="message.text"></textarea>
+        <button class="box" (click)="sendMessage()">SEND</button>
+      </div>
     </div>
   </div>
 </div>
