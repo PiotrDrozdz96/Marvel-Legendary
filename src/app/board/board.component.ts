@@ -23,7 +23,7 @@ import { PlayerNameDialog } from '../dialogs/player-name-dialog/player-name.dial
 })
 export class BoardComponent implements OnInit {
 
-  private run: boolean;
+  public run: boolean;
 
   constructor(
     private dialog: MatDialog,
