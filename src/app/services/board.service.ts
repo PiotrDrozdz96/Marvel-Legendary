@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material';
 import { HttpService } from './http.service';
 
 import { Deck } from '../models/deck';
-import { Card, Hero, Scheme, Mastermind, Bystander, Villain } from '../models/card';
+import { Card, Hero, Scheme, Mastermind, Bystander, Villain, CardIcon, Team, Color } from '../models/card';
 import { Field } from '../models/field';
 import { LeaderBoards } from '../models/leaderboards';
 
@@ -113,8 +113,12 @@ export class BoardService {
     this.numberOfDrawing = 6;
   }
 
-  checkPlayedCards(param: string, arg: string): boolean {
+  checkPlayedCards(param: CardIcon, arg: Team | Color): boolean {
     return this.playerCards.concat(this.copiedCards).some(card => card[param] === arg);
+  }
+
+  playerReveal(param: CardIcon, arg: Team | Color): boolean {
+    return this.playerCards.concat(this.playerHand, this.copiedCards).some(card => card[param] === arg);
   }
 
   moveVillains(card: Villain, dialog: MatDialog) {

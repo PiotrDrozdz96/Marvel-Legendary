@@ -1,6 +1,6 @@
 import { MatDialog } from '@angular/material';
 import { skip } from 'rxjs/operators';
-import { Hero } from '../../models/card';
+import { Hero, Team, Color } from '../../models/card';
 import { BoardService } from '../../services/board.service';
 
 // tslint:disable:class-name
@@ -8,8 +8,8 @@ import { BoardService } from '../../services/board.service';
 export class rare implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/hawkeye/hawkeye_rare.png';
-    team = 'avengers';
-    color = 'grey';
+    team: Team = 'avengers';
+    color: Color = 'grey';
     attack = 5;
     recrutingPoints = 0;
     cost = 7;
@@ -23,8 +23,8 @@ export class rare implements Hero {
 export class uncommon implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/hawkeye/hawkeye_uncommon.png';
-    team = 'avengers';
-    color = 'grey';
+    team: Team = 'avengers';
+    color: Color = 'grey';
     attack = 3;
     recrutingPoints = 0;
     cost = 5;
@@ -38,8 +38,8 @@ export class uncommon implements Hero {
 export class common_1 implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/hawkeye/hawkeye_common_1.png';
-    team = 'avengers';
-    color = 'yellow';
+    team: Team = 'avengers';
+    color: Color = 'yellow';
     attack = 1;
     recrutingPoints = 0;
     cost = 3;
@@ -51,8 +51,8 @@ export class common_1 implements Hero {
 export class common_2 implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/hawkeye/hawkeye_common_2.png';
-    team = 'avengers';
-    color = 'grey';
+    team: Team = 'avengers';
+    color: Color = 'grey';
     attack = 2;
     recrutingPoints = 0;
     cost = 4;

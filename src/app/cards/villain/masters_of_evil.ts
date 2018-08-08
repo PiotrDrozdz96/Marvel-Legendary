@@ -54,7 +54,7 @@ export class ultron implements Villain {
     }
     escape(board: BoardService, dialog: MatDialog) {
         this.fight(board, dialog);
-        if (!board.playerCards.find(card => card.color === 'grey')) {
+        if (!board.playerReveal('color', 'grey')) {
             board.discardPile.put(board.woundsDeck.draw());
         }
     }

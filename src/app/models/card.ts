@@ -19,10 +19,14 @@ export interface AlwaysLeads {
     name: string;
 }
 
+export type CardIcon = 'team' | 'color';
+export type Team  = 'x-men' | 'avengers' | 'shield' | 'spider';
+export type Color = 'green' | 'yellow' | 'red' | 'grey' | 'white';
+
 export interface Hero extends Card {
-    // type: 'hero' || 'wound;
-    team?: string;
-    color?: string;
+    // type: 'hero' | 'wound';
+    team?: Team;
+    color?: Color;
     attack: number;
     recrutingPoints: number;
     cost: number;

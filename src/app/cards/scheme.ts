@@ -24,7 +24,7 @@ export class legacy_virus implements Scheme {
     image = 'assets/cards/scheme/scheme_legacy_virus.png';
     counterTwist = 0;
     twist(board: BoardService, schemeTwist: scheme_twist) {
-        if (!board.playerHand.some(card => card.color === 'grey')) {
+        if (!board.playerReveal('color', 'grey')) {
             board.discardPile.put(board.woundsDeck.draw());
         }
         board.KO.push(schemeTwist);

@@ -3,15 +3,15 @@ import { MatDialog } from '@angular/material';
 import { SelectDialog } from '../../dialogs/cards-list-dialog/select.dialog';
 import { EndGameDialog } from '../../dialogs/end-game-dialog/end-game.dialog';
 import { Deck } from '../../models/deck';
-import { Hero } from '../../models/card';
+import { Hero, Team, Color } from '../../models/card';
 
 // tslint:disable:class-name
 
 export class rare implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/nick_fury/nick_fury_rare.png';
-    team = 'shield';
-    color = 'grey';
+    team: Team = 'shield';
+    color: Color = 'grey';
     attack = 0;
     recrutingPoints = 0;
     cost = 8;
@@ -38,8 +38,8 @@ export class rare implements Hero {
 export class uncommon implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/nick_fury/nick_fury_uncommon.png';
-    team = 'shield';
-    color = 'green';
+    team: Team = 'shield';
+    color: Color = 'green';
     attack = 1;
     recrutingPoints = 0;
     cost = 6;
@@ -51,8 +51,8 @@ export class uncommon implements Hero {
 export class common_1 implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/nick_fury/nick_fury_common_1.png';
-    team = 'shield';
-    color = 'red';
+    team: Team = 'shield';
+    color: Color = 'red';
     attack = 0;
     recrutingPoints = 0;
     cost = 4;
@@ -81,8 +81,8 @@ export class common_1 implements Hero {
 export class common_2 implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/nick_fury/nick_fury_common_2.png';
-    team = 'shield';
-    color = 'grey';
+    team: Team = 'shield';
+    color: Color = 'grey';
     attack = 2;
     recrutingPoints = 0;
     cost = 3;

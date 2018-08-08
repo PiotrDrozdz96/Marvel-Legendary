@@ -70,7 +70,7 @@ export class zzzax implements Villain {
     attack = 5;
     points = 3;
     fight(board: BoardService, dialog: MatDialog) {
-        if (!board.playerCards.find(card => card.color === 'green')) {
+        if (!board.playerReveal('color', 'green')) {
             board.discardPile.put(board.woundsDeck.draw());
         }
     }

@@ -64,7 +64,7 @@ export class frost_giant implements Villain {
     attack = 4;
     points = 2;
     fight(board: BoardService, dialog: MatDialog) {
-        if (!board.playerCards.concat(board.playerHand).find(card => card.color === 'white')) {
+        if (!board.playerReveal('color', 'white')) {
             board.discardPile.put(board.woundsDeck.draw());
         }
     }
@@ -78,7 +78,7 @@ export class ymir implements Villain {
     attack = 6;
     points = 4;
     ambush(board: BoardService, dialog: MatDialog) {
-        if (!board.playerHand.find(card => card.color === 'white')) {
+        if (!board.playerReveal('color', 'white')) {
             board.discardPile.put(board.woundsDeck.draw());
         }
     }

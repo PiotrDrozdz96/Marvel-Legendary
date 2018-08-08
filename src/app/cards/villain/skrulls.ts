@@ -46,7 +46,7 @@ export class queen_veranke implements Villain {
         this.image = hero.image;
         this.team = 'hero';
         this.copiedHero = hero;
-        if (board.leaderboards.scheme = 'secret_invasion_shapeshifters') {
+        if (board.leaderboards.scheme === 'secret_invasion_shapeshifters') {
             this.attack += 2;
         }
     }
@@ -73,7 +73,7 @@ export class shapeshifters implements Villain {
         this.image = hero.image;
         this.team = 'hero';
         this.copiedHero = hero;
-        if (board.leaderboards.scheme = 'secret_invasion_shapeshifters') {
+        if (board.leaderboards.scheme === 'secret_invasion_shapeshifters') {
             this.attack += 2;
         }
     }

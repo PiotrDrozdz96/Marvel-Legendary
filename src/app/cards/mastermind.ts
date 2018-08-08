@@ -60,6 +60,9 @@ export class doctor_doom implements Mastermind {
     ];
     masterStrike(board: BoardService, dialog: MatDialog) {
         let numberOfChoosenCards = 0;
+        if (board.playerHand.length === 6 && !board.playerReveal('color', 'grey')) {
+            open();
+        }
         function open() {
             dialog.open(SelectDialog, {
                 data: {
@@ -76,10 +79,6 @@ export class doctor_doom implements Mastermind {
                     if (numberOfChoosenCards !== 2) { open(); }
                 }
             });
-        }
-
-        if (board.playerHand.length === 6 && !board.playerHand.some(card => card.color === 'grey')) {
-            open();
         }
     }
 }
@@ -144,7 +143,7 @@ export class loki implements Mastermind {
         }
     ];
     masterStrike(board: BoardService, dialog: MatDialog) {
-        if (!board.playerHand.some(card => card.color === 'green')) {
+        if (!board.playerReveal('color', 'green')) {
             board.discardPile.put(board.woundsDeck.draw());
         }
     }
@@ -184,7 +183,7 @@ export class magneto implements Mastermind {
         {
             image: 'assets/cards/mastermind/magneto/magneto_2.png',
             func: (board: BoardService, dialog: MatDialog, tactic: Tactic) => {
-                if (!board.playerCards.some(card => card.team === 'x-men')) {
+                if (!board.playerReveal('team', 'x-men')) {
                     board.playerDeck.put(board.woundsDeck.draw().concat(board.woundsDeck.draw()));
                 }
             }
@@ -222,6 +221,9 @@ export class magneto implements Mastermind {
         }
     ];
     masterStrike(board: BoardService, dialog: MatDialog) {
+        if (!board.playerReveal('team', 'x-men')) {
+            open();
+        }
         function open() {
             dialog.open(SelectDialog, {
                 data: {
@@ -239,10 +241,6 @@ export class magneto implements Mastermind {
                     }
                 }
             });
-        }
-
-        if (!board.playerHand.some(card => card.team === 'x-men')) {
-            open();
         }
     }
 }
