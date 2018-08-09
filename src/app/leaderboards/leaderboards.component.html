@@ -14,7 +14,7 @@
 
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>
-        <input class="forms name" type="text" [(ngModel)]="filter.name" (keyup)="change()">
+        <input class="forms name" type="text" maxlength="12" [(ngModel)]="filter.name" (keyup)="change()">
       </th>
       <td mat-cell *matCellDef="let element"> {{element.name}} </td>
     </ng-container>

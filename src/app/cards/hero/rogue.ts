@@ -39,7 +39,7 @@ export class uncommon implements Hero {
     func(board: BoardService, dialog: MatDialog) {
         dialog.open(SelectDialog, {
             data: {
-                array: board.playerCards,
+                array: board.playerCards.filter(card => card.image !== this.image),
                 header: 'Copy Card'
             }
         }).afterClosed().subscribe(choosen => {
