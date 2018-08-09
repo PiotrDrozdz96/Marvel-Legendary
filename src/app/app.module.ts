@@ -29,6 +29,7 @@ import { LeaderboardsComponent } from './leaderboards/leaderboards.component';
 import { CardsListDialog } from './dialogs/cards-list-dialog/cards-list.dialog';
 import { SelectDialog } from './dialogs/cards-list-dialog/select.dialog';
 import { SelectWithRandomDialog } from './dialogs/cards-list-dialog/select-with-random.dialog';
+import { TextDialog } from './dialogs/text.dialog';
 
 import { PlayerNameDialog } from './dialogs/player-name-dialog/player-name.dialog';
 import { PlayCardsDialog } from './dialogs/play-cards-dialog/play-cards.dialog';
@@ -51,7 +52,8 @@ import { MenuSliderComponent } from './menu-slider/menu-slider.component';
     MenuComponent,
     LeaderboardsComponent,
     MenuSliderComponent,
-    PlayerNameDialog
+    PlayerNameDialog,
+    TextDialog
   ],
   entryComponents: [
     PlayCardsDialog,
@@ -59,7 +61,8 @@ import { MenuSliderComponent } from './menu-slider/menu-slider.component';
     SelectDialog,
     SelectWithRandomDialog,
     PlayerNameDialog,
-    EndGameDialog
+    EndGameDialog,
+    TextDialog
   ],
   imports: [
     BrowserModule,

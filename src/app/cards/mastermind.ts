@@ -13,7 +13,7 @@ export class master_strike implements Card {
 export class doctor_doom implements Mastermind {
     type = 'mastermind';
     image = 'assets/cards/mastermind/doctor_doom/mastermind_doctor_doom.png';
-    alwaysLeads = {group: 'henchmen', name: 'doombot_legion'};
+    alwaysLeads = { group: 'henchmen', name: 'doombot_legion' };
     attack = 9;
     additionalAttack = 0;
     points = 5;
@@ -86,7 +86,7 @@ export class doctor_doom implements Mastermind {
 export class loki implements Mastermind {
     type = 'mastermind';
     image = 'assets/cards/mastermind/loki/mastermind_loki.png';
-    alwaysLeads = {group: 'villain', name: 'enemies_of_asgard'};
+    alwaysLeads = { group: 'villain', name: 'enemies_of_asgard' };
     attack = 10;
     additionalAttack = 0;
     points = 5;
@@ -152,7 +152,7 @@ export class loki implements Mastermind {
 export class magneto implements Mastermind {
     type = 'mastermind';
     image = 'assets/cards/mastermind/magneto/mastermind_magneto.png';
-    alwaysLeads = {group: 'villain', name: 'brootherhood'};
+    alwaysLeads = { group: 'villain', name: 'brootherhood' };
     attack = 8;
     additionalAttack = 0;
     points = 5;
@@ -248,7 +248,7 @@ export class magneto implements Mastermind {
 export class red_skull implements Mastermind {
     type = 'mastermind';
     image = 'assets/cards/mastermind/red_skull/mastermind_red_skull.png';
-    alwaysLeads = {group: 'villain', name: 'hydra'};
+    alwaysLeads = { group: 'villain', name: 'hydra' };
     attack = 7;
     additionalAttack = 0;
     points = 5;
@@ -323,6 +323,25 @@ export class red_skull implements Mastermind {
         }
     ];
     masterStrike(board: BoardService, dialog: MatDialog) {
-        board.KO.put(board.playerHand.take());
+        if (board.playerHand.some(card => card.type === 'hero')) {
+            open();
+        }
+
+        function open() {
+            dialog.open(SelectDialog, {
+                data: {
+                    array: board.playerHand.filter(card => card.type === 'hero'),
+                    preview: board.mastermind.image,
+                    header: 'KOs one Hero'
+                }
+            }).afterClosed().subscribe(choosen => {
+                if (choosen === undefined) {
+                    open();
+                } else {
+                    const index = board.playerHand.findIndex(card => card === choosen.card);
+                    board.KO.put(board.playerHand.pick(index));
+                }
+            });
+        }
     }
 }

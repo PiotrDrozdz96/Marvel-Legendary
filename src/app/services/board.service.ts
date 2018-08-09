@@ -24,9 +24,11 @@ export class BoardService {
   public startObs = new BehaviorSubject<boolean>(false);
   public drawVillainObs = new BehaviorSubject<boolean>(false);
   public defeatedVillainObs = new BehaviorSubject<any>(undefined);
+  public villainsRunsOutNumber = 0;
+  public villainsRunsOutObs = new BehaviorSubject<number>(0);
   public cardsSubscription: Array<Subscription> = [];
 
-  public leaderboards =  new LeaderBoards();
+  public leaderboards = new LeaderBoards();
 
   playerDeck = new Deck<Hero>();
   playerHand = new Deck<Hero>();
@@ -60,22 +62,14 @@ export class BoardService {
   ];
 
   constructor(public http: HttpService) {
-    /* change method draw in Deck*/
-    this.playerDeck.draw = (): Array<Hero> => {
-      if (this.playerDeck.length === 0) {
-        this.discardPile.shuffle();
-        this.playerDeck.put(this.discardPile.take());
-      }
-      const newCard = this.playerDeck.shift();
-      this.playerDeck.numberOfDrawing++;
-      return newCard === undefined ? [] : [newCard];
+    /* change method in Deck*/
+    this.playerDeck.runsOut = () => {
+      this.discardPile.shuffle();
+      this.playerDeck.put(this.discardPile.take());
     };
-    this.playerDeck.reveal = (): Hero => {
-      if (this.playerDeck.length === 0) {
-        this.discardPile.shuffle();
-        this.playerDeck.put(this.discardPile.take());
-      }
-      return this.playerDeck[0];
+    this.villainDeck.runsOut = () => {
+      this.villainsRunsOutNumber++;
+      this.villainsRunsOutObs.next(this.villainsRunsOutNumber);
     };
     this.discardPile.put = (arr: Array<Hero>, notCardEffect = false): void => {
       let discard = true;
@@ -106,6 +100,7 @@ export class BoardService {
   start(): Observable<boolean> { return this.startObs.asObservable(); }
   drawVillain(): Observable<boolean> { return this.drawVillainObs.asObservable(); }
   defeatedVillain(): Observable<any> { return this.defeatedVillainObs.asObservable(); }
+  villainsRunsOut(): Observable<number> { return this.villainsRunsOutObs.asObservable(); }
   drawToPlayerHand() {
     for (let i = 0; i < this.numberOfDrawing; i++) {
       this.playerHand.put(this.playerDeck.draw());
@@ -189,6 +184,7 @@ export class BoardService {
     this.victoryPile.put(this.mastermind.bystanders);
     this.mastermind.bystanders = [];
     if (this.mastermind.tactics.length === 0) {
+      this.leaderboards.win = true;
       return true;
     } else {
       this.setKOimage(tactic[0].image);

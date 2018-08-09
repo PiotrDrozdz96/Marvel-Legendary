@@ -37,17 +37,22 @@ export class EndGameDialog extends BasicDialog {
             lose: {
                 h1: 'Evils Win',
                 h2: 'You lose by'
+            },
+            mastermindEscaped: {
+                h1: 'You protected city very well',
+                h2: 'But Mastermind Escaped'
             }
         };
         this.h1 = headers[data.header].h1;
         this.h2 = headers[data.header].h2;
-        board.leaderboards.win = data.header === 'win';
         this.victoryPile = board.victoryPile;
         this.escapedVillains = board.escapedVillain;
         this.yourScore = this.victoryPile.reduce((sum, card) => sum + card.points, 0)
             - 4 * this.escapedVillains.filter(card => card.type === 'bystander').length
             - 3 * this.board.scheme.counterTwist
-            - this.escapedVillains.filter(card => card.type === 'villain').length;
+            - this.escapedVillains.filter(card => card.type === 'villain').length
+            - ((data.header === 'lose' || data.header === 'mastermindEscaped') ?
+            this.board.mastermind.points * (this.board.mastermind.tactics.length + 1) : 0);
         board.leaderboards.score = this.yourScore;
         this.http.post(this.board.leaderboards);
     }

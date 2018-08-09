@@ -14,6 +14,7 @@ import { CardsListDialog } from '../dialogs/cards-list-dialog/cards-list.dialog'
 import { SelectWithRandomDialog } from '../dialogs/cards-list-dialog/select-with-random.dialog';
 import { EndGameDialog } from '../dialogs/end-game-dialog/end-game.dialog';
 import { PlayerNameDialog } from '../dialogs/player-name-dialog/player-name.dialog';
+import { TextDialog } from '../dialogs/text.dialog';
 
 @Component({
   selector: 'app-board',
@@ -38,6 +39,23 @@ export class BoardComponent implements OnInit {
       this.run = sub;
       if (sub) {
         Sub.unsubscribe();
+      }
+    });
+    board.villainsRunsOut().subscribe(runsOut => {
+      if (runsOut === 1) {
+        this.board.escapedVillain.put(this.board.mastermind.bystanders);
+        this.board.mastermind.bystanders = [];
+        this.dialog.open(TextDialog, {data: {
+          h1: 'HARRY UP!',
+          h2: 'Mastermind try escape'
+        }}).afterClosed().subscribe(sub => {
+          this.board.mastermind.masterStrike(this.board, this.dialog);
+        });
+      } else if (runsOut === 2) {
+        this.board.leaderboards.win = true;
+        this.dialog.open(EndGameDialog, { data: { header: 'mastermindEscaped' } }).afterClosed().subscribe(sub => {
+          this.board.reload();
+        });
       }
     });
   }

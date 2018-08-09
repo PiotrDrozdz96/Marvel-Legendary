@@ -163,8 +163,7 @@ export class replace_leaders_killbots implements Scheme {
             team: 'killbots',
             attack: 3
         });
-        board.villainDeck = board.villainDeck.map(card => card.type === 'bystander' ?
-            Object.assign({}, killbots) : card, undefined, true) as Deck<Card>;
+        board.villainDeck.replace(card => card.type === 'bystander' ? Object.assign({}, killbots) : card);
         board.villainDeck.create(length, killbots);
         board.drawVillain().subscribe(sub => {
             board.fields.filter(field => field.card && field.card.team === 'killbots').forEach(field => {
