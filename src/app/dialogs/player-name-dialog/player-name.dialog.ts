@@ -19,6 +19,8 @@ export class PlayerNameDialog {
         this.testText = document.createElement('p');
         this.testText.style.visibility = 'hidden';
         this.testText.style.display = 'inline';
+        this.testText.style.position = 'absolute';
+        this.testText.style.top = '0';
         this.testText.style.fontSize = this.fontSize + 'px';
         this.testText.innerHTML = this.board.leaderboards.name;
         document.body.appendChild(this.testText);
