@@ -1,7 +1,3 @@
 <img [src]="src" (mouseenter)="mouseEnter()" (mouseleave)="mouseLeave()"
-    [ngStyle]="{'position': transform ? 'absolute' : 'initial',
-    'transform': transform ? 'rotate(' + rotate + 'deg)' : 'none',
-    'left': left + 'vh',
-    'top': top + 'vh',
-    'cursor': pointer ? 'pointer' : 'default'}"
+    [ngStyle]="style" [style.cursor]="cursor"
 >

@@ -13,19 +13,13 @@ export class CardComponent implements OnInit {
   left = 0;
 
   @Input() src: string;
-  @Input() transform: boolean;
   @Input() reveal = true;
-  @Input() pointer = false;
+  @Input() cursor = 'default';
+  @Input() style = {};
 
   constructor(private boardService: BoardService) { }
 
-  ngOnInit() {
-    if (this.transform) {
-      this.rotate = Math.floor((Math.random() * 28) - 14);
-      this.top = (Math.random() * 1.2) - 0.60;
-      this.left = (Math.random() * 2) - 1;
-    }
-  }
+  ngOnInit() { }
 
   mouseEnter() {
     if (this.reveal) {

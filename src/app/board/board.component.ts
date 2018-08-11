@@ -25,6 +25,7 @@ import { TextDialog } from '../dialogs/text.dialog';
 export class BoardComponent implements OnInit {
 
   public run: boolean;
+  private styles = Array(30).fill({}).map(style => this.createStyle());
 
   constructor(
     private dialog: MatDialog,
@@ -45,10 +46,12 @@ export class BoardComponent implements OnInit {
       if (runsOut === 1) {
         this.board.escapedVillain.put(this.board.mastermind.bystanders);
         this.board.mastermind.bystanders = [];
-        this.dialog.open(TextDialog, {data: {
-          h1: 'HARRY UP!',
-          h2: 'Mastermind try escape'
-        }}).afterClosed().subscribe(sub => {
+        this.dialog.open(TextDialog, {
+          data: {
+            h1: 'HARRY UP!',
+            h2: 'Mastermind try escape'
+          }
+        }).afterClosed().subscribe(sub => {
           this.board.mastermind.masterStrike(this.board, this.dialog);
         });
       } else if (runsOut === 2) {
@@ -61,6 +64,17 @@ export class BoardComponent implements OnInit {
   }
 
   ngForArray(number: number): Array<any> { return new Array(number); }
+  createStyle() {
+    return {
+      position: 'absolute',
+      transform: 'rotate(' + Math.floor((Math.random() * 28) - 14) + 'deg)',
+      left: (Math.random() * 2) - 1 + 'vh',
+      top: (Math.random() * 1.2) - 0.60 + 'vh'
+    };
+  }
+  getStyle(number: number) {
+    return this.styles[((number + Math.floor(number / 30)) % 30)];
+  }
 
   createPlayer() {
     const dialogRef = this.dialog.open(PlayerNameDialog);
