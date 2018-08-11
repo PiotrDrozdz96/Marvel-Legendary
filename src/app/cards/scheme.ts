@@ -9,7 +9,8 @@ import { wound } from './wounds';
 import { bystander } from './bystanders';
 import * as henchman from './villain/henchmen';
 import { BehaviorSubject } from 'rxjs';
-import { SelectGroupWithRandomDialog } from '../dialogs/cards-list-dialog/select-group-with-random.dialog';
+
+import { shapeshifters } from './villain/skrulls';
 
 // tslint:disable:class-name
 
@@ -23,19 +24,19 @@ export class legacy_virus implements Scheme {
     image = 'assets/cards/scheme/scheme_legacy_virus.png';
     counterTwist = 0;
     twist(board: BoardService, schemeTwist: scheme_twist) {
-        if (!board.playerHand.some(card => card.color === 'grey')) {
+        if (!board.playerReveal('color', 'grey')) {
             board.discardPile.put(board.woundsDeck.draw());
         }
         board.KO.push(schemeTwist);
     }
     setup(board: BoardService, dialog: MatDialog) {
-        board.villianDeck.create(8, new scheme_twist);
+        board.villainDeck.create(8, new scheme_twist);
         board.woundsDeck.take();
         board.woundsDeck.create(6, new wound);
         board.drawVillain().subscribe(sub => {
             if (board.woundsDeck.length === 0) {
                 dialog.open(EndGameDialog, { data: { header: 'lose' } }).afterClosed().subscribe(subs => {
-                    location.reload();
+                    board.reload();
                 });
             }
         });
@@ -55,10 +56,10 @@ export class midtown_bank_robbery implements Scheme {
         board.drawVillainObs.next(true);
     }
     setup(board: BoardService, dialog: MatDialog) {
-        const length = 12 - board.villianDeck.filter(card => card.type === 'bystander').length;
-        board.villianDeck.create(8, new scheme_twist);
+        const length = 12 - board.villainDeck.filter(card => card.type === 'bystander').length;
+        board.villainDeck.create(8, new scheme_twist);
         for (let i = 0; i < length; i++) {
-            board.villianDeck.put(board.bystandersDeck.draw());
+            board.villainDeck.put(board.bystandersDeck.draw());
         }
         board.drawVillain().subscribe(sub => {
             if (!sub) {
@@ -67,7 +68,7 @@ export class midtown_bank_robbery implements Scheme {
                 });
                 if (board.escapedVillain.filter(card => card.type === 'bystander').length >= 8) {
                     dialog.open(EndGameDialog, { data: { header: 'lose' } }).afterClosed().subscribe(subs => {
-                        location.reload();
+                        board.reload();
                     });
                 }
             }
@@ -85,23 +86,21 @@ export class negative_zone_prison_breakout implements Scheme {
         board.drawVillainObs.next(true);
     }
     setup(board: BoardService, dialog: MatDialog, box: BoxService) {
-        board.villianDeck.create(8, new scheme_twist);
+        board.villainDeck.create(8, new scheme_twist);
         const setupObs = new BehaviorSubject<boolean>(false);
-        const beforeHenchmen = board.villianDeck.filter((card) => card['team'] === 'henchman');
         dialog.open(SelectWithRandomDialog, {
             data: {
-                array: box.henchmenBox.cards,
+                array: Object.values(box.henchmenBox.cards),
                 header: 'Select additional Henchman group'
             }
         }).afterClosed().subscribe(choosen => {
-            board.villianDeck.create(10, box.henchmenBox.pick(choosen.index)[0]);
-            board.villianDeck.create(10 - beforeHenchmen.length, beforeHenchmen[0]);
+            board.villainDeck.create(10, box.pick('henchmen', choosen.index, false)[0]);
             setupObs.next(true);
         });
         board.drawVillain().subscribe(sub => {
             if (board.escapedVillain.filter(card => card.type === 'villain').length >= 12) {
                 dialog.open(EndGameDialog, { data: { header: 'lose' } }).afterClosed().subscribe(subs => {
-                    location.reload();
+                    board.reload();
                 });
             }
         });
@@ -123,12 +122,12 @@ export class portals_dark_dimension implements Scheme {
             board.fields[4 - index].additionalCard.push(schemeTwist);
         } else {
             dialog.open(EndGameDialog, { data: { header: 'lose' } }).afterClosed().subscribe(sub => {
-                location.reload();
+                board.reload();
             });
         }
     }
     setup(board: BoardService, dialog: MatDialog) {
-        board.villianDeck.create(7, new scheme_twist);
+        board.villainDeck.create(7, new scheme_twist);
         board.drawVillain().subscribe(sub => {
             if (!sub) {
                 if (board.mastermind.additionalCard.some(card => card.type === 'schemeTwist')) {
@@ -155,25 +154,24 @@ export class replace_leaders_killbots implements Scheme {
         board.KO.push(schemeTwist);
     }
     setup(board: BoardService, dialog: MatDialog) {
-        board.villianDeck.create(5, new scheme_twist);
+        board.villainDeck.create(5, new scheme_twist);
         board.scheme.counterTwist = 3;
-        const length = 18 - board.villianDeck.filter(card => card.type === 'bystander').length;
+        const length = 18 - board.villainDeck.filter(card => card.type === 'bystander').length;
         const killbots = Object.assign(new bystander, {
             image: 'assets/cards/scheme/killbot.png',
             type: 'villain',
             team: 'killbots',
             attack: 3
         });
-        board.villianDeck = board.villianDeck.map(card => card.type === 'bystander' ?
-            Object.assign({}, killbots) : card, undefined, true) as Deck<Card>;
-        board.villianDeck.create(length, killbots);
+        board.villainDeck.replace(card => card.type === 'bystander' ? Object.assign({}, killbots) : card);
+        board.villainDeck.create(length, killbots);
         board.drawVillain().subscribe(sub => {
             board.fields.filter(field => field.card && field.card.team === 'killbots').forEach(field => {
                 field.card.attack = board.scheme.counterTwist;
             });
             if (board.escapedVillain.filter(card => card['team'] === 'killbots').length >= 5) {
                 dialog.open(EndGameDialog, { data: { header: 'lose' } }).afterClosed().subscribe(subs => {
-                    location.reload();
+                    board.reload();
                 });
             }
         });
@@ -185,7 +183,7 @@ class Skrull implements Villain {
     image: string;
     team = 'hero';
     attack: number;
-    points = 0;
+    points = 2;
     copiedHero = undefined;
 
     constructor(hero: Hero) {
@@ -196,8 +194,7 @@ class Skrull implements Villain {
 
     fight(board: BoardService, dialog: MatDialog) {
         board.discardPile.push(this.copiedHero);
-        const index = board.victoryPile.findIndex(card => card === this);
-        board.victoryPile.pick(index);
+        this.image = (new shapeshifters).image;
     }
 }
 
@@ -205,6 +202,7 @@ export class secret_invasion_shapeshifters implements Scheme {
     type = 'scheme';
     image = 'assets/cards/scheme/scheme_secret_invasion_shapeshifters.png';
     counterTwist = 0;
+    alwaysLeads = {group: 'villain', name: 'skrulls'};
     twist(board: BoardService, schemeTwist: scheme_twist, dialog: MatDialog) {
         board.KO.push(schemeTwist);
         const index = board.hq.reduce((maxIndex, card, i, arr) => {
@@ -217,13 +215,13 @@ export class secret_invasion_shapeshifters implements Scheme {
         }
     }
     setup(board: BoardService, dialog: MatDialog, box: BoxService) {
-        board.villianDeck.create(8, new scheme_twist);
+        board.villainDeck.create(8, new scheme_twist);
         const setupObs = new BehaviorSubject<boolean>(false);
         open();
         function open() {
-            const dialogRef = dialog.open(SelectGroupWithRandomDialog, {
+            const dialogRef = dialog.open(SelectWithRandomDialog, {
                 data: {
-                    array: box.heroBox.cards,
+                    array: Object.values(box.herosesBox.cards),
                     header: 'Select Heroses'
                 }
             });
@@ -231,13 +229,13 @@ export class secret_invasion_shapeshifters implements Scheme {
                 if (choosen === undefined) {
                     open();
                 } else {
-                    const choosenGroup = box.heroBox.pick(choosen.index)[0];
+                    const choosenGroup = box.pick('heroses', choosen.index, false);
                     board.heroDeck.create(1, choosenGroup[0]);
                     board.heroDeck.create(3, choosenGroup[1]);
                     board.heroDeck.create(5, choosenGroup[2]);
                     board.heroDeck.create(5, choosenGroup[3]);
                     board.heroDeck.shuffle();
-                    board.villianDeck.put(board.heroDeck.splice(0, 12).map(card => new Skrull(card)));
+                    board.villainDeck.put(board.heroDeck.splice(0, 12).map(card => new Skrull(card)));
                     setupObs.next(true);
                 }
             });
@@ -245,7 +243,7 @@ export class secret_invasion_shapeshifters implements Scheme {
         board.drawVillain().subscribe(sub => {
             if (board.escapedVillain.filter(card => card['team'] === 'hero').length >= 6) {
                 dialog.open(EndGameDialog, { data: { header: 'lose' } }).afterClosed().subscribe(subs => {
-                    location.reload();
+                    board.reload();
                 });
             }
         });
@@ -265,13 +263,13 @@ export class super_hero_civil_war implements Scheme {
         }
     }
     setup(board: BoardService, dialog: MatDialog, box: BoxService) {
-        board.villianDeck.create(8, new scheme_twist);
+        board.villainDeck.create(8, new scheme_twist);
         const setupObs = new BehaviorSubject<boolean>(false);
         open();
         function open() {
-            const dialogRef = dialog.open(SelectGroupWithRandomDialog, {
+            const dialogRef = dialog.open(SelectWithRandomDialog, {
                 data: {
-                    array: box.heroBox.cards,
+                    array: Object.values(box.herosesBox.cards),
                     header: 'Select Heroses'
                 }
             });
@@ -279,7 +277,7 @@ export class super_hero_civil_war implements Scheme {
                 if (choosen === undefined) {
                     open();
                 } else {
-                    const choosenGroup = box.heroBox.pick(choosen.index)[0];
+                    const choosenGroup = box.pick('heroses', choosen.index, false);
                     board.heroDeck.create(1, choosenGroup[0]);
                     board.heroDeck.create(3, choosenGroup[1]);
                     board.heroDeck.create(5, choosenGroup[2]);
@@ -291,7 +289,7 @@ export class super_hero_civil_war implements Scheme {
         board.drawVillain().subscribe(sub => {
             if (board.heroDeck.length === 0) {
                 dialog.open(EndGameDialog, { data: { header: 'lose' } }).afterClosed().subscribe(subs => {
-                    location.reload();
+                    board.reload();
                 });
             }
         });
@@ -321,9 +319,9 @@ export class unleash_cosmic_cube implements Scheme {
                 break;
             case 8:
                 dialog.open(EndGameDialog, { data: { header: 'lose' } }).afterClosed().subscribe(sub => {
-                    location.reload();
+                    board.reload();
                 });
         }
     }
-    setup(board: BoardService) { board.villianDeck.create(8, new scheme_twist); }
+    setup(board: BoardService) { board.villainDeck.create(8, new scheme_twist); }
 }

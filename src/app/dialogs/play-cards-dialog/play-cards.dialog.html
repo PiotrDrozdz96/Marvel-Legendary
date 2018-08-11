@@ -2,6 +2,7 @@
 <div class="dialog">
     <div class="cards-list">
         <img *ngFor="let card of board.playerCards" [src]="card.image" (mouseenter)="mouseEnter(card.image)" (mouseleave)="mouseLeave()">
+        <img *ngFor="let card of board.copiedCards" [src]="card.image" (mouseenter)="mouseEnter(card.image)" (mouseleave)="mouseLeave()">
     </div>
     <div class="cards-list">
         <img *ngFor="let card of board.playerHand; let index = index" [src]="card.image" (mouseenter)="mouseEnter(card.image)" (mouseleave)="mouseLeave()" (click)="pick(index)">

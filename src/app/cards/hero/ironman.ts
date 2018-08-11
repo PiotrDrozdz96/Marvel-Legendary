@@ -1,4 +1,4 @@
-import { Hero } from '../../models/card';
+import { Hero, Team, Color } from '../../models/card';
 import { BoardService } from '../../services/board.service';
 import { MatDialog } from '@angular/material';
 
@@ -7,8 +7,8 @@ import { MatDialog } from '@angular/material';
 export class rare implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/ironman/ironman_rare.png';
-    team = 'avengers';
-    color = 'grey';
+    team: Team = 'avengers';
+    color: Color = 'grey';
     attack = 0;
     recrutingPoints = 0;
     cost = 7;
@@ -23,8 +23,8 @@ export class rare implements Hero {
 export class uncommon implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/ironman/ironman_uncommon.png';
-    team = 'avengers';
-    color = 'grey';
+    team: Team = 'avengers';
+    color: Color = 'grey';
     attack = 3;
     recrutingPoints = 0;
     cost = 5;
@@ -36,8 +36,8 @@ export class uncommon implements Hero {
 export class common_1 implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/ironman/ironman_common_1.png';
-    team = 'avengers';
-    color = 'grey';
+    team: Team = 'avengers';
+    color: Color = 'grey';
     attack = 0;
     recrutingPoints = 0;
     cost = 3;
@@ -52,8 +52,8 @@ export class common_1 implements Hero {
 export class common_2 implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/ironman/ironman_common_2.png';
-    team = 'avengers';
-    color = 'white';
+    team: Team = 'avengers';
+    color: Color = 'white';
     attack = 2;
     recrutingPoints = 0;
     cost = 3;

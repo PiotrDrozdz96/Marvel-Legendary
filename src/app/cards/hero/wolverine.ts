@@ -1,7 +1,6 @@
 import { MatDialog } from '@angular/material';
-import { take, skip } from 'rxjs/operators';
 import { BoardService } from '../../services/board.service';
-import { Hero } from '../../models/card';
+import { Hero, Team, Color } from '../../models/card';
 import { SelectDialog } from '../../dialogs/cards-list-dialog/select.dialog';
 import { wound } from '../wounds';
 
@@ -11,8 +10,8 @@ import { wound } from '../wounds';
 export class rare implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/wolverine/wolverine_rare.png';
-    team = 'x-men';
-    color = 'yellow';
+    team: Team = 'x-men';
+    color: Color = 'yellow';
     attack = 0;
     recrutingPoints = 0;
     cost = 8;
@@ -27,8 +26,8 @@ export class rare implements Hero {
 export class uncommon implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/wolverine/wolverine_uncommon.png';
-    team = 'x-men';
-    color = 'yellow';
+    team: Team = 'x-men';
+    color: Color = 'yellow';
     attack = 2;
     recrutingPoints = 0;
     cost = 5;
@@ -42,8 +41,8 @@ export class uncommon implements Hero {
 export class common_1 implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/wolverine/wolverine_common_1.png';
-    team = 'x-men';
-    color = 'yellow';
+    team: Team = 'x-men';
+    color: Color = 'yellow';
     attack = 2;
     recrutingPoints = 0;
     cost = 3;
@@ -74,8 +73,8 @@ export class common_1 implements Hero {
 export class common_2 implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/wolverine/wolverine_common_2.png';
-    team = 'x-men';
-    color = 'yellow';
+    team: Team = 'x-men';
+    color: Color = 'yellow';
     attack = 1;
     recrutingPoints = 0;
     cost = 2;

@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { BoardService } from '../../services/board.service';
+import { HttpService } from '../../services/http.service';
 import { Card, Villain, Bystander, Mastermind } from '../../models/card';
 import { Inject } from '@angular/core';
 import { BasicDialog } from '../basic-dialog';
+import { BoxService } from '../../services/box.service';
 
 @Component({
     selector: 'app-end-game',
@@ -23,6 +25,7 @@ export class EndGameDialog extends BasicDialog {
     constructor(
         public dialogRef: MatDialogRef<EndGameDialog>,
         public board: BoardService,
+        private http: HttpService,
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {
         super();
@@ -34,6 +37,10 @@ export class EndGameDialog extends BasicDialog {
             lose: {
                 h1: 'Evils Win',
                 h2: 'You lose by'
+            },
+            mastermindEscaped: {
+                h1: 'You protected city very well',
+                h2: 'But Mastermind Escaped'
             }
         };
         this.h1 = headers[data.header].h1;
@@ -43,7 +50,11 @@ export class EndGameDialog extends BasicDialog {
         this.yourScore = this.victoryPile.reduce((sum, card) => sum + card.points, 0)
             - 4 * this.escapedVillains.filter(card => card.type === 'bystander').length
             - 3 * this.board.scheme.counterTwist
-            - this.escapedVillains.filter(card => card.type === 'villain').length;
+            - this.escapedVillains.filter(card => card.type === 'villain').length
+            - ((data.header === 'lose' || data.header === 'mastermindEscaped') ?
+            this.board.mastermind.points * (this.board.mastermind.tactics.length + 1) : 0);
+        board.leaderboards.score = this.yourScore;
+        this.http.post(this.board.leaderboards);
     }
 
 }

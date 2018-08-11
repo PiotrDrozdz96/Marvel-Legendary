@@ -33,7 +33,7 @@ export class the_lizard implements Villain {
     attack = 3;
     points = 2;
     fight(board: BoardService, dialog: MatDialog) {
-        if (board.fields[0].card && board.fields[0].card === this) {
+        if (board.fields[0].card === this) {
             board.discardPile.put(board.woundsDeck.draw());
         }
     }

@@ -1,4 +1,4 @@
-import { Hero } from '../../models/card';
+import { Hero, Team, Color } from '../../models/card';
 import { BoardService } from '../../services/board.service';
 import { MatDialog } from '@angular/material';
 import { SelectDialog } from '../../dialogs/cards-list-dialog/select.dialog';
@@ -8,52 +8,61 @@ import { SelectDialog } from '../../dialogs/cards-list-dialog/select.dialog';
 export class rare implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/rogue/rogue_rare.png';
-    team = 'x-men';
-    color = 'green';
+    team: Team = 'x-men';
+    color: Color = 'green';
     attack = 4;
     recrutingPoints = 0;
     cost = 8;
     func(board: BoardService, dialog: MatDialog) {
-        board.playerHand.put(board.playerDeck.draw());
+        const card = board.playerDeck.draw()[0];
+        if (card.func) {
+            card.func(board, dialog);
+        }
+        if (card.sub) {
+            board.cardsSubscription.push(card.sub(board));
+        }
+        board.copiedCards.push(card);
+        board.playerAttack += card.attack;
+        board.playerRecrutingPoints += card.recrutingPoints;
+
     }
 }
 
 export class uncommon implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/rogue/rogue_uncommon.png';
-    team = 'x-men';
-    color = 'red';
+    team: Team = 'x-men';
+    color: Color = 'red';
     attack = 0;
     recrutingPoints = 0;
     cost = 5;
     func(board: BoardService, dialog: MatDialog) {
-        open();
-        function open() {
-            dialog.open(SelectDialog, {
-                data: {
-                    array: board.playerCards,
-                    header: 'Copy Card'
+        dialog.open(SelectDialog, {
+            data: {
+                array: board.playerCards.filter(card => card.image !== this.image),
+                header: 'Copy Card'
+            }
+        }).afterClosed().subscribe(choosen => {
+            if (choosen !== undefined) {
+                if (choosen.card.func) {
+                    choosen.card.func(board, dialog);
                 }
-            }).afterClosed().subscribe(choosen => {
-                if (choosen === undefined) {
-                    open();
-                } else {
-                    board.playerAttack += choosen.card.attack;
-                    board.playerRecrutingPoints += choosen.card.recrutingPoints;
-                    if (choosen.card.func) {
-                        choosen.card.func(board, dialog);
-                    }
+                if (choosen.card.sub) {
+                    board.cardsSubscription.push(choosen.card.sub(board));
                 }
-            });
-        }
+                board.copiedCards.push(choosen.card);
+                board.playerAttack += choosen.card.attack;
+                board.playerRecrutingPoints += choosen.card.recrutingPoints;
+            }
+        });
     }
 }
 
 export class common_1 implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/rogue/rogue_common_1.png';
-    team = 'x-men';
-    color = 'green';
+    team: Team = 'x-men';
+    color: Color = 'green';
     attack = 1;
     recrutingPoints = 0;
     cost = 4;
@@ -67,10 +76,10 @@ export class common_1 implements Hero {
 export class common_2 implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/rogue/rogue_common_2.png';
-    team = 'x-men';
-    color = 'red';
-    attack = 2;
-    recrutingPoints = 0;
+    team: Team = 'x-men';
+    color: Color = 'red';
+    attack = 0;
+    recrutingPoints = 2;
     cost = 3;
     func(board: BoardService, dialog: MatDialog) {
         if (board.checkPlayedCards('color', 'red')) {

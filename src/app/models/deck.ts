@@ -23,6 +23,20 @@ export class Deck<T extends Object> extends Array<T> {
             [].concat(this as Array<T>).map(callbackfn, thisArg);
     }
 
+    /* Array methods changing original Deck */
+    /* filter */
+    sift(callbackfn: (value: T, index: number, array: Deck<T>) => any, thisArg?: any): void {
+        const siftArr = (this as Array<T>).filter(callbackfn, thisArg);
+        this.take();
+        this.put(siftArr);
+    }
+    /* map */
+    replace(callbackfn: (value: T, index: number, array: Deck<T>) => any, thisArg?: any): void {
+        const replacedArr = (this as Array<T>).map(callbackfn, thisArg);
+        this.take();
+        this.put(replacedArr);
+    }
+
     /* new methods */
     create(number: number, card: T): void {
         const arr = new Array(number);
@@ -33,15 +47,20 @@ export class Deck<T extends Object> extends Array<T> {
     }
     take(): Array<T> { return this.splice(0, this.length); }
     draw(): Array<T> {
+        if (this.length === 0) { this.runsOut(); }
         const newCard = this.shift();
         this.numberOfDrawing++;
         return newCard === undefined ? [] : [newCard];
     }
-    reveal(): T { return this[0]; }
+    runsOut(): void { }
+    reveal(): T {
+        if (this.length === 0) { this.runsOut(); }
+        return this[0];
+    }
     pick(index: number): Array<T> {
         return this.splice(index, 1);
     }
-    put(arr: Array<T>): void {
+    put(arr: Array<T>, condition?: boolean): void {
         this.push(...arr);
     }
     shuffle(): void {

@@ -1,0 +1,11 @@
+<style>
+    .dialog {
+        text-align: center;
+    }
+</style>
+
+<div class="dialog">
+    <mat-form-field>
+        <input matInput placeholder="Player Name" maxlength="12" [(ngModel)]="board.leaderboards.name" (keyup)="changeFontSize()">
+    </mat-form-field>
+</div>

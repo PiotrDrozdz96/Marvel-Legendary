@@ -1,0 +1,124 @@
+.menu {
+    width: 140vh;
+    height: 100vh;
+    margin: auto;
+    z-index: 11;
+    text-align: center;
+    top: -4px;
+    background-image: url('/assets/legendary_board.jpg');
+    background-size: 140vh 100vh;
+    background-repeat: no-repeat;
+}
+
+.container {
+    width: 140vh;
+    height: 100vh;
+    background-image: url('/assets/menu.jpg');
+    background-size: 140vh 100vh;
+    margin: auto;
+}
+
+.text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#startDiv {
+    position: relative;
+    top: 50vh;
+    height: 58px;
+}
+
+#start {
+    color: goldenrod;
+    cursor: pointer;
+    animation: start 4s infinite;
+    margin: auto;
+    font-size: 40px;
+    text-shadow: 0 0 20px black;
+}
+
+.shadow-text {
+    cursor: pointer;
+    text-decoration: none;
+    color: firebrick;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    font-size: 40px;
+    margin: 0;
+}
+
+.shadow-text:hover {
+    color: purple;
+}
+
+#guide {
+    position: relative;
+    top: 20vh;
+    left: 16vw;
+}
+
+#leaderboards {
+    position: relative;
+    top: 20vh;
+    left: -15vw;
+}
+
+#sendMessage {
+    position: relative;
+    top: 70vh;
+    left: -20vw;
+}
+
+#message {
+    position: relative;
+    display: none;
+    top: 45vh;
+    left: 25vw;
+    background-color: #424242;
+    color: white;
+    height: 18.32vh;
+    width: 20vh;
+    border: 2px solid black;
+}
+
+.box {
+    border: 2px solid grey;
+    float: left;
+    width: 19.5vh;
+}
+
+.box input {
+    width: 14vh;
+    float: right;
+    background-color: inherit;
+    color: inherit;
+}
+
+#message textarea {
+    background-color: inherit;
+    color: inherit;
+    resize: none;
+}
+
+button.box {
+    float: none;
+    cursor: pointer;
+}
+
+@keyframes start {
+    0% {
+        text-shadow: 0 0 20px black;
+        font-size: 40px;
+    }
+    50% {
+        text-shadow: 0 0 10px white;
+        font-size: 50px;
+    }
+    100% {
+        text-shadow: 0 0 20px black;
+        font-size: 40px;
+    }
+}

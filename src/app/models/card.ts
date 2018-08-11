@@ -14,23 +14,33 @@ export interface Tactic {
     func(board: BoardService, dialog: MatDialog, tactic: Tactic);
 }
 
+export interface AlwaysLeads {
+    group: string;
+    name: string;
+}
+
+export type CardIcon = 'team' | 'color';
+export type Team  = 'x-men' | 'avengers' | 'shield' | 'spider';
+export type Color = 'green' | 'yellow' | 'red' | 'grey' | 'white';
+
 export interface Hero extends Card {
-    // type: 'hero' || 'wound;
-    team?: string;
-    color?: string;
+    // type: 'hero' | 'wound';
+    team?: Team;
+    color?: Color;
     attack: number;
     recrutingPoints: number;
     cost: number;
     func?(board: BoardService, dialog: MatDialog);
-    sub?(board: BoardService, dialog: MatDialog): Subscription;
+    discard?(board: BoardService, card?): boolean;
+    sub?(board: BoardService): Subscription;
 }
 
 export interface Mastermind extends Card {
     // type: 'mastermind';
+    alwaysLeads: AlwaysLeads;
     attack: number;
     additionalAttack: number;
     points: number;
-    alwaysLeads: string;
     bystanders?: Array<Bystander>;
     additionalCard?: Array<Card>;
     tactics: Array<Tactic>;
@@ -51,6 +61,7 @@ export interface Villain extends Card {
 export interface Scheme extends Card {
     // type: 'scheme';
     counterTwist: number;
+    alwaysLeads?: AlwaysLeads;
     twist(board: BoardService, card: scheme_twist, dialog?: MatDialog);
     setup(board: BoardService, dialog?: MatDialog, box?: BoxService);
 }

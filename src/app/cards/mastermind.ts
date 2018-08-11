@@ -13,10 +13,10 @@ export class master_strike implements Card {
 export class doctor_doom implements Mastermind {
     type = 'mastermind';
     image = 'assets/cards/mastermind/doctor_doom/mastermind_doctor_doom.png';
+    alwaysLeads = { group: 'henchmen', name: 'doombot_legion' };
     attack = 9;
     additionalAttack = 0;
     points = 5;
-    alwaysLeads = 'doombotLegion';
     tactics = [
         {
             image: 'assets/cards/mastermind/doctor_doom/doctor_doom_1.png',
@@ -60,6 +60,9 @@ export class doctor_doom implements Mastermind {
     ];
     masterStrike(board: BoardService, dialog: MatDialog) {
         let numberOfChoosenCards = 0;
+        if (board.playerHand.length === 6 && !board.playerReveal('color', 'grey')) {
+            open();
+        }
         function open() {
             dialog.open(SelectDialog, {
                 data: {
@@ -77,20 +80,16 @@ export class doctor_doom implements Mastermind {
                 }
             });
         }
-
-        if (board.playerHand.length === 6 && !board.playerHand.some(card => card.color === 'grey')) {
-            open();
-        }
     }
 }
 
 export class loki implements Mastermind {
     type = 'mastermind';
     image = 'assets/cards/mastermind/loki/mastermind_loki.png';
+    alwaysLeads = { group: 'villain', name: 'enemies_of_asgard' };
     attack = 10;
     additionalAttack = 0;
     points = 5;
-    alwaysLeads = 'enemiesOfAsgard';
     tactics = [
         {
             image: 'assets/cards/mastermind/loki/loki_1.png',
@@ -144,7 +143,7 @@ export class loki implements Mastermind {
         }
     ];
     masterStrike(board: BoardService, dialog: MatDialog) {
-        if (!board.playerHand.some(card => card.color === 'green')) {
+        if (!board.playerReveal('color', 'green')) {
             board.discardPile.put(board.woundsDeck.draw());
         }
     }
@@ -153,10 +152,10 @@ export class loki implements Mastermind {
 export class magneto implements Mastermind {
     type = 'mastermind';
     image = 'assets/cards/mastermind/magneto/mastermind_magneto.png';
+    alwaysLeads = { group: 'villain', name: 'brootherhood' };
     attack = 8;
     additionalAttack = 0;
     points = 5;
-    alwaysLeads = 'brotherhood';
     tactics = [
         {
             image: 'assets/cards/mastermind/magneto/magneto_1.png',
@@ -184,7 +183,7 @@ export class magneto implements Mastermind {
         {
             image: 'assets/cards/mastermind/magneto/magneto_2.png',
             func: (board: BoardService, dialog: MatDialog, tactic: Tactic) => {
-                if (!board.playerCards.some(card => card.team === 'x-men')) {
+                if (!board.playerReveal('team', 'x-men')) {
                     board.playerDeck.put(board.woundsDeck.draw().concat(board.woundsDeck.draw()));
                 }
             }
@@ -222,6 +221,9 @@ export class magneto implements Mastermind {
         }
     ];
     masterStrike(board: BoardService, dialog: MatDialog) {
+        if (!board.playerReveal('team', 'x-men')) {
+            open();
+        }
         function open() {
             dialog.open(SelectDialog, {
                 data: {
@@ -240,20 +242,16 @@ export class magneto implements Mastermind {
                 }
             });
         }
-
-        if (!board.playerHand.some(card => card.team === 'x-men')) {
-            open();
-        }
     }
 }
 
 export class red_skull implements Mastermind {
     type = 'mastermind';
     image = 'assets/cards/mastermind/red_skull/mastermind_red_skull.png';
+    alwaysLeads = { group: 'villain', name: 'hydra' };
     attack = 7;
     additionalAttack = 0;
     points = 5;
-    alwaysLeads = 'hydra';
     tactics = [
         {
             image: 'assets/cards/mastermind/red_skull/red_skull_1.png',
@@ -325,6 +323,25 @@ export class red_skull implements Mastermind {
         }
     ];
     masterStrike(board: BoardService, dialog: MatDialog) {
-        board.KO.put(board.playerHand.take());
+        if (board.playerHand.some(card => card.type === 'hero')) {
+            open();
+        }
+
+        function open() {
+            dialog.open(SelectDialog, {
+                data: {
+                    array: board.playerHand.filter(card => card.type === 'hero'),
+                    preview: board.mastermind.image,
+                    header: 'KOs one Hero'
+                }
+            }).afterClosed().subscribe(choosen => {
+                if (choosen === undefined) {
+                    open();
+                } else {
+                    const index = board.playerHand.findIndex(card => card === choosen.card);
+                    board.KO.put(board.playerHand.pick(index));
+                }
+            });
+        }
     }
 }

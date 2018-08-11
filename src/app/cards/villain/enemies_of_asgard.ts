@@ -12,10 +12,12 @@ export class destroyer implements Villain {
     attack = 7;
     points = 5;
     fight(board: BoardService, dialog: MatDialog) {
-        const shieldCards = board.playerCards.filter(card => card.team === 'shield');
-        const restCards = board.playerCards.filter(card => card.team !== 'shield');
-        board.KO.put(shieldCards);
-        board.playerCards = restCards;
+        setTimeout(() => {
+            const shieldCards = board.playerCards.filter(card => card.team === 'shield');
+            const restCards = board.playerCards.filter(card => card.team !== 'shield');
+            board.KO.put(shieldCards);
+            board.playerCards = restCards;
+        }, 1000);
     }
     escape(board: BoardService, dialog: MatDialog) {
         let KOCounter = 0;
@@ -62,7 +64,7 @@ export class frost_giant implements Villain {
     attack = 4;
     points = 2;
     fight(board: BoardService, dialog: MatDialog) {
-        if (!board.playerCards.concat(board.playerHand).find(card => card.color === 'white')) {
+        if (!board.playerReveal('color', 'white')) {
             board.discardPile.put(board.woundsDeck.draw());
         }
     }
@@ -76,16 +78,13 @@ export class ymir implements Villain {
     attack = 6;
     points = 4;
     ambush(board: BoardService, dialog: MatDialog) {
-        if (!board.playerHand.find(card => card.color === 'white')) {
+        if (!board.playerReveal('color', 'white')) {
             board.discardPile.put(board.woundsDeck.draw());
         }
     }
     fight(board: BoardService, dialog: MatDialog) {
-        const playerHand = board.playerHand.filter( card => card.type !== 'wound');
-        const playerCards = board.playerCards.filter( card => card.type !== 'wound');
-        const discardPile = board.discardPile.filter( card => card.type !== 'wound');
-        board.playerHand = playerHand;
-        board.playerCards = playerCards;
-        board.discardPile = discardPile;
+        board.playerHand.sift(card => card.type !== 'wound');
+        board.playerCards.sift(card => card.type !== 'wound');
+        board.discardPile.sift(card => card.type !== 'wound');
     }
 }

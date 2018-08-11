@@ -1,0 +1,59 @@
+#slider {
+    position: absolute;
+    height: 100vh;
+    background-image: url('/assets/menu.jpg');
+    background-size: 100% 100%;
+    z-index: 999;
+}
+
+@keyframes full-to-half {
+    0% {
+        width: 100vw;
+        margin: 0 0;
+    }
+    100% {
+        width: 140vh;
+        margin: 0 calc( calc( 100vw - 140vh) / 2)
+    }
+}
+
+@keyframes half-to-none {
+    0% {
+        width: 140vh;
+        margin: 0 calc( calc( 100vw - 140vh) / 2)
+    }
+    100% {
+        width: 0;
+        margin: 0 50vw;
+    }
+}
+
+@keyframes half-to-full-to-none {
+    0% {
+        width: 140vh;
+        margin: 0 calc( calc( 100vw - 140vh) / 2)
+    }
+    33% {
+        width: 100vw;
+        margin: 0 0;
+    }
+    100% {
+        width: 0;
+        margin: 0 50vw;
+    }
+}
+
+@keyframes none-to-full-to-half {
+    0% {
+        width: 0;
+        margin: 0 50vw;
+    }
+    66% {
+        width: 100vw;
+        margin: 0 0;
+    }
+    100% {
+        width: 140vh;
+        margin: 0 calc( calc( 100vw - 140vh) / 2)
+    }
+}

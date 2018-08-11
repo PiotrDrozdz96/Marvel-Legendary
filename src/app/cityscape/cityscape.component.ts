@@ -18,7 +18,7 @@ export class CityscapeComponent implements OnInit {
           field.attack = 0;
         });
         this.board.mastermind.additionalAttack = 0;
-        const new_cards = this.board.villianDeck.draw();
+        const new_cards = this.board.villainDeck.draw();
         if (new_cards.length === 1) {
           const new_card = new_cards[0];
           this.board.setKOimage(new_card.image);
@@ -48,9 +48,9 @@ export class CityscapeComponent implements OnInit {
   }
 
   attack(index: number) {
-    if ((this.board.playerAttack >= this.board.fields[index].attack + this.board.fields[index].card.attack) &&
+    if ((this.board.playerAttack >= Math.max(this.board.fields[index].attack + this.board.fields[index].card.attack, 1)) &&
       (!this.board.fields[index].card.fightCondition || this.board.fields[index].card.fightCondition(this.board))) {
-      this.board.playerAttack -= this.board.fields[index].attack + this.board.fields[index].card.attack;
+      this.board.playerAttack -= Math.max(this.board.fields[index].attack + this.board.fields[index].card.attack, 1);
       this.board.defeatVillain(index, this.dialog);
     }
   }

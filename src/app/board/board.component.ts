@@ -12,8 +12,9 @@ import { BoxService } from '../services/box.service';
 import { PlayCardsDialog } from '../dialogs/play-cards-dialog/play-cards.dialog';
 import { CardsListDialog } from '../dialogs/cards-list-dialog/cards-list.dialog';
 import { SelectWithRandomDialog } from '../dialogs/cards-list-dialog/select-with-random.dialog';
-import { SelectGroupWithRandomDialog } from '../dialogs/cards-list-dialog/select-group-with-random.dialog';
 import { EndGameDialog } from '../dialogs/end-game-dialog/end-game.dialog';
+import { PlayerNameDialog } from '../dialogs/player-name-dialog/player-name.dialog';
+import { TextDialog } from '../dialogs/text.dialog';
 
 @Component({
   selector: 'app-board',
@@ -23,42 +24,72 @@ import { EndGameDialog } from '../dialogs/end-game-dialog/end-game.dialog';
 })
 export class BoardComponent implements OnInit {
 
-  private heroGroup: number;
-  private villainGroup: number;
-  private henchmanCards: number;
-  private bystanders: number;
-  private masterStrike: number;
-
+  public run: boolean;
+  private styles = Array(30).fill({}).map(style => this.createStyle());
 
   constructor(
     private dialog: MatDialog,
     public board: BoardService,
     public box: BoxService
   ) {
-    this.numberCards('onePlayer');
-    this.selectMastermind();
+    this.box.numberPlayers(1);
+    setTimeout(() => {
+      this.createPlayer();
+    }, 2000);
+    const Sub = board.start().subscribe(sub => {
+      this.run = sub;
+      if (sub) {
+        Sub.unsubscribe();
+      }
+    });
+    board.villainsRunsOut().subscribe(runsOut => {
+      if (runsOut === 1) {
+        this.board.escapedVillain.put(this.board.mastermind.bystanders);
+        this.board.mastermind.bystanders = [];
+        this.dialog.open(TextDialog, {
+          data: {
+            h1: 'HARRY UP!',
+            h2: 'Mastermind try escape'
+          }
+        }).afterClosed().subscribe(sub => {
+          this.board.mastermind.masterStrike(this.board, this.dialog);
+        });
+      } else if (runsOut === 2) {
+        this.board.leaderboards.win = true;
+        this.dialog.open(EndGameDialog, { data: { header: 'mastermindEscaped' } }).afterClosed().subscribe(sub => {
+          this.board.reload();
+        });
+      }
+    });
   }
 
-  private numberCards(mode: string) {
-    const modes = {
-      onePlayer: [3, 1, 3, 1, 1],
-      normal: [5, 2, 10, 2, 5],
-      onBoard: [5, 3, 10, 10, 5]
+  ngForArray(number: number): Array<any> { return new Array(number); }
+  createStyle() {
+    return {
+      position: 'absolute',
+      transform: 'rotate(' + Math.floor((Math.random() * 28) - 14) + 'deg)',
+      left: (Math.random() * 2) - 1 + 'vh',
+      top: (Math.random() * 1.2) - 0.60 + 'vh'
     };
-    [
-      this.heroGroup,
-      this.villainGroup,
-      this.henchmanCards,
-      this.bystanders,
-      this.masterStrike
-    ] = [...modes[mode]];
+  }
+  getStyle(number: number) {
+    return this.styles[((number + Math.floor(number / 30)) % 30)];
+  }
 
+  createPlayer() {
+    const dialogRef = this.dialog.open(PlayerNameDialog);
+    dialogRef.afterClosed().subscribe(sub => {
+      if (this.board.leaderboards.name === '') {
+        this.board.leaderboards.name = 'Anonim';
+      }
+      this.selectMastermind();
+    });
   }
 
   selectMastermind() {
     const dialogRef = this.dialog.open(SelectWithRandomDialog, {
       data: {
-        array: this.box.mastermindBox.cards,
+        array: Object.values(this.box.mastermindBox.cards),
         header: 'Select Mastermind'
       }
     });
@@ -66,9 +97,11 @@ export class BoardComponent implements OnInit {
       if (data === undefined) {
         this.selectMastermind();
       } else {
-        this.board.mastermind = this.box.mastermindBox.pick(data.index)[0];
+        this.board.leaderboards.mastermind = this.box.mastermindBox.key(data.index);
+        this.board.mastermind = this.box.mastermindBox.pick(data.index);
         this.board.mastermind.bystanders = [];
         this.board.mastermind.additionalCard = [];
+        this.box.alwaysLeads(this.board.mastermind.alwaysLeads);
         this.selectScheme();
       }
     });
@@ -77,7 +110,7 @@ export class BoardComponent implements OnInit {
   selectScheme() {
     const dialogRef = this.dialog.open(SelectWithRandomDialog, {
       data: {
-        array: this.box.schemeBox.cards,
+        array: Object.values(this.box.schemeBox.cards),
         header: 'Select Scheme'
       }
     });
@@ -85,16 +118,18 @@ export class BoardComponent implements OnInit {
       if (data === undefined) {
         this.selectScheme();
       } else {
-        this.board.scheme = this.box.schemeBox.pick(data.index)[0];
+        this.board.leaderboards.scheme = this.box.schemeBox.key(data.index);
+        this.board.scheme = this.box.schemeBox.pick(data.index);
+        this.box.alwaysLeads(this.board.scheme.alwaysLeads);
         this.selectVillains();
       }
     });
   }
 
   selectVillains() {
-    const dialogRef = this.dialog.open(SelectGroupWithRandomDialog, {
+    const dialogRef = this.dialog.open(SelectWithRandomDialog, {
       data: {
-        array: this.box.villainsBox.cards,
+        array: Object.values(this.box.villainsBox.cards),
         header: 'Select Villain Group'
       }
     });
@@ -102,10 +137,9 @@ export class BoardComponent implements OnInit {
       if (data === undefined) {
         this.selectVillains();
       } else {
-        const villains = this.box.villainsBox.pick(data.index)[0];
-        villains.forEach(villain => { this.board.villianDeck.create(2, villain); });
-        this.villainGroup--;
-        if (this.villainGroup > 0) {
+        const villains = this.box.pick('villains', data.index);
+        villains.forEach(villain => { this.board.villainDeck.create(2, villain); });
+        if (this.box.villainsGroup > 0) {
           this.selectVillains();
         } else {
           this.selectHenchman();
@@ -115,35 +149,38 @@ export class BoardComponent implements OnInit {
   }
 
   selectHenchman() {
-    const dialogRef = this.dialog.open(SelectWithRandomDialog, {
-      data: {
-        array: this.box.henchmenBox.cards,
-        header: 'Select Henchman Group'
-      }
-    });
-    dialogRef.afterClosed().subscribe(data => {
-      if (data === undefined) {
-        this.selectHenchman();
-      } else {
-        // add henchman
-        this.board.villianDeck.create(this.henchmanCards, this.box.henchmenBox.pick(data.index)[0]);
-        // add bystanders
-        for (let i = 0; i < this.bystanders; i++) {
-          this.board.villianDeck.put(this.board.bystandersDeck.draw());
+    if (this.box.henchmenGroup > 0) {
+      const dialogRef = this.dialog.open(SelectWithRandomDialog, {
+        data: {
+          array: Object.values(this.box.henchmenBox.cards),
+          header: 'Select Henchman Group'
         }
-        // add masterStrike
-        this.board.villianDeck.create(this.masterStrike, new master_strike);
-        // scheme setup
-        this.selectHero();
-
+      });
+      dialogRef.afterClosed().subscribe(data => {
+        if (data === undefined) {
+          this.selectHenchman();
+        } else {
+          // add henchman
+          this.board.villainDeck.create(10, this.box.pick('henchmen', data.index)[0]);
+          this.selectHenchman();
+        }
+      });
+    } else {
+      // add bystanders
+      for (let i = 0; i < this.box.bystanders; i++) {
+        this.board.villainDeck.put(this.board.bystandersDeck.draw());
       }
-    });
+      // add masterStrike
+      this.board.villainDeck.create(this.box.masterStrike, new master_strike);
+      // scheme setup
+      this.selectHero();
+    }
   }
 
   selectHero() {
-    const dialogRef = this.dialog.open(SelectGroupWithRandomDialog, {
+    const dialogRef = this.dialog.open(SelectWithRandomDialog, {
       data: {
-        array: this.box.heroBox.cards,
+        array: Object.values(this.box.herosesBox.cards),
         header: 'Select Heroses'
       }
     });
@@ -151,27 +188,26 @@ export class BoardComponent implements OnInit {
       if (data === undefined) {
         this.selectHero();
       } else {
-        const choosenGroup = this.box.heroBox.pick(data.index)[0];
+        const choosenGroup = this.box.pick('heroses', data.index);
         this.board.heroDeck.create(1, choosenGroup[0]);
         this.board.heroDeck.create(3, choosenGroup[1]);
         this.board.heroDeck.create(5, choosenGroup[2]);
         this.board.heroDeck.create(5, choosenGroup[3]);
-        this.heroGroup--;
-        if (this.heroGroup > 0) {
+        if (this.box.herosesGroup > 0) {
           this.selectHero();
         } else {
           const schemeSetupObs = this.board.scheme.setup(this.board, this.dialog, this.box);
           if (schemeSetupObs) {
             const schemeSetupSub = schemeSetupObs.subscribe(done => {
               if (done) {
-                this.board.villianDeck.shuffle();
+                this.board.villainDeck.shuffle();
                 this.board.heroDeck.shuffle();
                 this.board.startObs.next(true);
                 schemeSetupSub.unsubscribe();
               }
             });
           } else {
-            this.board.villianDeck.shuffle();
+            this.board.villainDeck.shuffle();
             this.board.heroDeck.shuffle();
             this.board.startObs.next(true);
           }
@@ -180,7 +216,9 @@ export class BoardComponent implements OnInit {
     });
   }
 
-  playerHand() { this.dialog.open(PlayCardsDialog); }
+  playerHand() {
+    this.dialog.open(PlayCardsDialog);
+  }
   viewCards(header: string, cards: Array<Card>) {
     this.dialog.open(CardsListDialog, { data: { header: header, array: cards } });
   }
@@ -193,11 +231,15 @@ export class BoardComponent implements OnInit {
   }
 
   nextTurn() {
-    if (this.board.playerCards.filter(card => card.type === 'wound').length === this.board.playerCards.length) {
-      this.board.KO.put(this.board.playerCards.take());
+    if (this.board.healing) {
+      this.board.KO.put(this.board.playerCards.concat(this.board.playerHand).filter(card => card.type === 'wound'));
+      this.board.playerCards.sift(card => card.type !== 'wound');
+      this.board.playerHand.sift(card => card.type !== 'wound');
     }
+    this.board.healing = true;
     this.board.playerAttack = 0;
     this.board.playerRecrutingPoints = 0;
+    this.board.copiedCards.take();
     this.board.discardPile.put(this.board.playerHand.take().concat(this.board.playerCards.take()));
     this.board.playerDeck.numberOfDrawing = 0;
     this.board.drawToPlayerHand();
@@ -207,11 +249,11 @@ export class BoardComponent implements OnInit {
   }
 
   attackMastermind() {
-    if (this.board.playerAttack >= this.board.mastermind.attack + this.board.mastermind.additionalAttack) {
-      this.board.playerAttack -= this.board.mastermind.attack + this.board.mastermind.additionalAttack;
+    if (this.board.playerAttack >= Math.max(this.board.mastermind.attack + this.board.mastermind.additionalAttack, 1)) {
+      this.board.playerAttack -= Math.max(this.board.mastermind.attack + this.board.mastermind.additionalAttack, 1);
       if (this.board.defeatMastermind(this.dialog)) {
         this.dialog.open(EndGameDialog, { data: { header: 'win' } }).afterClosed().subscribe(sub => {
-          location.reload();
+          this.board.reload();
         });
       }
     }

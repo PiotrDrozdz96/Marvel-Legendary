@@ -1,4 +1,4 @@
-import { Hero } from '../../models/card';
+import { Hero, Color } from '../../models/card';
 import { BoardService } from '../../services/board.service';
 import { MatDialog } from '@angular/material';
 import { SelectDialog } from '../../dialogs/cards-list-dialog/select.dialog';
@@ -8,7 +8,7 @@ import { SelectDialog } from '../../dialogs/cards-list-dialog/select.dialog';
 export class rare implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/deadpool/deadpool_rare.png';
-    color = 'yellow';
+    color: Color = 'yellow';
     attack = 6;
     recrutingPoints = 0;
     cost = 7;
@@ -21,8 +21,8 @@ export class rare implements Hero {
             }
         }).afterClosed().subscribe(choosen => {
             if (choosen !== undefined) {
-                board.playerHand.put(board.woundsDeck.draw());
                 board.playerHand.pick(choosen.index);
+                board.playerHand.put(board.woundsDeck.draw());
                 board.playerHand.put(board.heroDeck.draw());
             }
         });
@@ -32,7 +32,7 @@ export class rare implements Hero {
 export class uncommon implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/deadpool/deadpool_uncommon.png';
-    color = 'yellow';
+    color: Color = 'yellow';
     attack = 2;
     recrutingPoints = 0;
     cost = 3;
@@ -59,7 +59,7 @@ export class uncommon implements Hero {
 export class common_1 implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/deadpool/deadpool_common_1.png';
-    color = 'grey';
+    color: Color = 'grey';
     attack = 0;
     recrutingPoints = 2;
     cost = 3;
@@ -89,7 +89,7 @@ export class common_1 implements Hero {
 export class common_2 implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/deadpool/deadpool_common_2.png';
-    color = 'red';
+    color: Color = 'red';
     attack = 2;
     recrutingPoints = 0;
     cost = 5;

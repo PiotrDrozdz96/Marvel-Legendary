@@ -1,4 +1,4 @@
-import { Hero } from '../../models/card';
+import { Hero, Team, Color } from '../../models/card';
 import { BoardService } from '../../services/board.service';
 import { MatDialog } from '@angular/material';
 
@@ -7,8 +7,8 @@ import { MatDialog } from '@angular/material';
 export class rare implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/spider_man/spider_man_rare.png';
-    team = 'spider';
-    color = 'red';
+    team: Team = 'spider';
+    color: Color = 'red';
     attack = 0;
     recrutingPoints = 0;
     cost = 2;
@@ -26,15 +26,15 @@ export class rare implements Hero {
 export class uncommon implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/spider_man/spider_man_uncommon.png';
-    team = 'spider';
-    color = 'grey';
+    team: Team = 'spider';
+    color: Color = 'grey';
     attack = 0;
     recrutingPoints = 0;
     cost = 2;
     func(board: BoardService, dialog: MatDialog) {
         board.victoryPile.put(board.bystandersDeck.draw());
         const card = board.playerDeck.reveal();
-        if (card.cost <= 2) {
+        if (card && card.cost <= 2) {
             board.playerHand.put(board.playerDeck.draw());
         }
     }
@@ -43,14 +43,14 @@ export class uncommon implements Hero {
 export class common_1 implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/spider_man/spider_man_common_1.png';
-    team = 'spider';
-    color = 'green';
+    team: Team = 'spider';
+    color: Color = 'green';
     attack = 0;
     recrutingPoints = 1;
     cost = 2;
     func(board: BoardService, dialog: MatDialog) {
         const card = board.playerDeck.reveal();
-        if (card.cost <= 2) {
+        if (card && card.cost <= 2) {
             board.playerHand.put(board.playerDeck.draw());
         }
     }
@@ -59,14 +59,14 @@ export class common_1 implements Hero {
 export class common_2 implements Hero {
     type = 'hero';
     image = 'assets/cards/hero/spider_man/spider_man_common_2.png';
-    team = 'spider';
-    color = 'yellow';
+    team: Team = 'spider';
+    color: Color = 'yellow';
     attack = 1;
     recrutingPoints = 0;
     cost = 2;
     func(board: BoardService, dialog: MatDialog) {
         const card = board.playerDeck.reveal();
-        if (card.cost <= 2) {
+        if (card && card.cost <= 2) {
             board.playerHand.put(board.playerDeck.draw());
         }
     }

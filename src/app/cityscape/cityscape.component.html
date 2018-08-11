@@ -1,13 +1,13 @@
 <div class="cards-list">
     <div class="field" *ngFor="let field of board.fields.slice().reverse(); let index = index">
         <div class="additional-card">
-            <app-card *ngIf="field.additionalCard.length!=0" [src]="field.additionalCard[0].image" (click)="viewCards('', field.place, field.additionalCard)"></app-card>
+            <app-card *ngIf="field.additionalCard.length!=0" [src]="field.additionalCard[0].image" [cursor]="pointer" (click)="viewCards('', field.place, field.additionalCard)"></app-card>
         </div>
         <div class="villain">
-            <app-card *ngIf="field.card!=null" [src]="field.card.image" (click)="attack(board.fields.length-index-1)"></app-card>
+            <app-card *ngIf="field.card!=null" [src]="field.card.image" [cursor]="pointer" (click)="attack(board.fields.length-index-1)"></app-card>
         </div>
         <div class="bystander">
-            <app-card *ngIf="field.bystanders.length!=0" [src]="field.bystanders[0].image" (click)="viewCards('Bystander in ', field.place, field.bystanders)"></app-card>
+            <app-card *ngIf="field.bystanders.length!=0" [src]="field.bystanders[0].image" [cursor]="pointer" (click)="viewCards('Bystander in ', field.place, field.bystanders)"></app-card>
         </div>
     </div>
 </div>

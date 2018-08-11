@@ -8,20 +8,29 @@ import { BoardService } from '../services/board.service';
 })
 export class CardComponent implements OnInit {
 
-  @Input()
-  src: string;
+  rotate = 0;
+  top = 0;
+  left = 0;
+
+  @Input() src: string;
+  @Input() reveal = true;
+  @Input() cursor = 'default';
+  @Input() style = {};
 
   constructor(private boardService: BoardService) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   mouseEnter() {
-    this.boardService.setKOimage(this.src);
+    if (this.reveal) {
+      this.boardService.setKOimage(this.src);
+    }
   }
 
   mouseLeave() {
-    this.boardService.setKOimage('');
+    if (this.reveal) {
+      this.boardService.setKOimage('');
+    }
   }
 
 }

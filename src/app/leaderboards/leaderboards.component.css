@@ -1,0 +1,93 @@
+#leaderboards {
+    width: 100vw;
+    height: 100vh;
+    overflow-y: scroll;
+    z-index: 0;
+    min-width: 1105px;
+    background-image: url('/assets/leaderboards_background.jpg');
+    background-size: 100% 100%;
+}
+
+#leaderboards .mat-elevation-z8 {
+    width: 100%;
+    background-color: transparent;
+}
+
+#leaderboards .mat-header-cell {
+    background-color: #111947;
+}
+
+.card {
+    height: 18.32vh;
+    width: 13.19vh;
+    cursor: pointer;
+}
+
+.heroses {
+    margin-right: 2vh;
+}
+
+button {
+    position: absolute;
+    z-index: 101;
+    background-color: #3f51b5;
+    color: white;
+}
+
+#menu {
+    left: calc(100vw - 170px);
+    top: 10px;
+}
+
+#top {
+    display: none;
+    font-size: 50px;
+    padding-top: 8px;
+    height: 60px;
+    ;
+    width: 60px;
+    left: calc(100vw - 150px);
+    top: calc(100vh - 150px);
+}
+
+.shading {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    opacity: 0.5;
+}
+
+.picture {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    text-align: center;
+}
+
+.picture img {
+    height: 35.3vh;
+    width: 25.5vh;
+    margin-top: 32.35vh;
+    margin-right: 1vh;
+}
+
+.forms {
+    background-color: transparent;
+    color: inherit;
+    font-family: inherit;
+    border-color: dodgerblue;
+}
+
+.forms option {
+    background-color: dodgerblue;
+    color: white;
+}
+
+.name, .win, .scheme, .villains {
+    width: 80px;
+}
+
+.mastermind {
+    width: 100px;
+}

@@ -1,15 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject, Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material';
+import { HttpService } from './http.service';
 
 import { Deck } from '../models/deck';
-import { Card, Hero, Scheme, Mastermind, Bystander, Villain } from '../models/card';
+import { Card, Hero, Scheme, Mastermind, Bystander, Villain, CardIcon, Team, Color } from '../models/card';
 import { Field } from '../models/field';
+import { LeaderBoards } from '../models/leaderboards';
 
 import { hero_shield_agent, hero_shield_trooper, hero_shield_officer } from '../cards/hero/shield';
 import { wound } from '../cards/wounds';
 import { bystander } from '../cards/bystanders';
 import { EndGameDialog } from '../dialogs/end-game-dialog/end-game.dialog';
+import { SelectDialog } from '../dialogs/cards-list-dialog/select.dialog';
+import { BoxService } from './box.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,15 +24,21 @@ export class BoardService {
   public startObs = new BehaviorSubject<boolean>(false);
   public drawVillainObs = new BehaviorSubject<boolean>(false);
   public defeatedVillainObs = new BehaviorSubject<any>(undefined);
+  public villainsRunsOutNumber = 0;
+  public villainsRunsOutObs = new BehaviorSubject<number>(0);
   public cardsSubscription: Array<Subscription> = [];
+
+  public leaderboards = new LeaderBoards();
 
   playerDeck = new Deck<Hero>();
   playerHand = new Deck<Hero>();
   playerCards = new Deck<Hero>();
+  copiedCards = new Deck<Hero>(); // rogue
   discardPile = new Deck<Hero>();
   playerAttack = 0;
   playerRecrutingPoints = 0;
   numberOfDrawing = 6;
+  healing = true;
 
   victoryPile = new Deck<Villain | Bystander | Mastermind>();
   KO = new Deck<Card>();
@@ -38,7 +48,7 @@ export class BoardService {
   bystandersDeck = new Deck<Bystander>();
   mastermind: Mastermind;
   scheme: Scheme;
-  villianDeck = new Deck<Card | Villain | Bystander>();
+  villainDeck = new Deck<Card | Villain | Bystander>();
   heroDeck = new Deck<Hero>();
 
   escapedVillain = new Deck<Villain | Bystander>();
@@ -51,23 +61,24 @@ export class BoardService {
     new Field('bridge')
   ];
 
-  constructor() {
-    /* change method draw in playerDeck*/
-    this.playerDeck.draw = (): Array<Hero> => {
-      if (this.playerDeck.length === 0) {
-        this.discardPile.shuffle();
-        this.playerDeck.put(this.discardPile.take());
-      }
-      const newCard = this.playerDeck.shift();
-        this.playerDeck.numberOfDrawing++;
-        return newCard === undefined ? [] : [newCard];
+  constructor(public http: HttpService) {
+    /* change method in Deck*/
+    this.playerDeck.runsOut = () => {
+      this.discardPile.shuffle();
+      this.playerDeck.put(this.discardPile.take());
     };
-    this.playerDeck.reveal = (): Hero => {
-      if (this.playerDeck.length === 0) {
-        this.discardPile.shuffle();
-        this.playerDeck.put(this.discardPile.take());
+    this.villainDeck.runsOut = () => {
+      this.villainsRunsOutNumber++;
+      this.villainsRunsOutObs.next(this.villainsRunsOutNumber);
+    };
+    this.discardPile.put = (arr: Array<Hero>, notCardEffect = false): void => {
+      let discard = true;
+      if (!notCardEffect && arr.length === 1 && arr[0].discard) {
+        discard = arr[0].discard(this, arr[0]);
       }
-      return this.playerDeck[0];
+      if (discard) {
+        this.discardPile.push(...arr);
+      }
     };
     /* SET UP */
     /*********/
@@ -80,24 +91,16 @@ export class BoardService {
     this.shieldDeck.create(30, new hero_shield_officer);
     this.bystandersDeck.create(30, new bystander);
     this.woundsDeck.create(30, new wound);
-    /* 3. select mastermind */
-    /* inside board.component, selectMastermind.dialog */
-    /* 4. select scheme */
-    /* inside board.component, selectScheme.dialog */
-    /* 5. villain deck*/
-    /*  number of schemeTwist described in scheme */
-    /* a. 3 villain group 8*3=24 cards*/
-    /* b. 1 henchmen group 10 cards*/
-    /* c. 10 bystanders */
-    /* d. 5 masterStrike */
-    /* shuffle deck */
+
   }
 
+  reload = () => this.http.reload();
   getKOimage(): Observable<string> { return this.koImage.asObservable(); }
   setKOimage(image: string): void { this.koImage.next(image); }
   start(): Observable<boolean> { return this.startObs.asObservable(); }
   drawVillain(): Observable<boolean> { return this.drawVillainObs.asObservable(); }
   defeatedVillain(): Observable<any> { return this.defeatedVillainObs.asObservable(); }
+  villainsRunsOut(): Observable<number> { return this.villainsRunsOutObs.asObservable(); }
   drawToPlayerHand() {
     for (let i = 0; i < this.numberOfDrawing; i++) {
       this.playerHand.put(this.playerDeck.draw());
@@ -105,8 +108,12 @@ export class BoardService {
     this.numberOfDrawing = 6;
   }
 
-  checkPlayedCards(param: string, arg: string): boolean {
-    return this.playerCards.some(card => card[param] === arg);
+  checkPlayedCards(param: CardIcon, arg: Team | Color): boolean {
+    return this.playerCards.concat(this.copiedCards).some(card => card[param] === arg);
+  }
+
+  playerReveal(param: CardIcon, arg: Team | Color): boolean {
+    return this.playerCards.concat(this.playerHand, this.copiedCards).some(card => card[param] === arg);
   }
 
   moveVillains(card: Villain, dialog: MatDialog) {
@@ -116,8 +123,12 @@ export class BoardService {
         if (this.fields[4].card.escape) {
           this.fields[4].card.escape(this, dialog);
         }
+        KO(this);
         this.escapedVillain.put([this.fields[4].card]);
-        this.escapedVillain.put(this.fields[4].bystanders);
+        if (this.fields[4].bystanders.length > 0) {
+          this.escapedVillain.put(this.fields[4].bystanders);
+          discard(this);
+        }
         freePlaceIndex = 4;
       }
       for (freePlaceIndex; freePlaceIndex > 0; freePlaceIndex--) {
@@ -130,9 +141,42 @@ export class BoardService {
     if (this.fields[0].card.ambush) {
       this.fields[0].card.ambush(this, dialog);
     }
+
+    function KO(board: BoardService) {
+      dialog.open(SelectDialog, {
+        data: {
+          array: board.hq.filter(hero => hero.cost <= 6),
+          header: 'KO hero from HQ'
+        }
+      }).afterClosed().subscribe(choosen => {
+        if (choosen === undefined) {
+          KO(board);
+        } else {
+          const index = board.hq.findIndex(hero => hero === choosen.card);
+          board.KO.put(board.hq.pick(index));
+          board.hq.put(board.heroDeck.draw());
+        }
+      });
+    }
+
+    function discard(board: BoardService) {
+      dialog.open(SelectDialog, {
+        data: {
+          array: board.playerHand,
+          header: 'Put card on discard Pile'
+        }
+      }).afterClosed().subscribe(choosen => {
+        if (choosen === undefined) {
+          discard(board);
+        } else {
+          board.discardPile.put(board.playerHand.pick(choosen.index));
+        }
+      });
+    }
   }
 
   defeatMastermind(dialog: MatDialog) {
+    this.healing = false;
     const tactic = this.mastermind.tactics.splice(Math.floor(Math.random() * this.mastermind.tactics.length), 1);
     const tacticCard = Object.assign({}, this.mastermind);
     tacticCard.image = tactic[0].image;
@@ -140,6 +184,7 @@ export class BoardService {
     this.victoryPile.put(this.mastermind.bystanders);
     this.mastermind.bystanders = [];
     if (this.mastermind.tactics.length === 0) {
+      this.leaderboards.win = true;
       return true;
     } else {
       this.setKOimage(tactic[0].image);
@@ -149,14 +194,17 @@ export class BoardService {
   }
 
   defeatVillain(index: number, dialog: MatDialog) {
+    this.healing = false;
     const card = this.fields[index].card;
     this.setKOimage('');
-    this.victoryPile.push(card);
-    this.victoryPile.put(this.fields[index].bystanders);
-    this.fields[index].card = null;
-    this.fields[index].bystanders = [];
     if (card.fight) {
       card.fight(this, dialog);
+    }
+    this.victoryPile.push(card);
+    if (this.fields[index].card === card) {
+      this.victoryPile.put(this.fields[index].bystanders);
+      this.fields[index].card = null;
+      this.fields[index].bystanders = [];
     }
     this.defeatedVillainObs.next(card);
   }
