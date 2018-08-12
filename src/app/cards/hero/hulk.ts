@@ -30,7 +30,7 @@ export class uncommon implements Hero {
     recrutingPoints = 0;
     cost = 5;
     func(board: BoardService, dialog: MatDialog) {
-        board.discardPile.put(board.woundsDeck.draw());
+        board.gainsWound();
     }
 }
 

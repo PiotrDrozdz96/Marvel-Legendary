@@ -34,7 +34,7 @@ export class the_lizard implements Villain {
     points = 2;
     fight(board: BoardService, dialog: MatDialog) {
         if (board.fields[0].card === this) {
-            board.discardPile.put(board.woundsDeck.draw());
+            board.gainsWound();
         }
     }
 }
@@ -47,6 +47,6 @@ export class venom implements Villain {
     points = 3;
     fightCondition(board: BoardService) { return board.checkPlayedCards('color', 'red'); }
     escape(board: BoardService, dialog: MatDialog) {
-        board.discardPile.put(board.woundsDeck.draw());
+        board.gainsWound();
     }
 }

@@ -94,7 +94,7 @@ export class sabertooth implements Villain {
     points = 3;
     fight(board: BoardService, dialog: MatDialog) {
         if (!board.playerReveal('team', 'x-men')) {
-            board.discardPile.put(board.woundsDeck.draw());
+            board.gainsWound();
         }
     }
     escape = (board: BoardService, dialog: MatDialog) => this.fight(board, dialog);

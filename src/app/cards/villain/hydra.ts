@@ -51,7 +51,7 @@ export class viper implements Villain {
     points = 3;
     fight(board: BoardService, dialog: MatDialog) {
         if (!board.victoryPile.find(card => card['team'] === 'hydra')) {
-            board.discardPile.put(board.woundsDeck.draw());
+            board.gainsWound();
         }
     }
     escape = (board: BoardService, dialog: MatDialog) => this.fight(board, dialog);

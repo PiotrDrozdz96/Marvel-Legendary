@@ -116,6 +116,8 @@ export class BoardService {
     return this.playerCards.concat(this.playerHand, this.copiedCards).some(card => card[param] === arg);
   }
 
+  gainsWound() { this.discardPile.put(this.woundsDeck.draw()); }
+
   moveVillains(card: Villain, dialog: MatDialog) {
     let freePlaceIndex = this.fields.findIndex(field => field.card === null);
     if (freePlaceIndex !== 0) {

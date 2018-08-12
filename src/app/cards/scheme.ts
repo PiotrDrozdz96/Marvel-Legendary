@@ -25,7 +25,7 @@ export class legacy_virus implements Scheme {
     counterTwist = 0;
     twist(board: BoardService, schemeTwist: scheme_twist) {
         if (!board.playerReveal('color', 'grey')) {
-            board.discardPile.put(board.woundsDeck.draw());
+            board.gainsWound();
         }
         board.KO.push(schemeTwist);
     }
@@ -312,7 +312,7 @@ export class unleash_cosmic_cube implements Scheme {
                 break;
             case 5:
             case 6:
-                board.discardPile.put(board.woundsDeck.draw());
+                board.gainsWound();
                 break;
             case 7:
                 board.discardPile.put(board.woundsDeck.draw().concat(board.woundsDeck.draw(), board.woundsDeck.draw()));

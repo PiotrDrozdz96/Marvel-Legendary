@@ -144,7 +144,7 @@ export class loki implements Mastermind {
     ];
     masterStrike(board: BoardService, dialog: MatDialog) {
         if (!board.playerReveal('color', 'green')) {
-            board.discardPile.put(board.woundsDeck.draw());
+            board.gainsWound();
         }
     }
 }

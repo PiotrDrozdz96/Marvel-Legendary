@@ -55,7 +55,7 @@ export class ultron implements Villain {
     escape(board: BoardService, dialog: MatDialog) {
         this.fight(board, dialog);
         if (!board.playerReveal('color', 'grey')) {
-            board.discardPile.put(board.woundsDeck.draw());
+            board.gainsWound();
         }
     }
 }
